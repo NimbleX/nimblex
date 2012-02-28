@@ -1,0 +1,25 @@
+*~
+*.lzm
+*.txz
+*.tgz
+*.tar.bz2
+
+01-Core*
+!01-Core.sh
+02-Xorg*
+!02-Xorg.sh
+03-Libs*
+!03-Libs.sh
+04-Apps*
+!04-Apps.sh
+05-KDE*
+!05-KDE.sh
+07-Devel*
+!07-Devel.sh
+FILELIST.TXT
+ISO-test/
+#       Kernels/
+#       enlightment/
+#       initramfs/
+#       remaster
+
