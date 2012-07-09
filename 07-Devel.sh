@@ -8,6 +8,7 @@ if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
 slacksrc="ftp://ftp.rdsbv.ro/mirrors/slackware/slackware${ARCH}-current/slackware${ARCH}"
 slacksrc="ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/slackware${ARCH}"
+slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
 
 blacklist_d="perl*,python*"
 whitelist_l="glibc*,mpfr*"
@@ -42,7 +43,7 @@ run-ldconfig() {
 echo "Running ldconfig and others chrooted inside $AUFS"
 
 cd $SD && AUFS="aufs-temp" && mkdir -p $AUFS
-mount -t aufs -o br:$NP none $AUFS
+mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 mount -t aufs -o remount,append:05-KDE${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:04-Apps${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
@@ -53,7 +54,7 @@ mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 chroot $AUFS ldconfig
 
 umount $AUFS
-
+rm -rf $NP/.wh..wh.*
 }
 
 
@@ -80,7 +81,7 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm -noappend -b 256k
+	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -90,7 +91,7 @@ else
 	  copy-removed
 	  run-ldconfig
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm -noappend -b 256k
+	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

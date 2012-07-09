@@ -7,10 +7,11 @@ if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
 LIST="FILELIST.TXT"
 SRC="http://darkstar.ist.utl.pt/slackware/addon/slacky/slackware${ARCH}-13.37"
+SRC="http://packages.nimblex.net/slacky${ARCH}"
 
 mkdir -p $NP $NP-work $NP-removed/usr/{lib${ARCH},share}
 
-whitelist_slacky_l37=(a52dec cairo-perl cairomm gc glitz gssdp libsoup gupnp SDL_gfx SDL_Pango libgsm faac openjpeg schroedinger x264 xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc glibmm pangomm imlib2 ffmpeg-0.8 libmspack portaudio dvdauthor videotrans libdv-1 dvgrab libiec61883 faad2 libavc1394 recordmydesktop gtkmm atkmm opencore-amr libcue libmms libmpcdec libshout unrar mjpegtools jack-audio-connection-kit celt liblo libquicktime openal-soft libgnomecanvas libwps libwpg flash-player-plugin zope.interface wildmidi qjson libebml libmatroska ladspa_sdk libva libvpx libbluray libdvdnav libdvdcss libdca libdvbpsi rtmpdump libvdpau libbs2b vo-aacenc vo-amrwbenc ftgl enca-1 libcanberra orc exif oxygen-gtk qtcurve twolame usbmuxd libxavs mlt-0.7 libmpdclient libaacplus libmpeg2 libtar libssh2 libkate libtiger xosd libass libupnp goom)
+whitelist_slacky_l37=(a52dec cairo-perl cairomm gc glitz gssdp libsoup gupnp SDL_gfx SDL_Pango libgsm faac openjpeg schroedinger x264 xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc glibmm pangomm imlib2 ffmpeg-0.8 libmspack portaudio dvdauthor videotrans libdv-1 dvgrab libiec61883 faad2 libavc1394 recordmydesktop gtkmm atkmm opencore-amr libcue libmms libmpcdec libshout unrar mjpegtools jack-audio-connection-kit celt liblo libquicktime openal-soft libgnomecanvas libwps libwpg flash-player-plugin zope.interface wildmidi qjson libebml libmatroska ladspa_sdk libva libvpx libbluray libdvdnav libdvdcss libdca libdvbpsi rtmpdump libvdpau libbs2b vo-aacenc vo-amrwbenc ftgl enca-1 libcanberra orc exif oxygen-gtk qtcurve twolame usbmuxd libxavs mlt-0.7 libmpdclient libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom libgnome-keyring)
 
 whitelist_slacky_ln=(a52dec cairo-perl cairomm gc orbit2 gconf giblib glitz gssdp libsoup gupnp sdl_gfx sdl_pango ilbc libgsm libusb1 faac amrwb amrnb openjpeg schroedinger x264 xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc glibmm pangomm imlib2 ffmpeg libmspack portaudio dvdauthor videotrans libdv dvgrab libiec61883 faad2 libavc1394 recordmydesktop gtkmm opencore-amr libcue libmms libmpcdec libshout unrar mjpegtools jack-audio-connection-kit celt liblo libquicktime openal-soft libgnomecanvas libwps libwpg flash-player-plugin zope.interface wildmidi qjson libminizip libebml libmatroska tremor ladspa_sdk libva libvpx sound-theme-freedesktop ftgl- libcanberra orc exif oxygen-gtk)
 
@@ -20,7 +21,7 @@ cd $SD/$NP-work
 for package in $(seq 0 $((${#whitelist_slacky_l37[*]} -1))); do
 TXZn=(`cat ../$LIST | awk '{print $9}' | grep ".txz$" | grep -w "${whitelist_slacky_l37[$package]}" | cut -b 2-`)
   for i in $(seq 0 $((${#TXZn[*]} -1))); do
-    wget $SRC${TXZn[i]}
+    wget -N $SRC${TXZn[i]}
   done
 done
 
@@ -28,7 +29,7 @@ done
 if [[ $ARCH = "" ]]; then
  echo QTCurve is in the slackware 13.37 repo
 elif [[ $ARCH = "64" ]]; then
- wget http://repository.slacky.eu/slackware64-13.1/desktop/qtcurve/1.5.0/qtcurve-1.5.0-x86_64-1sl.txz
+ wget -N http://repository.slacky.eu/slackware64-13.1/desktop/qtcurve/1.5.0/qtcurve-1.5.0-x86_64-1sl.txz
 fi
 
 echo DELETEing gst-ffmpeg, gconf-editor, gtk-recordmydesktop and maybe other crap
@@ -89,7 +90,7 @@ cd $SD && AUFS="aufs-temp"
 echo "Running ldconfig and others chrooted inside $AUFS"
 
 mkdir -p $AUFS
-mount -t aufs -o br:03-Libs${ARCH} none $AUFS
+mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:03-Libs${ARCH} none $AUFS
 mount -t aufs -o remount,append:02-Xorg${ARCH}-3D=ro none $AUFS
 mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
@@ -100,7 +101,7 @@ chroot $AUFS ln -sf /usr/share/themes/oxygen-gtk/gtk-2.0/gtkrc /etc/gtk-2.0/gtkr
 chroot $AUFS useradd -s /bin/false -d / -u 98 usbmux
 
 umount $AUFS
-
+rm -rf $NP/.wh..wh.*
 }
 
 
@@ -128,7 +129,7 @@ else
 	 "lzmfy" )
 	  echo "...LZMFY"
 	  rm -f $NP.lzm
-	  mksquashfs $NP $NP.lzm -b 256k
+	  mksquashfs $NP $NP.lzm -b 256k -no-xattrs
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -139,7 +140,7 @@ else
 	  run-ldconfig
 	  echo "...LZMFY"
 	  rm -f $NP.lzm
-	  mksquashfs $NP $NP.lzm -b 256k
+	  mksquashfs $NP $NP.lzm -b 256k -no-xattrs
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"
