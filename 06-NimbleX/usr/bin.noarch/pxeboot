@@ -1,0 +1,35 @@
+#!/bin/bash
+# Dirty, Quick & Unprofessional PXE boot script to boot NimbleX over the network.
+# Author: Bogdan Radulescu <bogdan@nimblex.net>
+
+
+interface="eth0"
+ifconfig $interface 10.10.10.1 netmask 255.255.255.0
+in.tftpd -l -s /boot/
+dhcpd
+
+# This will share your Internet connection in an unoptimized way but it
+# would work OK without having to write a complex script
+echo 1 > /proc/sys/net/ipv4/ip_forward
+if ! iptables -t nat -L | grep MASQUERADE; then
+  echo "Sharing the Internet on the network."
+  iptables -t nat -I POSTROUTING -j MASQUERADE
+fi
+
+sh /etc/rc.d/rc.httpd start
+
+echo "Building the bootable ISO from your booted system :)"
+DEV=`ls /mnt/live/mnt/*/nimblex/nimblex.sgn | cut -d "/" -f 5`
+dir2lzm /mnt/live/mnt/$DEV/nimblex/rootcopy/ /tmp/rootcopy-`date +%j`.lzm
+mkisofs -o /var/www/htdocs/NimbleX-2010.iso -R -A "Custom NimbleX" -V "Custom NimbleX" -no-emul-boot -boot-info-table -boot-load-size 4 -b boot/grub/iso9660_stage1_5 -graft-points /boot/=/boot/ /nimblex/base/=/mnt/live/mnt/$DEV/nimblex/base/ /nimblex/=/mnt/live/mnt/$DEV/nimblex/nimblex.sgn /nimblex/modules/=/mnt/live/mnt/$DEV/nimblex/modules/ /nimblex/modules/=/tmp/rootcopy-`date +%j`.lzm
+
+# mksquashfs /mnt/live/memory/changes /tmp/changes-`date +%j`.lzm -info -e tmp dev mnt var
+
+echo "For 60 seconds we'll make sure $interface is up and configured."
+for i in `seq 60`; do
+Status=`mii-tool $interface | cut -d " " -f 2`
+ if [[ $Status = "no" ]]; then
+  ifconfig $interface 10.10.10.1 netmask 255.255.255.0
+ fi
+ sleep 1;
+done

@@ -1,0 +1,10 @@
+[Unit]
+Description=NTP client
+After=hwclock.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ntpdate -s -b -u 0.ro.pool.ntp.org 0.europe.pool.ntp.org
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Basic Settings]
+Configured repositories=main
+Start Nepomuk=false
+
+[Service-nepomukstrigiservice]
+autostart=true
+
+[main Settings]
+Storage Dir[$e]=$HOME/.kde/share/apps/nepomuk/repository/main/
+Used Soprano Backend=sesame2
+index version=2

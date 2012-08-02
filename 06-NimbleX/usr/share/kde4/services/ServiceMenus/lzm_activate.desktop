@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin,application/x-lzm
+Actions=lzm_activate;
+X-KDE-AuthorizeAction=shell_access
+X-KDE-Priority=TopLevel
+
+[Desktop Action lzm_activate]
+Name=Use NimbleX package...
+Icon=package_nimblex
+Exec[$e]=activate

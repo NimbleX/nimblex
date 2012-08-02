@@ -1,0 +1,84 @@
+#!/bin/bash
+# Activate a module, while running LiveCD.
+# Include it into live directory structure on the fly
+#
+# Author: Tomas M. <http://www.linux-live.org>
+
+if [ "$1" = "-k" ]; then
+   CALLED_BY_KDE_HELPER=1
+   shift
+fi
+
+if [ -e /usr/bin/kactivate -a "$DISPLAY" -a ! "$CALLED_BY_KDE_HELPER" ]; then
+   exec /usr/bin/kactivate "$@" 2>/dev/null
+fi
+
+MODULE=$(readlink -f "$1")
+
+if [ "$MODULE" = "" -o ! -e "$MODULE" -o -d "$MODULE" ]; then
+   echo
+   echo "Activate a module on the fly while running Linux Live"
+   echo "Usage: $0 module.lzm"
+   exit 1
+fi
+
+if [ "$(echo $MODULE | fgrep -i .lzm)" = "" ]; then
+   echo
+   echo "$(basename $MODULE): Module must end with .lzm"
+   exit 2
+fi
+
+PATH=.:$(dirname $0):/usr/lib:$PATH
+. liblinuxlive || exit 3
+
+allow_only_root
+IMAGES=/mnt/live/memory/images
+MODULES=/mnt/live/memory/modules
+
+# are we even using union?
+if [ "$(grep '^aufs / ' /proc/mounts)" = "" ]; then
+   echo "not in the live mode, can't continue. Try lzm2dir $MODULE /"
+   exit 4
+fi
+
+mkdir -p "$MODULES"
+
+# Test whether the module file is stored in union
+# if yes, then we must move it somewhere else (to RAM) else it can't be added
+if [ -e "/mnt/live/memory/changes/$(readlink -f "$MODULE")" ]; then
+   echo "module file is stored inside the union, moving to $MODULES first..."
+   TARGET="$MODULES/$(basename "$MODULE")"
+   mv "$MODULE" "$TARGET"
+   if [ $? -ne 0 ]; then
+      echo "error copying module to memory, not enough free RAM? try df" >&2
+      rm "$TARGET"
+      exit 6
+   fi
+   MODULE="$TARGET"
+fi
+
+MOD=$(union_insert_module / "$MODULE" $IMAGES)
+if [ $? -ne 0 ]; then echo "error inserting module to live filesystem" >&2; exit 3; fi
+
+# All executables (but symlinks) in /etc/rc.d/ from this module will be started
+# with two arguments: "start" "activate". Moreover, all executables in
+# /etc/rc.d/rc*.d/S* will be started as well.
+# This is done only by the 'activate' script, not in the case when the module is loaded 
+# during OS startup (in that case, your distro is responsible for execution)
+MOD=$(basename $MOD)
+if [ -d $IMAGES/$MOD/etc/rc.d ]; then
+   ( find $IMAGES/$MOD/etc/rc.d -type f -maxdepth 1 ; \
+     find $IMAGES/$MOD/etc/rc.d -type f -maxdepth 2 -mindepth 2 | egrep '/S[^/]+$' \
+   ) | while read SCRIPT; do
+      if [ "$SCRIPT" != "" -a -x "$SCRIPT" -a ! -d "$SCRIPT" ]; then
+         # call the script by real path, not from the images directory
+         ${SCRIPT##$IMAGES/$MOD} start activate
+      fi
+   done
+fi
+
+# update ld cache if new ld.so.conf/cache exists in the module
+if [ -e "$IMAGES/$MOD/etc/ld.so.conf" -o -e "$IMAGES/$MOD/etc/ld.so.cache" ]; then
+   echo "Module contains ld.so.conf or ld.so.cache, updating libs cache..."
+   /sbin/ldconfig
+fi

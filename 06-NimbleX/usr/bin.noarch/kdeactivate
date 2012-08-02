@@ -1,0 +1,37 @@
+#!/bin/bash
+
+FILE="$1"
+BASE=$(basename "$FILE" .lzm).lzm
+HTTP=/mnt/live/memory/httpfs
+
+# show info message and remember PID of the process (we'll need to kill the message later on)
+kdialog --passivepopup "$BASE: module deactivation in progress, wait please..." 10000 & KILLPID=$!
+
+# remove the module from the live filesystem
+deactivate -k "$FILE"
+err=$?
+
+if [ $err -eq 1 ]; then
+   kill $KILLPID
+   kdialog --icon error --title "deactivate error" --error "Module is not activated"
+   exit 4
+fi
+
+if [ $err -ne 0 ]; then
+   kill $KILLPID
+   kdialog --icon error --title "deactivate error" --error "Module can't be deactivated. Perhaps some files from the module are still used, opened or executed."
+   exit 3
+else
+   # if http/slik module was mounted, clean up
+   if [ -d "$HTTP/$BASE" ]; then
+      umount "$HTTP/$BASE"
+      rm -f "$HTTP/$BASE/slik.url"
+      rmdir "$HTTP/$BASE"
+   fi
+   # Rebuild the system configuration cache for KDE (mainly to update KDE menu)
+   kbuildsycoca 2>/dev/null
+   kill $KILLPID
+   kdialog --passivepopup "Well done! $BASE: module deactivated." 5 &
+fi
+
+exit 0

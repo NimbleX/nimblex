@@ -1,0 +1,17 @@
+#!/bin/bash
+# convert .lzm compressed file back into directory tree
+#
+# Author: Tomas M. <http://www.linux-live.org>
+#
+
+if [ ! -d "$2" ]; then
+   echo 
+   echo "Convert .lzm compressed module back into directory tree"
+   echo "usage: $0 source_file.lzm existing_output_directory"
+   exit 1
+fi
+
+PATH=.:$(dirname $0):/usr/lib:$PATH
+. liblinuxlive || exit 1
+
+unsquashfs -f -dest "$2" "$1" >/dev/null

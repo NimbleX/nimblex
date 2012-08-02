@@ -1,0 +1,8 @@
+[Unit]
+Description=php-fpm fast cgi service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/php-fpm -y /etc/php/fpm/php-fpm.conf
+ExecReload=/bin/kill -USR2 $MAINPID
+PrivateTmp=true

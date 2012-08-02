@@ -1,0 +1,14 @@
+[Unit]
+Description=NFS server
+After=rpcbind.service
+Requires=rpcbind.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/conf.d/nfs-server.conf
+ExecStart=/usr/sbin/rpc.nfsd $NFSD_OPTS $NFSD_COUNT
+ExecStop=/usr/sbin/rpc.nfsd 0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+#!/bin/bash
+# This is a stupid basic tool used by Bogdan to copy/update stuff in rootcopy.
+
+DST="/mnt/live/mnt/`ls /mnt/live/mnt/`/nimblex/rootcopy/`dirname $1`"
+
+if [[ -z $1 ]]; then
+ echo "You need to specify the file which you want to copy/update in rootcopy"
+ echo "eg: cpr /etc/hosts"
+else
+ mkdir -p $DST && cp $1 $DST
+fi
+

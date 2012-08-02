@@ -22,7 +22,7 @@ wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
 wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz
 
 if [[ $ARCH = "" ]]; then
- wget -N $extrasrc/system/gparted/0.12.1/gparted-0.12.1-i486-1sl.txz # 1.4M
+ wget -N $extrasrc/system/gparted/0.13.0/gparted-0.13.0-i486-1sl.txz # 1.4M
  wget -N $extrasrc/network/qtransmission/2.42/qtransmission-2.42-i486-1sl.txz # 1.2M
  wget -N $extrasrc/utilities/yakuake/2.9.8/yakuake-2.9.8-i486-3sl.txz # 313K
  wget -N $extrasrc/graphic/gimp-save-for-web/0.29.0/gimp-save-for-web-0.29.0-i486-5sl.txz # 40K
@@ -32,7 +32,7 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/gparted/0.21.1/gparted-0.12.1-x86_64-1sl.txz #1.4M
  wget -N $extrasrc/network/qtransmission/2.42/qtransmission-2.42-x86_64-1sl.txz # 830K
- wget -N $extrasrc/system/gslapt/0.5.3f/gslapt-0.5.3f-x86_64-1sl.txz #121K
+ wget -N $extrasrc/system/gslapt/0.5.3f/gslapt-0.5.3f-x86_64-1sl.txz # 121K
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz
@@ -77,8 +77,11 @@ rm usr/lib/libnetapi.*
 cripple_mplayer() {
 cd $SD/$NP
 rm usr/bin/mencoder # Sorry to let you go, but you're a fat bastartd :|
-rm -r usr/share/mplayer/skins/default/*
-cp -a ../06-NimbleX/usr/share/mplayer/skins/proton/* usr/share/mplayer/skins/default/
+cp -a ../06-NimbleX/usr/share/mplayer/skins/proton usr/share/mplayer/skins/
+(cd usr/share/mplayer/skins/ && rm default && ln -s proton default)
+sed -i 's/#framedrop = yes/framedrop = yes/g' etc/mplayer/mplayer.conf
+sed -i 's/#cache = 8192/cache = 8192/g' etc/mplayer/mplayer.conf
+sed -i 's/#cache-min = 20.0/cache-min = 20.0/g' etc/mplayer/mplayer.conf
 }
 
 run-ldconfig() {
@@ -117,6 +120,7 @@ else
 	  instpkg
 	  clean-apps
           cripple_samba
+          cripple_mplayer
 	  run-ldconfig
 	 ;;
 	 "lzmfy" )
@@ -130,6 +134,7 @@ else
 	  instpkg
 	  clean-apps
           cripple_samba
+          cripple_mplayer
 	  run-ldconfig
 	  echo "...LZMFY"
 	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs

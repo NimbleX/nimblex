@@ -1,0 +1,65 @@
+#!/bin/bash
+set -e
+# It's an interactive shell program which creates a changes file for NimbleX
+# Author: Bogdan Radulescu [bogdan @ nimblex.net]
+
+
+kdialog --title "Save Changes" --yesno "This small wizzard will create a nimblex.data file to automatically save NimbleX settings next boot.
+You will have to specify a different partition from the one NimbleX is loading!
+Are you sure you wish to continue?"
+
+if ls /mnt/*/nimblex.data >/dev/null; then
+kdialog --warningyesno "You already have a changes file on your disk.
+If you overwrite it you'll obviously loose all the
+changes done since that file was in place.
+           Do you want to proceed?"
+fi
+
+# Get name of drive/partition
+#DRIVE=`kdialog --getexistingdirectory /mnt --title "Select partition !"`
+DRIVE=`kdialog --combobox "Select partition !" $(df | grep "/dev/" | awk '{print $6}')`
+
+# Test for Writable FS
+nocheckfs="`echo $@ | grep \"\-nocheckfs\"`"
+if [[ $nocheckfs = "" ]]; then
+touch "$DRIVE"/fstest 2> /dev/null
+if [[ "$?" = "0" ]]; then
+# RW fs, continue
+rm "$DRIVE"/fstest
+else
+# RO fs.
+kdialog --error "Sorry Read-only filesystem!
+Make sure this parition writable?" >&2
+exit 1
+fi
+fi
+
+# Select a file size
+SIZE=`kdialog --combobox "Select the size of nimblex.data
+The bigger the size the better!" "512M" "1GB" "2GB" "4GB" "8GB" "16G"`
+if [[ "$SIZE" = "512M" ]]; then
+COUNT=512k
+elif [[ "$SIZE" = "1GB" ]]; then
+COUNT=1024k
+elif [[ "$SIZE" = "2GB" ]]; then
+COUNT=2048k
+elif [[ "$SIZE" = "4GB" ]]; then
+COUNT=4096k
+elif [[ "$SIZE" = "8GB" ]]; then
+COUNT=8192k
+elif [[ "$SIZE" = "16GB" ]]; then
+COUNT=16384k
+fi
+kdialog --passivepopup "The size of you data file is $SIZE
+Please be patient while it is created.
+It can take up to several minutes!" 10 &
+
+# Create empty XFS file
+NAME=nimblex.data
+dd if=/dev/zero of="$DRIVE"/"$NAME" bs=1k count="$COUNT"
+# Make filesystem on the file
+mkfs.xfs -f "$DRIVE"/"$NAME"
+
+kdialog --passivepopup "The file "$DRIVE"/"$NAME" was created!
+Changes should be saved starring next boot."
+exit 0

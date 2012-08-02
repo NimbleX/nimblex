@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin,application/x-lzm
+Actions=lzm2DIR;
+X-KDE-AuthorizeAction=shell_access
+X-KDE-Priority=TopLevel
+
+[Desktop Action lzm2DIR]
+Name=Extract NimbleX package...
+Icon=package_nimblex
+Exec=(cd %d && mkdir `echo %n | sed "s/\\.lzm$//"` && lzm2dir %d/%n %d/`echo %n | sed "s/\\.lzm$//"` && kdialog --passivepopup "Package extracted in %d/`echo %n | sed "s/\\.lzm$//"`" || kdialog --sorry "Package extraction failed!")

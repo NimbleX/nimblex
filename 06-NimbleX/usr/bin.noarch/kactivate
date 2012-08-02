@@ -1,0 +1,73 @@
+#!/bin/bash
+# This script is used in KDE to provide a GUI for 'activate'
+# It has the same syntax like 'activate', moreover it accepts HTTP addresses
+# to be mounted remotely using httpfs
+# (you may kactivate a LZM package over HTTP, no need to download it!)
+
+PATH=.:$(dirname $0):/usr/lib:$PATH
+. liblinuxlive || exit 127
+
+# make sure to work only with *.lzm files
+while [ "$(echo "$1" | grep '.lzm$')" = "" -a "$1" != "" ]; do shift; done
+
+FILE="$1"
+
+if [ "$FILE" = "" ]; then
+   FILE=$(kdialog --icon folder_open --getopenurl "" "*.lzm" --title "Select LZM package")
+   if [ $? -ne 0 ]; then exit 1; fi
+   FILE=$(echo "$FILE" | sed -r "s,file://,,")
+fi
+
+BASE=$(basename "$FILE" 2>/dev/null)
+
+# don't insert a package with the same name like an already activated one
+if ismountpoint "/mnt/live/memory/images/$BASE"; then
+   kdialog --icon undo --title "package already activated" --error "$BASE: Package with this name is already activated.\nYou may need to remove it first."
+   exit 2
+fi
+
+SLIK=${FILE:0:4}
+
+# handle slik (Slax Klik) and HTTP requests/urls
+if [ "$SLIK" = "slik" -o "$SLIK" = "http" ]; then
+
+   # if a package is loaded from untrusted site (everything else than nimblex.net or slax.org, ask for confirmation)
+   DOMAIN=$(echo "$FILE" | cut -b 8- | egrep -o "^(www.)?([^/]+)")
+   DOMAIN=${DOMAIN##www.}
+   if [ "$DOMAIN" != "nimblex.net" ] || [ "$DOMAIN" != "slax.org" ]; then
+      kdialog --icon configure --dontagain "kactivate:trust-$DOMAIN" --title "unsafe domain $DOMAIN" --warningyesno "Warning! You are about to load a package from $DOMAIN...\nThis may be unsafe. Are you sure?"
+      if [ $? -ne 0 ]; then exit 127; fi
+   fi
+
+   MNT="/mnt/live/memory/httpfs/$BASE"
+   mkdir -p "$MNT"
+   kdialog --passivepopup "$BASE: package insertion in progress, wait please..." 10000 & KILLPID=$!
+   ERR=$(httpfs http${FILE:4} "$MNT" 2>&1)
+   if [ $? -ne 0 ]; then
+      kill $KILLPID
+      kdialog --icon error --title "network error" --error "Can't mount the package remotely.\nError message: $ERR\n\nTry to download the package to your computer."
+      exit 128;
+   fi
+   echo "http${FILE:4}" >$MNT/slik.url
+   kill $KILLPID
+   FILE="$MNT/$BASE"
+fi
+
+# show info message and remember PID of the process (we'll need to kill the message later on)
+kdialog --passivepopup "$BASE: package insertion in progress, wait please..." 10000 & KILLPID=$!
+
+# insert the package to live filesystem
+activate -k "$FILE"
+
+if [ $? -ne 0 ]; then
+   kill $KILLPID
+   kdialog --icon error --title "unknown error" --error "Some error occured while activating the package."
+   exit 3
+else
+   # Rebuild the system configuration cache for KDE (mainly to update KDE menu)
+   kbuildsycoca 2>/dev/null
+   kill $KILLPID
+   kdialog --passivepopup "Well done! $BASE: package activated successfully." 5 &
+fi
+
+exit 0

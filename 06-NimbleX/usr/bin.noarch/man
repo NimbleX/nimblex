@@ -1,0 +1,2 @@
+#!/bin/sh
+links http://public.nimblex.net/cgi-bin/man-cgi?$1

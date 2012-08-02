@@ -1,0 +1,36 @@
+# The Bar && Font
+i: /usr/share/wbar/iconpack/wbar.osx/osxbarback.png
+t: /usr/share/wbar/iconpack/wbar.osx/font/12
+c:
+
+i: /usr/share/wbar/iconpack/wbar.osx/nautilus.png
+c: konqueror
+t: konqueror
+
+i: /usr/share/wbar/iconpack/wbar.osx/cedega.png
+c: 
+t: wine
+
+i: /usr/share/wbar/iconpack/wbar.osx/firefox.png
+c: firefox
+t: firefox
+
+i: /usr/share/wbar/iconpack/wbar.osx/skype.png
+c: skype
+t: skype
+
+i: /usr/share/wbar/iconpack/wbar.osx/psi.png
+c: kopete
+t: kopete
+
+i: /usr/share/wbar/iconpack/wbar.osx/ooffice.png
+c: ooffice3.2
+t: Office
+
+i: /usr/share/wbar/iconpack/wbar.osx/gimp.png
+c: gimp
+t: gimp
+
+i: /usr/share/wbar/iconpack/wbar.osx/xmms.png
+c: xmms
+t: xmms

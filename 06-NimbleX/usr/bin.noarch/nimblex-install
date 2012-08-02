@@ -1,0 +1,359 @@
+#!/bin/sh
+
+# NimbleX Live Installer
+# Copyright 2007 Bogdan Radulescu <bogdan@nimblex.net> 29-05-2007
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# To do: Back-up / Restore MBR
+# To do: Let people choose between grub or syslinux install
+
+Version="0.3"
+NXver="-nx10"
+
+minsize=220
+maxsize=1024
+fatsize=16
+tmp="/tmp/nx-$$-mnt"
+mkdir -p "$tmp"
+
+
+if [[ "$DISPLAY" && "$(which Xdialog 2>&1 | grep -v "which: no")" ]]; then
+   dialog="Xdialog --wrap --left"
+else
+   dialog="dialog"
+fi
+
+$dialog --clear --title "NimbleX 2010 Installer v$Version" --msgbox "NimbleX Installer is a tool that allows you to install NimbleX in live mode to a drive. This installer was designed for USB drives but it should also work for hard drives.
+
+If you use it ALL THE DATA FROM SELECTED DRIVE WILL BE DELETED!" 10 70
+
+disks2=`fdisk -l | sed -n 's!^Disk */dev/\([^ :]\+\): *\([^ ]\+\) *\([^,]\+\).*$!\1 \2\3!p'`
+
+disk=""
+
+# complexity=`$dialog --stdout --item-help --title "Installation method" --menu "Would you like to controll some aspects of the installation process or you'd rather trust GOD?" 0 0 0 simple "Only choose where to put NimbleX" "Your drive will be formated as a big FAT partition" advanced "Control some installation options" "Your drive doesn't necessary has to be formated"`
+
+complexity=advanced
+
+if [[ $complexity = simple ]]; then
+echo "This is not yet implemented because when you write something you should know what you want to do it from the start not patch it everytime you have an ideea. I didn't do that and now I don't know how to work arround that"
+exit
+
+elif [[ $complexity = advanced ]]; then
+formatc=`$dialog --stdout --item-help --title "Do you want to format the dirve?" --menu "Depending on whether you choose to format your drive or not we'll decide which bootloder to use and how installation will proceed. Do you want to format the dirve?" 0 0 0 yes "We'll use GRUB and create 2 partitions on your drive" "The first partition will be FAT and the second, ext3, will contain NimbleX." no "We'll use syslinux and keep your current parition(s)" "Choose if GRUB fails or don't want a format but your bootloder will be deleted"`
+fi
+
+while [ "x$disk" = "x" ]; do
+
+disk=`$dialog --stdout --title "Select disk" --menu "Tell me where do you want to install your NimbleX?" 0 0 0 $disks2`
+
+if [ "x$disk" = "x" ]; then
+	echo "Have a nice day"
+	exit
+fi
+
+size=`fdisk -l /dev/$disk | sed -n 's!^Disk.* \([0-9]\+\) *bytes$!\1!p'`
+sizemb=$(($size/1048576))
+
+if [ $sizemb -lt $minsize ]; then
+	$dialog --title "Disk too small" --msgbox "You need a disk at least ${minsize}MB to install NimbleX" 0 0
+	disk=""
+fi
+
+done
+
+deletembr() {
+dd if=/dev/zero of=/dev/$disk bs=446 count=1
+}
+
+check_mounted() {
+	ok=n
+	until [ $ok = y ]; do
+	inuse=`mount | sed -n "s,^\\(/dev/${disk}[0-9]*\\).*\$,\\1,p"`
+	if [ "x$inuse" = "x" ]; then
+		ok=y
+	else
+		npart=`echo "$inuse" | wc -l`
+		$dialog --title "Disk is in use" --yesno "The disk /dev/$disk has $npart partition(s) mounted. Unmount the partition(s) now?" 6 50
+	
+		if [ "x$?" != "x0" ]; then
+			echo "Have a nice day"
+			exit
+		fi
+	
+		for p in $inuse; do
+			umount $p
+		done
+	fi
+	
+	done
+}
+
+partitions() {
+	nmaxsize=$(($sizemb-$fatsize))
+	defsize=$(($sizemb/2))
+	if [ $defsize -lt $minsize ]; then
+		defsize=$minsize
+	fi
+	if [ $defsize -gt $maxsize ]; then
+		defsize=$maxsize
+	fi
+
+	nsize=""
+	while [ "x$nsize" = "x" ]; do
+	
+	nsize=`$dialog --stdout --title "Choose NimbleX partition size" --inputbox "Input NimbleX partition size in MB between $minsize and $nmaxsize" 0 0 $defsize`
+	
+	if [ "x$nsize" = "x" ]; then
+		echo "Have a nice day"
+		exit
+	fi
+
+	if [ "$nsize" -lt $minsize ]; then
+		nsize=""
+	fi
+	if [ "$nsize" -gt $nmaxsize ]; then
+		nsize=""
+	fi
+
+	done
+
+	fatsize=$(($sizemb-$nsize))
+
+	echo "Disk: $disk FAT=$fatsize NX=$nsize total=$sizemb"
+
+	$dialog --title "Last chance to abort!" --yesno "The disk /dev/$disk will be repartitioned as: ${fatsize}MB FAT, ${nsize}MB NimbleX. Continue and erase anything on the disk?" 0 0
+	
+	if [ "x$?" != "x0" ]; then
+		echo "Chicken out, eh?"
+		exit
+	fi
+
+	check_mounted
+
+	fat="fat16"
+	typ="e"
+	if [ $fatsize -gt 1024 ]; then
+		fat="fat32"
+		typ="c"
+	fi
+
+	$dialog --title "Partitioning ${sizemb}MB /dev/$disk" --infobox "FAT: ${fatsize}MB NimbleX: ${nsize}MB" 0 0
+	
+	parted -s /dev/$disk mklabel msdos >/dev/null
+
+cat <<EOF | fdisk /dev/$disk >/dev/null
+n
+p
+1
+1
++${fatsize}M
+n
+p
+2
+
+
+t
+1
+${typ}
+w
+EOF
+
+	$dialog --title "Formatting partitions on /dev/$disk" --infobox "$fat: ${fatsize}MB ext3: ${nsize}MB" 0 0
+	mkdosfs /dev/${disk}1 >/dev/null
+	mkfs.ext3 /dev/${disk}2 >/dev/null
+}
+
+fatpartition() {
+	parted -s /dev/$disk mklabel msdos >/dev/null
+
+cat <<EOF | fdisk /dev/$disk >/dev/null
+n
+p
+1
+1
+
+t
+1
+c
+w
+EOF
+
+	$dialog --title "Formatting partitions on /dev/$disk" --infobox "la la la" 0 0
+	mkdosfs /dev/${disk}1 >/dev/null
+}
+
+installsysx() {
+deletembr
+echo "DEFAULT nimblex
+LABEL nimblex
+KERNEL /boot/vmlinuz$NXver
+APPEND vga=791 initrd=/boot/initrd$NXver.gz vga=791 splash=silent changes=/nimblex/ autoexec=xconf;kdm
+LABEL nimblex-cli
+KERNEL /boot/vmlinuz$NXver
+APPEND vga=791 initrd=/boot/initrd$NXver.gz" > $tmp/boot/syslinux/syslinux.cfg
+
+lilo -S /dev/null -M /dev/$disk ext
+lilo -S /dev/null -A /dev/$disk 1
+cat /boot/syslinux.bin > /dev/$disk
+syslinux -d boot/syslinux /dev/${disk}1
+mkdir -p $tmp/boot/syslinux/
+cp /boot/vesamenu.c32 $tmp/boot/vesamenu.c32
+cp /boot/syslinux/syslinux.cfg $tmp/boot/syslinux/syslinux.cfg
+}
+
+installgrub() {
+	$dialog --title "Copying files..." --infobox "Please be patient while the NimbleX files are copied!" 0 0
+
+	rm $tmp/boot/grub/menu.lst &>/dev/null
+	grub-install --root-directory="$tmp" "/dev/$disk" >/dev/null
+	cp /boot/grub/message "$tmp/boot/grub/"
+
+echo "# This config file is generated by the NimbleX installer
+default=0
+timeout=5
+color yellow/black blink-red/black
+gfxmenu (hd0,1)/boot/grub/message
+title NimbleX 2010 - Boot in KDE
+	root (hd0,1)
+	kernel /boot/vmlinuz$NXver quiet vga=791 splash=silent changes=nimblex.data autoexec=startx
+	initrd /boot/initrd$NXver.gz
+title NimbleX 2010 - Boot in KDM
+	root (hd0,1)
+	kernel /boot/vmlinuz$NXver quiet vga=791 splash=silent changes=nimblex.data autoexec=xconf;kdm
+	initrd /boot/initrd$NXver.gz
+title NimbleX 2010 - Command Line
+	root (hd0,1)
+	kernel /boot/vmlinuz$NXver changes=nimblex.data
+	initrd /boot/initrd$NXver.gz
+title NimbleX 2010 - Safe Install
+	root (hd0,1)
+	kernel /boot/vmlinuz$NXver quiet vga=791 splash=silent changes=nimblex.data safeinst autoexec=startx
+	initrd /boot/initrd$NXver.gz
+title Boot from the first harddisk partition
+	rootnoverify (hd1,0)
+	makeactive
+	chainloader +1
+" > "$tmp/boot/grub/menu.lst"
+}
+
+copybase() {
+	$dialog --title "Copying files .." --infobox "Please be patient while the NimbleX files are copied!" 0 0
+	cp -a /boot/vmlinuz$NXver /boot/initrd$NXver.gz "$tmp/boot"
+	ln -s /boot/vmlinuz$NXver $tmp/boot/vmlinuz &>/dev/null
+	ln -s /boot/initrd$NXver.gz $tmp/boot/initrd.gz &>/dev/null
+	mkdir -p "$tmp/boot" "$tmp/nimblex/modules"
+	cp -a /mnt/live/mnt/*/nimblex/base /mnt/live/mnt/*/nimblex/nimblex.sgn "$tmp/nimblex"
+}
+
+copymodules() {
+	# Verify if we have enough space for aditional stuff
+	modsize=`du /mnt/live/mnt/*/nimblex/modules | cut -d "/" -f 1`
+	dfinfo=`df /dev/${disk}2 | tail -1`
+	fspace=`echo $dfinfo | cut -d " " -f 4`
+	if [[ $modsize -lt $fspace ]]; then
+	$dialog --title "Copying aditional files..." --infobox "Please be patient while some extensions are copied!" 0 0
+	cp -a /mnt/live/mnt/*/nimblex/modules "$tmp/nimblex"
+	else
+	echo "Not enough space for the modules directory. Proceding with no additional modules..."
+	fi
+	
+	umount /dev/${disk}2
+	rmdir "$tmp"
+}
+
+nimblex_data() {
+	$dialog --title "Make NimbleX save changes?" --yesno "Now you can choose weather or not to save changes in your NimbleX distro. Most of the people prefer not to save changes and this make NimbleX almost unbreakable! If you need to save changes in NimbleX a file nimblex.data will be created on your first partion and all the changes will be saved there.
+	Save changes?" 0 0
+
+	if [ "x$?" != "x0" ]; then
+		$dialog --title "Instalation complete!" --msgbox "NimbleX live instalation on ${disk}2 is finally complete!" 0 0
+		echo "You can configure NimbleX to save changes any other time from K Menu -> Settings -> Save in NimbleX"
+		exit
+	fi
+
+	fat_tmp="/tmp/nx-fat-$$-mnt"
+	mkdir -p "$fat_tmp"
+	mount /dev/${disk}1 "$fat_tmp"
+
+	# Test for Writable FS
+	nocheckfs="`echo $@ | grep \"\-nocheckfs\"`"
+	if [[ $nocheckfs = "" ]]; then
+	touch "$fat_tmp"/write_test 2> /dev/null
+	if [[ "$?" = "0" ]]; then
+	# Write fs passed... continue
+	rm "$fat_tmp"/write_test
+	else
+	# RO fs.
+	$dialog --msgbox "Sorry Read-only filesystem!
+	Something went wrong ?!" 0 0 >&2
+	$dialog --title "Instalation complete!" --msgbox "NimbleX live instalation on ${disk}2 is finally complete but for now changes will not be saved!
+	You can configure NimbleX to save changes any other time from K Menu -> Settings -> Save in NimbleX" 0 0
+	exit 1
+	fi
+	fi
+	
+	def_changes_size=$(($fatsize*2/3))
+	min_changes_size=100
+	
+	if [ $fatsize -lt $min_changes_size ]; then
+		$dialog --title "Fat partition too small" --msgbox "You need a disk at least ${min_changes_size}MB to save changes in NimbleX" 0 0
+		disk=""
+	fi
+	
+	changes_size=`$dialog --stdout --title "Choose the size of nimblex.data where you can save changes" --inputbox "Input nimblex.data file size in MB between $min_changes_size and $fatsize" 0 0 $def_changes_size`
+	
+	# Create empty XFS file
+	data_name=nimblex.data
+	dd if=/dev/zero of="$fat_tmp"/"$data_name" bs=1k count="$changes_size"k
+	# Make filesystem on the file
+	mkfs.xfs "$fat_tmp"/"$data_name"
+}
+
+### Grub or syslinux
+
+if [[ $formatc = "no" ]]; then
+	check_mounted
+#	fatpartition
+	mount /dev/${disk}1 "$tmp"
+	installsysx
+	#The next 2 lines are required because a bug in syslinux doesn't want to load files with different names than vnlinuz and initrd ?!
+	cp -a /boot/vmlinuz$NXver $tmp/boot/vmlinuz
+	cp -a /boot/initrd$NXver.gz $tmp/boot/initrd.gz
+	copybase
+	copymodules
+#	nimblex_data
+elif [[ $formatc = "yes" ]]; then
+	check_mounted
+	partitions
+	mount /dev/${disk}2 "$tmp"
+	installgrub
+	copybase
+	copymodules
+	nimblex_data
+else
+	echo "Where did you go?"
+	exit
+fi
+
+
+$dialog --title "Instalation complete!" --msgbox "NimbleX live instalation on ${disk}2 is finally complete!
+
+    Have a nice day :)" 0 0

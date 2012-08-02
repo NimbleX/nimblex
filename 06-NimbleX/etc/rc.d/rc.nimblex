@@ -1,0 +1,47 @@
+#!/bin/bash
+# Mount all discs, disable guest, autostart gui
+#
+# Author: Tomas M. <http://slax.linux-live.org>
+#
+
+. /usr/lib/liblinuxlive
+
+# change password
+NEWROOTPASS="`cmdline_value passwd`"
+if [ "$NEWROOTPASS" = "ask" ]; then
+   echo -ne "\nEnter new password for root: "
+   read -s NEWROOTPASS
+fi
+
+if [ ! "$NEWROOTPASS" = "" ]; then
+   echo "root:$NEWROOTPASS" | /usr/sbin/chpasswd
+fi
+
+# debug
+if grep debug /proc/cmdline 2>/dev/null >/dev/null; then
+   show_debug_banner
+   /mnt/live/bin/ash || /bin/bash || /bin/sh
+fi
+
+# Preserve some power by doing less frequent writebacks
+echo 1500 > /proc/sys/vm/dirty_writeback_centisecs
+
+# Add an extra loop device in case it's necessary for some later use
+mknod_next_loop_dev
+
+# if autoexec= boot parameter is present, automatically start the command given.
+# If you need to execute several commands, separate them using ';'
+# If you need to use spaces in your command, use ~ instead
+# If you wish to reboot/poweroff after the command's execution is finished,
+#  simply use autoexec=yourCommand;poweroff for example.
+AUTOCMD=$(cmdline_value "autoexec" | tr "~" " ")
+if [ "$AUTOCMD" != "" ]; then
+   echo "Starting autoexec command:  su --login -c \"$AUTOCMD\""
+   su --login -c "$AUTOCMD"
+fi
+
+# make sure the terminal is fully usable even with framebuffer
+if [ -e /dev/fb0 ]; then
+   for i in $(seq 1 30); do echo; done
+   /usr/bin/reset
+fi

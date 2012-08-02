@@ -1,0 +1,12 @@
+[Unit]
+Description=NimbleX Cleanup at Shutdown
+DefaultDependencies=no
+# Before=shutdown.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/mnt/live
+ExecStart=/mnt/live/cleanup
+
+[Install]
+WantedBy=umount.target

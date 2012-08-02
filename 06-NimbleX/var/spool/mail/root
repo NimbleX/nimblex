@@ -1,0 +1,37 @@
+From root  Thu Apr 29 22:30:00 2010
+Return-Path: root
+Received: from node1.nimblex.net (localhost [127.0.0.1])
+	by node1.nimblex.net (8.13.8/8.13.8) with ESMTP id k7GKeq4j011872
+	for <root@node1.nimblex.net>; Thu, 29 Apr 22:30:00 -0200
+Received: (from root@localhost)
+	by node1.nimblex.net (8.13.8/8.13.8/Submit) id k7GKfq6v011871
+	for root@nimblex; Thu, 29 Apr 22:30:00 -0200
+From: bogdan@nimblex.net
+Message-Id: <200908251906.k7GKfq6v011871@node1.nimblex.net>
+Date: Thu, 29 Apr 22:30:00 -0200
+To: root@nimblex
+Subject: I hope you enjoy NimbleX 2010
+User-Agent: nail 11.25 7/29/04
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+
+   Hello,
+
+   Thank you for giving NimbleX a try. I hope you enjoy it at some extent.
+   I know it's far from being good enought for most people but since it's
+   a project handled in my spare time you can also contribute to make it
+   better. The ways I can think of in which you can help are:
+
+   - spread the word (more users could benefit in many ways.)
+   - donate (Donations could help dedicate more time and are good for moral)
+   - code (There are a lot of things that need to be done. eg. installer)
+   - report bugs and suggest fixes
+   - send me a quick email telling me what you'd like to see in NimbleX
+
+   Last but not least check out http://www.nimblex.net to see if you can do
+   more with NimbleX. Perhaps the manual and forum should be checked out.
+
+   Regards,
+   Bogdan

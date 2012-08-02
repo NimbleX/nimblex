@@ -1,0 +1,10 @@
+[Unit]
+Description=UPower
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.UPower
+ExecStart=/usr/libexec/upowerd
+
+[Install]
+WantedBy=graphical.target

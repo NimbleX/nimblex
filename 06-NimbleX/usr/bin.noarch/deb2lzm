@@ -1,0 +1,51 @@
+#!/bin/bash
+# convert Debian/Ubuntu's DEB package into .lzm compressed file
+# which can be used as a LiveCD module
+#
+# Author: Tomas M. <http://www.linux-live.org>
+#         Peter Chabada <http://chabada.sk>
+#
+
+if [ "$1" = "" ]; then
+   echo "Convert Debian/Ubuntu's DEB package into .lzm compressed module"
+   echo "usage: $0 source_filename.deb [output_file.lzm]"
+   exit 1
+fi
+
+if ! which dpkg > /dev/null; then
+   echo "Error: dpkg is not installed!"
+   echo "You must have dpkg installed to unpack DEB package."
+   exit 1
+fi
+
+PATH=.:$(dirname $0):/usr/lib:$PATH
+. liblinuxlive || exit 1
+
+TMPDIR=/tmp/deb2lzm_$$
+TMPDIRCONTR=/tmp/deb2lzm_contr_$$
+
+rm -Rf $TMPDIR
+rm -Rf $TMPDIRCONTR
+
+dpkg --extract $1 $TMPDIR
+if [ $? != 0 ]; then echo "error unpacking package"; exit; fi
+
+dpkg --control $1 $TMPDIRCONTR
+if [ $? != 0 ]; then echo "error unpacking package control files"; exit; fi
+
+echo >> $TMPDIRCONTR/control
+
+PACKAGE=$(dpkg --field $1 package)
+
+mkdir -p $TMPDIR/var/lib/dpkg/info
+for FILE in $TMPDIRCONTR/*; do
+   cp $FILE $TMPDIR/var/lib/dpkg/info/$PACKAGE.$(basename $FILE)
+done
+
+PACKAGE=$PACKAGE.lzm
+if [ ! "$2" = "" ]; then PACKAGE=$2; fi
+create_module $TMPDIR "$PACKAGE"
+if [ $? != 0 ]; then echo "error building compressed image"; exit; fi
+
+rm -Rf $TMPDIR
+rm -Rf $TMPDIRCONTR

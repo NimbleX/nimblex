@@ -1,0 +1,70 @@
+section = movieplayer
+
+ window = main
+
+  base = main, -2, -2
+
+  button = exit,      232,  26,   8,   8, evExit
+  button = icon,      221,  26,   8,   8, evIconify
+  button = play,      281,  72,  14,  14, evPlaySwitchToPause
+  button = pause,     281,  72,  14,  14, evPauseSwitchToPlay
+  button = stop,      282, 106,  10,  10, evStop
+  button = rew,       249,  62,  11,  11, evBackward10sec
+  button = ff,        312,  62,  11,  11, evForward10sec
+  button = prev,      252,  87,   7,  11, evPrev
+  button = next,      313,  87,   7,  11, evNext
+  button = open,      282,  43,  11,   9, evLoadPlay
+  button = pref,      227, 122,   6,   7, evPreferences
+  button = equel,     202, 122,   7,   7, evEqualizer
+  button = playl,     214, 122,   8,   7, evPlaylist
+  button = fullscr,   189, 122,   7,   7, evFullScreen
+  button = mute,      165, 123,   9,   7, evMute
+  button = about,      29,  28,  13,  13, evAbout
+
+  hpotmeter = slider, 14, 7, NULL, 100,  0,  24,  98, 214, 7, evSetMoviePosition
+  hpotmeter = knob,    7, 7, NULL, 100, 50,  25, 123,  62, 7, evSetBalance
+  hpotmeter = knob,    7, 7, NULL, 100,  0, 103, 123,  62, 7, evSetVolume
+
+  font = symbols, symbols
+  font = font,    font
+
+  dlabel =  34,  56, 192,   1,    font, "$t - $o [$1] "
+  dlabel =  34,  80,   9,   0, symbols, "$l"
+  dlabel =  34,  80,   9,   0, symbols, "$s"
+  dlabel =  34,  80,   9,   0, symbols, "$e"
+  dlabel =  44,  80,  62,   0, symbols, "$1"
+  dlabel = 114,  80,  25,   1, symbols, "$a"
+  dlabel = 164,  74,  92,   0,    font, "v: $v"
+  dlabel = 130,  80,  25,   0, symbols, "$T"
+
+ end
+
+ window = sub
+  base = sub,-1,-1
+  background = 0,0,0
+ end
+
+ window = menu
+
+  base = menu
+
+  selected = menus
+
+  menu =   3,   6, 119,  14, evAbout
+  menu =   3,  30, 119,  14, evLoad
+  menu =   3,  45, 119,  14, evNone         ; Add playlist
+  menu =   3,  62, 119,  14, evPlay
+  menu =   3,  86, 119,  14, evPlaylist
+  menu =   3, 102, 119,  14, evEqualizer
+  menu =   3, 117, 119,  14, evSkinBrowser
+  menu =   3, 141, 119,  14, evPreferences
+  menu =   3, 182, 119,  14, evNormalSize
+  menu =   3, 198, 119,  14, evDoubleSize
+  menu =   3, 213, 119,  14, evFullScreen
+  menu =   3, 230, 119,  14, evIconify
+  menu =   3, 246, 119,  14, evExit
+
+ end
+
+end
+

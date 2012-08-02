@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/x-lzm">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>NimbleX LZM Package</comment>
+  <sub-class-of type="application/xml"/>
+  <glob pattern="*.lzm"/>
+  <generic-icon name="package_nimblex-x-generic"/>
+</mime-type>

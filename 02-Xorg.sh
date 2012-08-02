@@ -11,7 +11,7 @@ slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware
 blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,font-misc*,ttf-indic*,tibmachuni-font*,font-isas*,font-daewoo*,font-jis*,font-cronyx*,font-mutt*,font-bitstream*,font-schumacher*,sinhala_lklug*"
 blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server-xnest*,xedit*"
 
-whitelist_l="hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,qt*,gtk*,libgtkhtml*,pygtk*,atk*,jasper*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*"
+whitelist_l="hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,qt*,gtk+*,libgtkhtml*,pygtk*,atk*,jasper*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*"
 
 mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/{share/locale,lib${ARCH}/qt} $NP-removed/devel/usr/{include,lib${ARCH}/qt/include}
 
@@ -20,7 +20,6 @@ cd $SD/$NP-work
 wget -N -R "$blacklist_x" "$slacksrc"/x/*.txz
 wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
 
-wget -N ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/extra/google-chrome/GConf-*.txz
 wget -N ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/extra/google-chrome/ORBit2-*.txz
 }
 
@@ -50,6 +49,7 @@ echo Handle mesa as a separate package
 mkdir -p $SD/$NP-3D/usr/lib${ARCH}/xorg/modules/
 mv usr/lib${ARCH}/xorg/modules/dri $SD/$NP-3D/usr/lib${ARCH}/xorg/modules/
 
+# rm usr/lib${ARCH}/xorg/modules/drivers/sis_drv.so # 200K
 # Handle usr/share/icons # 300KB
 # Handle fonts (usr/share/fonts or txz packagez) (Maybe 2MB of data)
 # Handle usr/share/X11/locale # 144KB
@@ -65,12 +65,6 @@ rm -r usr/share/libwmf
 
 nimblex_adjust() {
 cd $SD/$NP
-#echo "Copying some cache files - check to see if these are still OK"
-#cp -a ../02-shared/etc/gtk-2.0 etc/
-#cp -a ../02-shared/etc/pango etc/
-#cp -a ../02-shared/usr/share/icons usr/share/
-#cp -a ../02-shared/usr/share/mime usr/share/
-#cp -a ../02-shared/usr/share/fonts usr/share/
 
 echo "Copying NimbleX specific shared files"
 cp -a ../06-NimbleX/usr/share/icons/oxygen usr/share/icons/

@@ -1,0 +1,10 @@
+WORKINGDIR=/var/slapt-get
+EXCLUDE=^aaa_elflibs,^devs,^glibc-.*,^kernel-.*,^udev,.*-[0-9]+dl$,x86_64
+
+SOURCE=ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware-current/:OFFICIAL
+SOURCE=http://darkstar.ist.utl.pt/slackware/addon/slacky/slackware-13.37/
+
+SOURCE=http://software.jaos.org/slackpacks/13.37/:OFFICIAL
+
+# Home made packages.
+# SOURCE=file:///var/www/packages/:CUSTOM

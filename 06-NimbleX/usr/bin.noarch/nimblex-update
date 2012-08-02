@@ -1,0 +1,115 @@
+#!/bin/bash
+
+#----------------------------------------------------------------------
+# Description: Poor man's update
+# Author:  <Bogdan Radulescu - http://nimblex.net>
+# Created at: Mon Jun  9 21:54:34 GMT 2008
+# Computer: nimblex
+# System: Linux 2.6.24 on i686
+#    
+# Copyright (c) 2008   All rights reserved.
+# GPL of course :)
+#----------------------------------------------------------------------
+update_version="0.1"
+
+if [[ $# -gt 1 || $1 = "--help" ]]; then
+echo "The update script accepts maximum one parameter"
+echo "-f for forced mode  - unnatended update"
+echo "-m for message only - it doesn't update"
+exit 1
+fi
+
+if pidof kdeinit >/dev/null; then
+message() {
+kdialog --passivepopup "$text" &
+echo -e "$text"
+}
+warning() {
+kdialog --sorry "$text" &
+echo -e "[1;31m$text[0;0m"
+}
+else
+message() {
+echo -e "$text"
+}
+warning() {
+echo -e "[1;31m$text[0;0m"
+}
+fi
+
+echo "This is the experimental update script for NimbleX."
+echo "I will try to maintain this feature but if it will be to high maintanance"
+echo "I'll have to discard it untill people will start contributing."
+echo "--------------------------------------------------------------"
+
+# We really need to detect if we can write
+if touch /tmp/rwtest && mv /tmp/rwtest /mnt/live/mnt/*/nimblex/rootcopy/ && rm /mnt/live/mnt/*/nimblex/rootcopy/rwtest ; then
+echo
+else
+text="You are most likely running NimbleX from CD so updating doesn't make sense!"
+message
+exit
+fi
+
+NXInfoLine=`links -source public.nimblex.net/version.html | head -1`
+LatestNXVer=`echo $NXInfoLine | cut -d "=" -f 1`
+ThisNXVer=L2010
+
+if [[ $LatestNXVer = $ThisNXVer ]]; then
+text="You have the latest NimbleX"
+message
+else
+action=`echo $NXInfoLine | cut -b1`
+    if [[ $action = "M" ]]; then
+    text="It's just a new minor patch so we don't have to update."
+    message
+    elif [[ $action = "P" ]]; then
+    URL=`echo $NXInfoLine | cut -d "=" -f 2`
+        if ! basename $URL | grep lzm >/dev/null; then
+        exit
+        elif [ -f /mnt/live/mnt/*/nimblex/modules/`basename $URL` ]; then
+        text="Your system already has the latest update."
+	message
+        exit
+        fi
+    if [[ $1 = "-f" ]]; then
+	answer="y"
+    else
+	if [[ $1 = "-m" ]]; then
+	text="There is a patch for your NimbleX. Run \"update\" in a shell"
+	message
+	exit
+	else
+        echo "There is a patch for your NimbleX version"
+	fi
+    echo "Should I download the patch from $URL? (y/n)"
+    echo ""
+    read -n 1 answer
+    fi
+	case $answer in
+        "y" | "Y")
+        cd /tmp && wget $URL && mv `basename $URL` /mnt/live/mnt/*/nimblex/modules/
+        if [ $? = 0 ] && [ -f /mnt/live/mnt/*/nimblex/modules/`basename $URL` ]; then
+        text="Update successfull"
+        message
+        date +%F >> /var/log/NXupdate
+        else
+        text="Update failed"
+        warning
+        sleep 10
+        exit
+        fi
+            ;;
+        "n" | "N")
+        echo "OK. I will exit."
+            ;;
+        *)
+        echo "Answer with y or n"
+        sleep 5
+        exit
+        esac
+    elif [[ $action = "N" ]]; then
+    echo "There is a new version of NimbleX. It might be better :)"
+    echo "You should find a link somewhere on the official website."
+    fi
+fi

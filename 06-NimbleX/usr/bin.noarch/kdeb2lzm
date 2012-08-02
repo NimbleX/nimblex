@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Convert deb2lzm for use with NimbleX and the other Linux Live distros
+# Author: Bogdan Radulescu [ nibmlex.net ]
+
+if [ "$1" = "" ]; then
+   echo
+   echo "Convert the DEB package into .lzm package"
+   echo "usage: $0 source_package.deb"
+   exit 1
+fi
+
+PKGNAME=$(basename $1 | sed "s/\\.deb$//")
+DIRNAME=$(dirname $1)
+
+kdialog --passivepopup "Converting the $PKGNAME package to LZM" & &> /dev/null
+deb2lzm $1 $DIRNAME/$PKGNAME.lzm
+killall kdialog
+kdialog --passivepopup "The $PKGNAME package was converted!" & &> /dev/null

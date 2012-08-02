@@ -1,0 +1,83 @@
+#!/bin/bash
+# Deactivate module from the root directory structure on the fly
+# This may fail for many cases, most likely when your module is 'busy'
+# - for example if you have files open from the module yet.
+#
+# Author: Tomas M. <http://www.linux-live.org>
+
+if [ "$1" = "-k" ]; then
+   CALLED_BY_KDE_HELPER=1
+   shift
+fi
+
+if [ -e /usr/bin/kdeactivate -a "$DISPLAY" -a ! "$CALLED_BY_KDE_HELPER" ]; then
+   exec /usr/bin/kdeactivate "$@" 2>/dev/null
+fi
+
+MODULE=$(basename "$1" .lzm).lzm
+IMAGES=/mnt/live/memory/images
+IPREV=empty
+
+if [ "$MODULE" = "" -o ! -e "$IMAGES/$MODULE" ]; then
+   echo
+   echo "Deactivate module from the root filesystem while running Linux Live"
+   echo "Usage: $0 module.lzm"
+   exit 1
+fi
+
+# if the module contains /var/lock/deactivatelock, deny deactivation
+if [ -e "$IMAGES/$MODULE/var/lock/deactivatelock" ]; then
+   echo "Can't deactivate the given module, I am sorry."
+   exit 2
+fi
+
+try_remount()
+{
+   mount -t aufs -o remount,verbose,del:$IMAGES/$MODULE aufs / 2>/dev/null
+}
+
+# Try to simply remove the dir first. If succeeds, finish
+rmdir "$IMAGES/$MODULE" 2>/dev/null && exit 0
+# OK the previous trick didn't work. So we have a real module here.
+
+# First, try to stop all daemons which may be started by this module
+if [ -d $IMAGES/$MODULE/etc/rc.d ]; then
+   ( find $IMAGES/$MODULE/etc/rc.d -type f -maxdepth 1 ; \
+     find $IMAGES/$MODULE/etc/rc.d -type f -maxdepth 2 -mindepth 2 | egrep '/S[^/]+$' \
+   ) | while read SCRIPT; do
+      if [ "$SCRIPT" != "" -a -x "$SCRIPT" -a ! -d "$SCRIPT" ]; then
+         # call the script by real path, not from the images directory
+         ${SCRIPT##$IMAGES/$MODULE} stop deactivate 
+      fi
+   done
+fi
+
+# detach it from aufs union. This may take a long time, remounting the
+# root directory is an expensive operation.
+try_remount
+
+# if remount fails, try to free all inotify watchers and remount again
+while [ $? -ne 0 -a "$IPREV" != "$INODE" ]; do
+   IPREV="$INODE"
+   INODE=$(dmesg | fgrep "test_inode_busy" | tail -n 1 | cut -d : -f 4 | cut -b 8-)
+   if [ "$INODE" != "" ]; then
+      find / -noleaf -xdev -inum "$INODE"
+      find / -noleaf -xdev -inum "$INODE" | xargs touch
+      try_remount
+   fi
+done
+
+if [ $? -ne 0 ]; then
+   echo "The module can't be removed, because it's busy (used)." >&2
+   exit 3
+fi
+
+# if we are here, the module has been successfuly removed from aufs union
+# so now we have to umount the lzm file and then free the loop device
+LOOP=$(cat /proc/mounts | grep "$IMAGES/$MODULE " | cut -d " " -f 1)
+umount -n "$IMAGES/$MODULE" 2>/dev/null
+if [ $? -ne 0 ]; then
+   exit 4
+fi
+losetup -d "$LOOP" 2>/dev/null # sometimes it's freed by umount automatically
+rmdir "$IMAGES/$MODULE" # if not empty or busy, a message will be shown

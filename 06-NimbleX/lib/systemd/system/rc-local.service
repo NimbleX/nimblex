@@ -1,0 +1,10 @@
+[Unit]
+Description=/etc/rc.local Compatibility
+
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.d/rc.local
+StandardInput=tty
+
+[Install]
+WantedBy=multi-user.target

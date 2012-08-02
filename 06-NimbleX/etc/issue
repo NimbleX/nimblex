@@ -1,0 +1,20 @@
+[0;0m ______________________________________________________________________
+|:[1;31m NIMBLEX 2012[0;0m :|                                   |: User  edition :|
+------------------------------------------------------------------------
+
+     The operating system is up and running now! Identify youself by
+ logging  into the system.                    [0;1m_____________________[0;0m
+                                             [0;1m|[0;1m nimblex login:[1;31m root[0;1m |[0;0m
+                                             [0;1m|[0;1m Password:[1;31m     [0;1m      |[0;0m
+                                              [0;1m---------------------[0;0m
+ The most interesting commands you can use after login:
+
+ [1;33mpasswd[0;0m .. Change the password -> this is sometimes very recomanded
+ [1;33mstartx[0;0m .. Start the KDE graphical interface for normal PC use
+
+ [1;33mmc[0;0m ...... Midnight Commander (filemanager/ftp - copy/view/edit files)
+ [1;33mhtop[0;0m .... An interactive process viewer  (better replacement for top)
+ [1;33mwicd-client[0;0m Network config client for connecting to a wireless netowork
+ ____________________________________________________________________
+|:| When finished, press the Power button to shutdown the computer |:|
+======================================================================

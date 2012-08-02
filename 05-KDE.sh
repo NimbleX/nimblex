@@ -59,7 +59,7 @@ cp ../06-NimbleX/usr/share/kde4/services/ServiceMenus/lzm_activate.desktop usr/s
 
 # Copy NimbleX specific files
 #!!!!!!!cp -a ../06-NimbleX/usr/share/apps/{kdm,konsole,ksplash} usr/share/apps/
-#!!!!!!!cp -a ../06-NimbleX/usr/share/config/{kickoffrc,konquerorrc,kxkbrc,kwalletrc,kppprc} usr/share/config/
+cp -a ../06-NimbleX/usr/share/config/{kickoffrc,konquerorrc,kxkbrc,kwalletrc,kppprc} usr/share/config/
 
 # Clean the little things
 rm usr/share/applications/kde4/{Help.desktop,dbpedia_references.desktop,KFloppy.desktop}

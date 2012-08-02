@@ -1,0 +1,19 @@
+[Unit]
+Description=Linux Volume Manager
+DefaultDependencies=no
+Requires=systemd-udev-settle.service
+After=systemd-udev-settle.service
+Before=shutdown.target local-fs.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/pvscan --ignorelockingfailure
+ExecStart=/sbin/vgscan --mknodes --ignorelockingfailure
+ExecStart=/sbin/vgchange --sysinit -a ly
+ExecStop=/sbin/lvchange --sysinit -a ln $(/sbin/vgs -o vg_name --noheadings --nosuffix 2> /dev/null)
+ExecStop=/sbin/lvchange --sysinit -a ln
+ExecStop=/sbin/vgchange --sysinit -a ln
+
+[Install]
+WantedBy=sysinit.target

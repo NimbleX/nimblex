@@ -1,0 +1,8 @@
+[Unit]
+Description=NTP
+
+[Service]
+ExecStart=/usr/sbin/ntpd -n
+
+[Install]
+WantedBy=multi-user.target
