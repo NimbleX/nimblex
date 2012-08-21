@@ -22,7 +22,7 @@ wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
 wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz
 
 if [[ $ARCH = "" ]]; then
- wget -N $extrasrc/system/gparted/0.13.0/gparted-0.13.0-i486-1sl.txz # 1.4M
+ wget -N $extrasrc/system/gparted/0.13.1/gparted-0.13.1-i486-1sl.txz # 1.4M
  wget -N $extrasrc/network/qtransmission/2.42/qtransmission-2.42-i486-1sl.txz # 1.2M
  wget -N $extrasrc/utilities/yakuake/2.9.8/yakuake-2.9.8-i486-3sl.txz # 313K
  wget -N $extrasrc/graphic/gimp-save-for-web/0.29.0/gimp-save-for-web-0.29.0-i486-5sl.txz # 40K
@@ -66,10 +66,20 @@ cp -a ../06-NimbleX/root/.config/transmission root/.config/
 #echo "Please test if FF libs are linked"
 }
 
+cripple_gimp() {
+cd $SD/$NP
+rm usr/share/gimp/2.0/brushes/Texture/Texture-Hose*.gih
+rm usr/share/gimp/2.0/brushes/Media/Acrylic-{04,05}.gih
+rm usr/share/gimp/2.0/brushes/Splatters/Splats-0*.gih
+rm usr/share/gimp/2.0/brushes/gimp-obsolete-files/{Grass1,feltpen}.gih
+rm usr/share/gimp/2.0/brushes/Legacy/vine.gih
+rm usr/share/gimp/2.0/patterns/{stone33,cracked,crinklepaper,pink_marble,starfield,walnut,nops,bluesquares,ice}.pat
+}
+
 cripple_samba() {
 cd $SD/$NP
 rm usr/sbin/{winbindd,swat}
-rm usr/bin/{net,rpcclient,smbget,smbcacls,smbclient,smbcquotas,smbtree,smbspool,ntlm_auth,pdbedit,eventlogadm,smbcontrol,smbstatus,nmblookup,wbinfo,testparm,sharesec,profiles}
+rm usr/bin/{net,rpcclient,smbget,smbcacls,smbclient,smbcquotas,smbtree,smbspool,ntlm_auth,pdbedit,eventlogadm,smbcontrol,smbstatus,nmblookup,wbinfo,testparm,sharesec,profiles,smbta-util}
 rm -r usr/share/swat
 rm usr/lib/libnetapi.*
 }
@@ -119,6 +129,7 @@ else
 	  echo "...INSTALLING"
 	  instpkg
 	  clean-apps
+          cripple_gimp
           cripple_samba
           cripple_mplayer
 	  run-ldconfig
@@ -133,6 +144,7 @@ else
 	  echo "...INSTALLING"
 	  instpkg
 	  clean-apps
+          cripple_gimp
           cripple_samba
           cripple_mplayer
 	  run-ldconfig

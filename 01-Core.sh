@@ -51,22 +51,25 @@ wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz			# 17.2	MB
 
 echo Use the script that downloads slacky packages by name because this is a bit to much to maintain
 
-wget -N $slacksrc/d/python-2.*.txz # 11500K
-wget -N $slacksrc/d/perl-5.*.txz # 14500K - should be 5.3M after crap is deleted
-wget -N $slacksrc/d/libtool-2.*.txz # 365K
-wget -N $slacksrc/tcl/tcl-8.*.txz # 1655K
-wget -N $slacksrc/../extra/wicd/wicd-1.*.txz # 347K
-wget -N ftp://ftp.osuosl.org/pub/slackware/slackware-13.37/slackware/n/dhcpcd-5.2.11-i486-1.txz # 56K - we need to downgrade for now because wicd doesn't work with the latest
+wget -N $slacksrc/d/python-2.*.txz		# 11500K
+wget -N $slacksrc/d/perl-5.*.txz		# 14500K - should be 5.3M after cleanup
+wget -N $slacksrc/d/libtool-2.*.txz		# 365K
+wget -N $slacksrc/tcl/tcl-8.*.txz		# 1655K
+wget -N $slacksrc/../extra/wicd/wicd-1.*.txz	# 347K
+wget -N ftp://ftp.osuosl.org/pub/slackware/slackware${ARCH}-13.37/slackware${ARCH}/n/dhcpcd-5.2.11-*.txz # 56K - we need to downgrade for now because wicd doesn't work with the latest
+wget -N http://packages.nimblex.net/nimblex/b43-firmware-5.100.138-fw-1.txz	# 145K
 if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/sshfs-fuse-2.3-i486-1.tgz		# 55K
  wget -N http://packages.nimblex.net/nimblex/glib2-2.33.1-i486-1.txz		# 3.1M
- wget -N http://packages.nimblex.net/nimblex/systemd-186-i486-2.txz		# 1.3M
+ wget -N http://packages.nimblex.net/nimblex/systemd-188-i486-1.txz		# 1.3M
+ wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-i486-1.txz		# 1.6M
  wget -N http://packages.nimblex.net/nimblex/libnih-1.0.3.txz			# 336K
  wget -N http://packages.nimblex.net/nimblex/atop-1.26-i486-1.tgz		# 113K
  wget -N http://packages.nimblex.net/nimblex/curlftpfs-0.9.2-i486-1.tgz		# 41K
  wget -N http://packages.nimblex.net/nimblex/ncdu-1.8-i486-1.tgz		# 28K
  wget -N http://packages.nimblex.net/nimblex/radvd-1.9.1-i486-1.tgz		# 71K
  wget -N http://packages.nimblex.net/nimblex/tdb-1.0.6-i486-1.tgz		# 50K
+ wget -N http://packages.nimblex.net/nimblex/csync-0.49.9-i486-1.txz		# 88K
  wget -N $extrasrc/libraries/libasyncns/0.8/libasyncns-0.8-i486-3sl.txz 	# 23K
  wget -N $extrasrc/network/nss-mdns/0.10/nss-mdns-0.10-i486-6sl.txz		# 22K
  wget -N $extrasrc/libraries/libdaemon/0.14/libdaemon-0.14-i486-2sl.txz		# 25K
@@ -131,7 +134,7 @@ rm -f sbin/reboot && ln -s /bin/systemctl sbin/reboot
 rm -f sbin/halt && ln -s /bin/systemctl sbin/halt
 rm -r etc/mtab && ln -s /proc/self/mounts etc/mtab
 sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
-echo "PACKAGE NAME:     udev-186" > var/log/packages/udev-186-i486-1
+echo "PACKAGE NAME:     udev-188" > var/log/packages/udev-188-i486-1
 
 rm etc/slackware-version
 
@@ -168,6 +171,7 @@ mkdir -p ../$NP-removed/locale/usr/share/locale/ && mv usr/share/locale/* $_
 
 # Handle .h & .a files
 mkdir -p ../$NP-removed/devel/usr/include/ && mv usr/include/* $_
+mv ../$NP-removed/devel/usr/include/python2.7 usr/include/	# Required at least by WICD
 
 mkdir -p ../$NP-removed/devel/lib${ARCH}/ && mv lib${ARCH}/*.a $_
 mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/ && mv usr/lib${ARCH}/*.a $_

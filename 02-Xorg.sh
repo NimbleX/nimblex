@@ -11,16 +11,21 @@ slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware
 blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,font-misc*,ttf-indic*,tibmachuni-font*,font-isas*,font-daewoo*,font-jis*,font-cronyx*,font-mutt*,font-bitstream*,font-schumacher*,sinhala_lklug*"
 blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server-xnest*,xedit*"
 
-whitelist_l="hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,qt*,gtk+*,libgtkhtml*,pygtk*,atk*,jasper*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*"
+whitelist_l="hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,jasper*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*"
 
-mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/{share/locale,lib${ARCH}/qt} $NP-removed/devel/usr/{include,lib${ARCH}/qt/include}
+mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/{share/locale,lib${ARCH}/qt} $NP-removed/devel/usr/{include,lib${ARCH}/qt/include,lib${ARCH}/qt/bin}
 
 downloadpkg() {
 cd $SD/$NP-work
 wget -N -R "$blacklist_x" "$slacksrc"/x/*.txz
 wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
 
-wget -N ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/extra/google-chrome/ORBit2-*.txz
+if [[ $ARCH = "" ]]; then
+ wget -N http://packages.nimblex.net/nimblex/ORBit2-2.14.19-i486-1.txz
+ wget -N http://packages.nimblex.net/nimblex/qt-4.8.2-i486-1.txz
+elif [[ $ARCH = "64" ]]; then
+ echo "You should prepare 64bit packages for QT and ORBit2!"
+fi
 }
 
 instpkg() {
@@ -39,7 +44,6 @@ echo Moving .h, .a files, man pages and localizations
 mv usr/man/* ../$NP-removed/man_pages/usr/man/
 # Handle locale
 mv usr/share/locale/* ../$NP-removed/locale/usr/share/locale/ # 250KB compiz and xkeyboard locale
-mv usr/lib${ARCH}/qt/translations ../$NP-removed/locale/usr/lib${ARCH}/qt/ # 1.4MB
 # Handle .h & .a files
 mv usr/include/* ../$NP-removed/devel/usr/include/
 mv usr/lib${ARCH}/*.a ../$NP-removed/devel/usr/lib${ARCH}/
@@ -57,9 +61,12 @@ mv usr/lib${ARCH}/xorg/modules/dri $SD/$NP-3D/usr/lib${ARCH}/xorg/modules/
 echo Cleaning QT/GTK stuff
 rm -r usr/share/{gtk-doc/html,gtk-2.0/demo}
 rm -r usr/lib${ARCH}/pygtk/2.0/demos
-rm -r usr/lib${ARCH}/qt/doc
+# rm -r usr/lib${ARCH}/qt/doc
+# rm -r usr/lib${ARCH}/qt/translations # 1.4MB
 rm -r usr/lib${ARCH}/qt/tests
 mv usr/lib${ARCH}/qt/include/* ../$NP-removed/devel/usr/lib${ARCH}/qt/include/
+mv usr/lib${ARCH}/qt/bin/{qmake,uic,uic3,l*,qdoc3,rcc,moc,qt3to4,qhelpconverter} ../$NP-removed/devel/usr/lib${ARCH}/qt/bin/
+mv usr/lib${ARCH}/qt/mkspecs ../$NP-removed/devel/usr/lib${ARCH}/qt/
 rm -r usr/share/libwmf
 }
 
@@ -68,7 +75,6 @@ cd $SD/$NP
 
 echo "Copying NimbleX specific shared files"
 cp -a ../06-NimbleX/usr/share/icons/oxygen usr/share/icons/
-cp -a ../06-NimbleX/usr/share/hal/fdi/policy/10osvendor/* usr/share/hal/fdi/policy/10osvendor/
 cp ../06-NimbleX/usr/share/mime/packages/nimblex.xml usr/share/mime/packages/
 mkdir -p usr/share/mime/application/
 cp ../06-NimbleX/usr/share/mime/application/x-lzm.xml usr/share/mime/application/
