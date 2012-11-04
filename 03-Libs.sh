@@ -11,15 +11,15 @@ SRC="http://packages.nimblex.net/slacky${ARCH}"
 
 mkdir -p $NP $NP-work $NP-removed/usr/{lib${ARCH},share}
 
-whitelist_slacky_l37=(a52dec cairo-perl cairomm gc glitz gssdp gupnp SDL_gfx SDL_Pango libgsm faac openjpeg schroedinger x264 xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc glibmm pangomm imlib2 ffmpeg-0.8 libmspack portaudio dvdauthor videotrans libdv-1 dvgrab libiec61883 faad2 libavc1394 recordmydesktop gtkmm atkmm opencore-amr libcue libmms libmpcdec libshout unrar mjpegtools jack-audio-connection-kit celt liblo libquicktime openal-soft libgnomecanvas libwps libwpg flash-player-plugin zope.interface wildmidi qjson libebml libmatroska ladspa_sdk libva libvpx libbluray libdvdnav libdvdcss libdca libdvbpsi rtmpdump libvdpau libbs2b vo-aacenc vo-amrwbenc ftgl enca-1 orc exif oxygen-gtk qtcurve twolame usbmuxd libxavs mlt-0.7 libmpdclient libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom)
+whitelist_slacky_l37=(a52dec cairo-perl cairomm gc glitz gssdp gupnp SDL_gfx SDL_Pango libgsm faac openjpeg schroedinger xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc glibmm pangomm imlib2 ffmpeg-0.8 libmspack portaudio dvdauthor videotrans libdv-1 dvgrab libiec61883 faad2 libavc1394 recordmydesktop gtkmm atkmm opencore-amr libcue libmms libmpcdec libshout unrar mjpegtools jack-audio-connection-kit celt liblo libquicktime openal-soft libgnomecanvas libwps libwpg flash-player-plugin zope.interface wildmidi qjson libebml libmatroska ladspa_sdk libva libvpx libbluray libdvdnav libdvdcss libdca libdvbpsi rtmpdump libvdpau libbs2b vo-aacenc vo-amrwbenc ftgl enca-1 orc exif oxygen-gtk qtcurve twolame usbmuxd libxavs mlt-0.7 libmpdclient libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom x264 libcrystalhd slv2 lv2core soundtouch libofa libLASi gst-plugins-ugly gst-ffmpeg goffice8 wv)
 
-whitelist_slacky_14=()
+whitelist_slacky_14=(a52dec gc gssdp gupnp SDL_gfx libgsm mp4v2 faac openjpeg orc schroedinger xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc++ cairomm glibmm pangomm atkmm gtkmm celt enca-1 libmodplug libva x264 libvpx opus utvideo opencore-amr ffmpeg-1.0 libmspack libdvdnav libdvdcss dvdauthor libdv-1 libiec61883 id3lib faad2 libavc1394 recordmydesktop fdesktoprecorder libmpcdec libshout libaacplus twolame vo-aacenc vo-amrwbenc libquicktime mjpegtools libxml++ libffado jack-audio-connection-kit openal-soft flash-player-plugin unrar qjson libebml libmatroska ladspa_sdk libbluray libdca libdvbpsi rtmpdump libvdpau ftgl exif usbmuxd libimobiledevice libxavs libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom soundtouch libsidplay gst-ffmpeg gst-plugins-ugly imlib2 goffice8 wv geoclue ORBit2 zope.interface)
 
 downloadpkg() {
 rm -f $LIST && wget $SRC/$LIST
 cd $SD/$NP-work
-for package in $(seq 0 $((${#whitelist_slacky_l37[*]} -1))); do
-TXZn=(`cat ../$LIST | awk '{print $9}' | grep ".txz$" | grep -w "${whitelist_slacky_l37[$package]}" | cut -b 2-`)
+for package in $(seq 0 $((${#whitelist_slacky_14[*]} -1))); do
+TXZn=(`cat ../$LIST | awk '/\.txz$/ {print $9}' | grep -w "${whitelist_slacky_14[$package]}" | cut -b 2-`)
   for i in $(seq 0 $((${#TXZn[*]} -1))); do
     wget -N $SRC${TXZn[i]}
   done
@@ -27,15 +27,12 @@ done
 
 # We will have to take some of them manually from a different location
 if [[ $ARCH = "" ]]; then
- echo QTCurve is in the slackware 13.37 repo
+ wget -N http://repository.slacky.eu/slackware-13.37/desktop/qtcurve/1.8.9/qtcurve-1.8.9-i486-1sl.txz		# 580K
+ wget -N http://repository.slacky.eu/slackware-13.37/desktop/oxygen-gtk/1.0.4/oxygen-gtk-1.0.4-i486-1sl.txz	# 288K
 elif [[ $ARCH = "64" ]]; then
  wget -N http://repository.slacky.eu/slackware64-13.1/desktop/qtcurve/1.5.0/qtcurve-1.5.0-x86_64-1sl.txz
 fi
 
-echo DELETEing gst-ffmpeg, gconf-editor, gtk-recordmydesktop and maybe other crap
-rm -f gst-ffmpeg*.txz
-rm -f gconf-editor*.txz
-rm -f gtk-recordmydesktop*.txz
 }
 
 instpkg() {
@@ -47,15 +44,10 @@ done
 clean-Lib() {
 cd $SD/$NP
 echo "Removing SOME of the most usless crap (doc,man,gtk-doc)"
-rm -rf usr/doc
-rm -rf usr/share/{doc,gtk-doc,devhelp,gtkmm-2.4,gnome/html,applications/gconf-cleaner.desktop}
-rm -rf usr/share/imlib2/data/images/*.png
-rm -rf usr/bin/gtkmm-demo
-rm -rf usr/share/sounds/freedesktop/stereo/audio-*
-rm -f usr/lib/python2.6/site-packages/mlt_wrap.o  # Only if we decide to keep mlt which take ~700K
-# Clean some of the small stuff too
-#rm -rf usr/share/applications/gconf-cleaner.desktop
-#rm usr/share/applications/gtk-recordmydesktop.desktop
+rm -r usr/doc
+rm -rf usr/share/{doc,gtk-doc,devhelp}
+rm -r usr/share/imlib2/data/images/*.png
+rm -f usr/lib/python2.6/site-packages/mlt_wrap.o  # Only if we decide to keep mlt which takes ~700K
 
 echo "Moving other usless crap (include/man/locale)"
 

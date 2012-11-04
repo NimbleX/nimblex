@@ -21,10 +21,9 @@ wget -N -R "$blacklist_x" "$slacksrc"/x/*.txz
 wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
 
 if [[ $ARCH = "" ]]; then
- wget -N http://packages.nimblex.net/nimblex/ORBit2-2.14.19-i486-1.txz
  wget -N http://packages.nimblex.net/nimblex/qt-4.8.2-i486-1.txz
 elif [[ $ARCH = "64" ]]; then
- echo "You should prepare 64bit packages for QT and ORBit2!"
+ echo "You should prepare a 64bit package for QT!"
 fi
 }
 
@@ -97,8 +96,6 @@ chroot $AUFS update-mime-database /usr/share/mime
 chroot $AUFS update-gtk-immodules
 chroot $AUFS update-gdk-pixbuf-loaders
 chroot $AUFS update-pango-querymodules
-chroot $AUFS /usr/bin/gtk-update-icon-cache -t -f /usr/share/icons/hicolor/
-# chroot $AUFS /usr/bin/gtk-update-icon-cache -t -f /usr/share/icons/oxygen/  # This is a KDE package and the cache will be HUGE!
 
 umount $AUFS
 rm -rf $NP/.wh..wh.*

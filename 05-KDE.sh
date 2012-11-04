@@ -11,7 +11,7 @@ slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware
 extrasrc="http://repository.slacky.eu/slackware${ARCH}-13.1/"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}/"
 
-blacklist_kde="kdeartwork-*,kdegames-*,calligra-*,marble-*,kstars-*,kiten-*,kgeography-*,parley-*,kalzium-*,ktouch-*,kig-*,kwordquiz-*,kremotecontrol-*,kbruch-*,khangman-*,kmplot-*,kanagram-*,klettres-*,kdevelop-*,ktorrent-*,libktorrent-*,blinken-*,kalgebra-*,cantor-*,kdetoys*,skanlite*,kdeadmin*,networkmanagement-*,amarok-*"
+blacklist_kde="kdeartwork-*,kdegames-*,calligra-*,marble-*,kstars-*,kiten-*,kgeography-*,parley-*,kalzium-*,ktouch-*,kig-*,kwordquiz-*,kremotecontrol-*,kbruch-*,khangman-*,kmplot-*,kanagram-*,klettres-*,kdevelop-*,ktorrent-*,libktorrent-*,blinken-*,kalgebra-*,cantor-*,kdetoys*,skanlite*,kdeadmin*,networkmanagement-*,amarok-*,kdepim-*,kplayer-*"
 whitelist_l="clucene*,soprano*,qimageblitz*,strigi*,phonon-*,redland*,qca*,liblastfm*,libxklavier*,poppler*,libtiff*,libspectre*,libwnck*,attica*,eggdbus*,ebook-tools*,libdiscid*,shared-desktop-ontologies*,libiodbc*,herqq-*,libbluedevil-*,NOTYET_akonadi*"
 blacklist_kde=$blacklist_kde",kdevplatform*,kdewebdev*" # Saves just 2MB
 
@@ -60,15 +60,15 @@ cp ../06-NimbleX/usr/share/kde4/services/ServiceMenus/lzm_activate.desktop usr/s
 # Copy NimbleX specific files
 #!!!!!!!cp -a ../06-NimbleX/usr/share/apps/{kdm,konsole,ksplash} usr/share/apps/
 cp -a ../06-NimbleX/usr/share/config/{kickoffrc,konquerorrc,kxkbrc,kwalletrc,kppprc} usr/share/config/
+cp ../06-NimbleX/etc/kde/kdm/kdmrc etc/kde/kdm/
 
 # Clean the little things
 rm usr/share/applications/kde4/{Help.desktop,dbpedia_references.desktop,KFloppy.desktop}
-rm usr/share/applications/kde4/akonadi*
 rm usr/share/applications/kde4/kwalletmanager.desktop
 rm usr/share/apps/remoteview/zeroconf.desktop
 
 # Don't autostart stuff that we don't care about
-rm usr/share/autostart/{kaddressbookmigrator.desktop,nepomukserver.desktop,nepomukcontroller.desktop,printer-applet.desktop,kalarm.autostart.desktop,korgac.desktop}
+rm usr/share/autostart/{nepomukserver.desktop,nepomukcontroller.desktop,printer-applet.desktop}
 
 echo "Moving other usless crap.(doc/include/man/locale)"
 # Handle Man pages

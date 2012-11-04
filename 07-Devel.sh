@@ -11,7 +11,7 @@ slacksrc="ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slack
 slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
 
 blacklist_d="perl*,python*"
-whitelist_l="glibc*,mpfr*"
+whitelist_l="glibc*,mpfr*,db4*"
 whitelist_ap="linuxdoc-tools*"
 
 mkdir -p $NP $NP-work $NP-removed

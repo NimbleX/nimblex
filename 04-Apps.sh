@@ -22,17 +22,19 @@ wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
 wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz
 
 if [[ $ARCH = "" ]]; then
- wget -N $extrasrc/system/gparted/0.13.1/gparted-0.13.1-i486-1sl.txz # 1.4M
- wget -N $extrasrc/network/qtransmission/2.42/qtransmission-2.42-i486-1sl.txz # 1.2M
- wget -N $extrasrc/utilities/yakuake/2.9.8/yakuake-2.9.8-i486-3sl.txz # 313K
- wget -N $extrasrc/graphic/gimp-save-for-web/0.29.0/gimp-save-for-web-0.29.0-i486-5sl.txz # 40K
- wget -N $extrasrc/multimedia/Transcoder/0.0.6/Transcoder-0.0.6-i686-1sl.txz # 30K
- wget -N $extrasrc/system/gslapt/0.5.3f/gslapt-0.5.3f-i486-3sl.txz # 121K
- wget -N $extrasrc/multimedia/mpd/0.15.16/mpd-0.15.16-i486-1sl.txz # 170K
+ wget -N $extrasrc/system/gparted/0.14.0/gparted-0.14.0-i486-1sl.txz # 1.4M
+ wget -N $extrasrc/network/transmission/2.73/transmission-2.73-i486-1sl.txz # 1.1M
+ wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-i486-1sl.txz # 350K
+# wget -N $extrasrc/graphic/gimp-save-for-web/0.29.0/gimp-save-for-web-0.29.0-i486-5sl.txz # 40K
+# wget -N $extrasrc/multimedia/Transcoder/0.0.6/Transcoder-0.0.6-i686-1sl.txz # 30K
+ wget -N $extrasrc/system/gslapt/0.5.3h/gslapt-0.5.3h-i486-1sl.txz # 124K
+# wget -N $extrasrc/multimedia/mpd/0.15.16/mpd-0.15.16-i486-1sl.txz # 170K
+ wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-i486-9sl.txz # 3.5M
 elif [[ $ARCH = "64" ]]; then
- wget -N $extrasrc/system/gparted/0.21.1/gparted-0.12.1-x86_64-1sl.txz #1.4M
- wget -N $extrasrc/network/qtransmission/2.42/qtransmission-2.42-x86_64-1sl.txz # 830K
+ wget -N $extrasrc/system/gparted/0.14.0/gparted-0.14.0-x86_64-2sl.txz # 1.4M
+# wget -N $extrasrc/network/transmission/2.42/transmission-2.42-x86_64-1sl.txz # 1.0M
  wget -N $extrasrc/system/gslapt/0.5.3f/gslapt-0.5.3f-x86_64-1sl.txz # 121K
+# wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-x86_64-1sl.txz # 3.6M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz
@@ -49,6 +51,8 @@ cd $SD/$NP
 rm -r usr/doc/*
 rm -r usr/share/gtk-doc/*
 rm -r usr/share/xine/visuals/*
+rm -r usr/share/abiword-2.8/strings
+
 echo Moving .h, .a files, man pages and localizations
 # Handle Man pages
 mv usr/man/* ../$NP-removed/man_pages/usr/man/
@@ -61,9 +65,9 @@ mv usr/include/* ../$NP-removed/devel/usr/include/
 mkdir -p root/.config/
 cp -a ../06-NimbleX/root/.config/transmission root/.config/
 
-#cd $SD/$NP/usr/lib${ARCH}
-#ln -s firefox-*/lib*.so .
-#echo "Please test if FF libs are linked"
+cd $SD/$NP/usr/lib${ARCH}
+ln -s firefox-*/lib*.so .
+echo "Please test if FF libs are linked"
 }
 
 cripple_gimp() {

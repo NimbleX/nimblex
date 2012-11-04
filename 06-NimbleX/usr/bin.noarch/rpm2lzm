@@ -14,7 +14,7 @@ PKGNAME=$(basename $1 | sed "s/\\.rpm$//")
 DIRNAME=$(dirname $1)
 
 mkdir /tmp/$PKGNAME
-rpm -ivh --nodeps --nomd5 --noorder --nosuggest --nodigest --force --nosignature --root=/tmp/$PKGNAME $1
+rpm -ivh --nodeps --nomd5 --noorder --nodigest --force --nosignature --root=/tmp/$PKGNAME $1
 rm -rf /tmp/$PKGNAME/var/lib/rpm
 dir2lzm /tmp/$PKGNAME $DIRNAME/$PKGNAME.lzm
 rm -rf /tmp/$PKGNAME
