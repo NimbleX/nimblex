@@ -6,7 +6,7 @@ DefaultDependencies=no
 [Service]
 Type=oneshot
 WorkingDirectory=/mnt/live
-ExecStart=/mnt/live/cleanup
+ExecStart=/mnt/live/lib/cleanup
 
 [Install]
 WantedBy=umount.target

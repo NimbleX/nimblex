@@ -1,0 +1,9 @@
+[KSplash Theme: NimbleX Space]
+Name = KDE 4.8 Splash Screen
+Description = Simple NimbleX Splash Screen
+Version = 1.0.0
+Author = Bogdan Radulescu
+Copyright = GPL
+
+# Theme behaviour settings.
+Engine = KSplashX

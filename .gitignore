@@ -16,8 +16,9 @@
 !05-KDE.sh
 07-Devel*
 !07-Devel.sh
+ISO-test-*
 FILELIST.TXT
-ISO-test/
+linux-live
 #       Kernels/
 #       enlightment/
 #       initramfs/

@@ -10,9 +10,9 @@ slacksrc="ftp://ftp.rdsbv.ro/mirrors/slackware/slackware${ARCH}-current/slackwar
 slacksrc="ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/slackware${ARCH}"
 slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
 
-blacklist_d="perl*,python*"
+blacklist_d="perl*,python*,llvm-*,gcc-java-*,gcc-gnat-*,gcc-go-*,gcc-gfortran-*"
 whitelist_l="glibc*,mpfr*,db4*"
-whitelist_ap="linuxdoc-tools*"
+whitelist_ap="linuxdoc-tools*,texinfo*"
 
 mkdir -p $NP $NP-work $NP-removed
 
@@ -57,6 +57,7 @@ umount $AUFS
 rm -rf $NP/.wh..wh.*
 }
 
+SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
 
 if [[ -z $1 ]]; then
 	echo "Tell me what to do"
@@ -81,7 +82,7 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs
+	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -91,7 +92,7 @@ else
 	  copy-removed
 	  run-ldconfig
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs
+	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

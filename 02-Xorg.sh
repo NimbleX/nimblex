@@ -11,20 +11,18 @@ slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware
 blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,font-misc*,ttf-indic*,tibmachuni-font*,font-isas*,font-daewoo*,font-jis*,font-cronyx*,font-mutt*,font-bitstream*,font-schumacher*,sinhala_lklug*"
 blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server-xnest*,xedit*"
 
-whitelist_l="hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,jasper*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*"
+whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*"
 
-mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/{share/locale,lib${ARCH}/qt} $NP-removed/devel/usr/{include,lib${ARCH}/qt/include,lib${ARCH}/qt/bin}
+whitelist_kde="oxygen-gtk2-*,oxygen-gtk3-*"
+
+mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/{share/locale,lib${ARCH}/qt} $NP-removed/devel/usr/{include,lib${ARCH}/qt/include,lib${ARCH}/qt/bin,lib${ARCH}/qt/lib}
 
 downloadpkg() {
 cd $SD/$NP-work
 wget -N -R "$blacklist_x" "$slacksrc"/x/*.txz
 wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
+wget -N -A "$whitelist_kde" "$slacksrc"/kde/*.txz
 
-if [[ $ARCH = "" ]]; then
- wget -N http://packages.nimblex.net/nimblex/qt-4.8.2-i486-1.txz
-elif [[ $ARCH = "64" ]]; then
- echo "You should prepare a 64bit package for QT!"
-fi
 }
 
 instpkg() {
@@ -60,9 +58,10 @@ mv usr/lib${ARCH}/xorg/modules/dri $SD/$NP-3D/usr/lib${ARCH}/xorg/modules/
 echo Cleaning QT/GTK stuff
 rm -r usr/share/{gtk-doc/html,gtk-2.0/demo}
 rm -r usr/lib${ARCH}/pygtk/2.0/demos
-# rm -r usr/lib${ARCH}/qt/doc
-# rm -r usr/lib${ARCH}/qt/translations # 1.4MB
 rm -r usr/lib${ARCH}/qt/tests
+# We only handle these only if we are using the standard Qt package
+# mv usr/lib${ARCH}/qt/lib/libQt{WebKit,Designer,3Support}.* ../$NP-removed/devel/usr/lib${ARCH}/qt/lib/
+rm -r usr/lib${ARCH}/qt/translations # 1.4MB
 mv usr/lib${ARCH}/qt/include/* ../$NP-removed/devel/usr/lib${ARCH}/qt/include/
 mv usr/lib${ARCH}/qt/bin/{qmake,uic,uic3,l*,qdoc3,rcc,moc,qt3to4,qhelpconverter} ../$NP-removed/devel/usr/lib${ARCH}/qt/bin/
 mv usr/lib${ARCH}/qt/mkspecs ../$NP-removed/devel/usr/lib${ARCH}/qt/
@@ -101,6 +100,8 @@ umount $AUFS
 rm -rf $NP/.wh..wh.*
 }
 
+SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
+
 if [[ -z $1 ]]; then
 	echo "Tell me what to do"
 	echo "You options are: clean download install lzmfy"
@@ -126,8 +127,8 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs
-	  mksquashfs $NP-3D $NP-3D.lzm -noappend -b 256k -no-xattrs
+	  mksquashfs $NP $NP.lzm $SQUASH_OPT
+	  mksquashfs $NP-3D $NP-3D.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -138,8 +139,8 @@ else
 	  nimblex_adjust
 	  run-ldconfig
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs
-	  mksquashfs $NP-3D $NP-3D.lzm -noappend -b 256k -no-xattrs
+	  mksquashfs $NP $NP.lzm $SQUASH_OPT
+	  mksquashfs $NP-3D $NP-3D.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

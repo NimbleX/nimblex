@@ -15,11 +15,11 @@ extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 ToBeAdded=(ipcalc madwifi)
 
 
-blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,apmd*,sysvinit-*"
-blacklist_ap="ghostscript*,hplip*,mysql*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*"
+blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,apmd*,sysvinit-*,udev-*"
+blacklist_ap="ghostscript*,hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*"
 whitelist_ap="mc*,flac*,rpm*,cdrtools*,screen*,sox*,sqlite*,nano*,xfsdump*,ntfsprogs*,lsof*,diffutils*,sysstat*,gphoto2*,vorbis-tools*,dc3dd*,lm_sensors*,sudo*,dvd+rw-tools*,cdparanoia*,bc*,ash*,normalize*,madplay*,aumix*,slackpkg*,dmidecode*,seejpeg*,bpe*,pm-utils*,most*,at*,dmapi*,lsscsi*,vbetool*,rzip*,diffstat*,libx86*,radeontool*"
 whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit-*"
-whitelist_l=$whitelist_l",gmp*,libidn*,glib-1*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*"
+whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*"
 
 whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*"
@@ -27,7 +27,7 @@ whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,
 slacky_get() {
 if [[ -z $1 ]]; then
   if [[ ! -f PACKAGES.TXT ]]; then
-    wget http://repository.slacky.eu/slackware-13.0/PACKAGES.TXT
+    wget http://repository.slacky.eu/slackware-14.0/PACKAGES.TXT
   fi
   cat PACKAGES.TXT | grep -A 2 "PACKAGE NAME:" | grep $1 | grep "PACKAGE LOCATION:" | awk '{print $3}' | cut -b 3-
   wget -r -l 1 -np -nH -nd -A txz $extrasrc$SP
@@ -60,9 +60,8 @@ wget -N ftp://ftp.osuosl.org/pub/slackware/slackware${ARCH}-13.37/slackware${ARC
 wget -N http://packages.nimblex.net/nimblex/b43-firmware-5.100.138-fw-1.txz	# 145K
 if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/sshfs-fuse-2.3-i486-1.tgz		# 55K
- wget -N http://packages.nimblex.net/nimblex/glib2-2.33.1-i486-1.txz		# 3.1M
- wget -N http://packages.nimblex.net/nimblex/systemd-188-i486-1.txz		# 1.3M
- wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-i486-1.txz		# 1.6M
+ wget -N http://packages.nimblex.net/nimblex/systemd-200-i486-1.txz		# 1.9M
+ wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-i486-1.txz		# 1.1M
  wget -N http://packages.nimblex.net/nimblex/libnih-1.0.3.txz			# 336K
  wget -N http://packages.nimblex.net/nimblex/atop-1.26-i486-1.tgz		# 113K
  wget -N http://packages.nimblex.net/nimblex/curlftpfs-0.9.2-i486-1.tgz		# 41K
@@ -71,25 +70,29 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/tdb-1.0.6-i486-1.tgz		# 50K
  wget -N http://packages.nimblex.net/nimblex/csync-0.49.9-i486-1.txz		# 88K
  wget -N http://packages.nimblex.net/nimblex/perl-archive-zip-1.31_02-i486.tgz	# 105K
- wget -N http://packages.nimblex.net/nimblex/libasyncns-0.8-i486-3sl.txz 	# 23K
- wget -N http://packages.nimblex.net/nimblex/libdaemon-0.14-i486-3sl.txz	# 27K
-# wget -N http://packages.nimblex.net/nimblex/ndiswrapper-utils-1.58rc1-i486-1.txz
-# wget -N http://packages.nimblex.net/nimblex/ndiswrapper-kernel-1.58rc1_3.5.3+-i486-1.txz
-# wget -N $extrasrc/network/xl2tpd/1.2.8/xl2tpd-1.2.8-i686-1sl.txz		# 58K
+ wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-i486-1.txz	# 46K
+ wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.76-i486-1ponce.txz #52K
+ wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-i486-1ponce.txz #5K
 # wget -N $extrasrc/network/airpwn/1.4/airpwn-1.4-i486-4sl.txz			# 60K
 # wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-i486-1sl.txz		# 37K
 # wget -N $extrasrc/security/tomoyo-tools/2.3.0p2/tomoyo-tools-2.3.0p2-i486-1sl.txz # 100K
+ wget -N $extrasrc/libraries/libasyncns/0.8/libasyncns-0.8-i486-4sl.txz		# 24K
+ wget -N $extrasrc/libraries/libdaemon/0.14/libdaemon-0.14-i486-3sl.txz		# 27K
  wget -N $extrasrc/libraries/libnet/1.1.6/libnet-1.1.6-i486-3sl.txz		# 152K
  wget -N $extrasrc/system/fuseiso/20070708/fuseiso-20070708-i486-7sl.txz	# 26K
  wget -N $extrasrc/network/nss-mdns/0.10/nss-mdns-0.10-i486-7sl.txz		# 25K
  wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-i486-2sl.txz		# 60K
  wget -N $extrasrc/system/slapt-get/0.10.2o/slapt-get-0.10.2o-i486-3sl.txz	# 170K
- wget -N $extrasrc/libraries/libevent/2.0.20/libevent-2.0.20-i486-1sl.txz	# 206K
- wget -N $extrasrc/multimedia/vcdimager/0.7.24/vcdimager-0.7.24-i486-3sl.txz	# 316K
+ wget -N $extrasrc/libraries/libevent/2.0.21/libevent-2.0.21-i486-1sl.txz	# 206K
  wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-i486-1sl.txz			# 198K
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-2sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/sshfs-fuse/2.4/sshfs-fuse-2.4-x86_64-1sl.txz		# 53K
+ wget -N http://packages.nimblex.net/nimblex/systemd-200-x86_64-1.txz		# 1.9M
+ wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
+ wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-x86_64-1.txz	# 46K
+ wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.76-x86_64-1.txz #52K
+ wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-x86_64-1.txz  #6K
  wget -N $extrasrc/libraries/perl-archive-zip/1.31_04/perl-archive-zip-1.31_04-x86_64-1sl.txz # 88 K
  wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-x86_64-2sl.txz		# 40K
  wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-x86_64-1sl.txz	# 61K
@@ -98,10 +101,6 @@ elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-x86_64-3sl.txz		# 178K
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-x86_64-1sl.txz # 51K
 fi
-}
-
-upgrade_packages() {
-rm $SD/$NP-work/udev-182-i486-5.txz
 }
 
 instpkg() {
@@ -131,15 +130,28 @@ ln -s /bin/systemctl bin/halt
 ln -s /bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
 sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
-echo "PACKAGE NAME:     udev-189" > var/log/packages/udev-189-i486-1
+echo "PACKAGE NAME:     udev-198" > var/log/packages/udev-198-`uname -m`-1
 
 rm etc/slackware-version
 
 rm boot/*
+
+mkdir -p etc/smack/accesses.d
 echo "nimblex" > etc/HOSTNAME
 echo "NimbleX Linux." > etc/motd
-echo "<html><body><h1>NimbleX is running your web server!</h1></body></html>" > srv/httpd/htdocs/index.html
+echo "<html><body><h1>NimbleX is running your web server!</h1></body></html>" > var/www/htdocs/index.html
 echo "nameserver 8.8.8.8" > etc/resolv.conf
+echo "WORKINGDIR=/var/slapt-get
+EXCLUDE=^aaa_elflibs,^devs,^glibc-.*,^kernel-.*,^udev,.*-[0-9]+dl$
+SOURCE=http://packages.nimblex.net/slackware${ARCH}/:OFFICIAL
+SOURCE=http://packages.nimblex.net/slacky${ARCH}/:OFFICIAL
+" > etc/slapt-get/slapt-getrc
+echo "cache = /var/slackyd
+repository = http://packages.nimblex.net/slackware${ARCH}/
+repository slacky${ARCH} = http://packages.nimblex.net/slacky${ARCH}/
+blacklist ^udev-.* ^kernel-.*
+" > etc/slackyd/slackyd.conf
+
 rm -r media/* mnt/*
 rm -r usr/{doc,share/gtk-doc}
 rm usr/info/*
@@ -204,14 +216,17 @@ cp ../06-NimbleX/etc/vsftpd.conf etc/
 cp ../06-NimbleX/etc/localtime etc/
 cp ../06-NimbleX/etc/bootchartd.conf etc/
 cp ../06-NimbleX/etc/profile etc/
-cp ../06-NimbleX/etc/profile.d/*.sh etc/profile.d/
-cp ../06-NimbleX/etc/slapt-get/slapt-getrc etc/slapt-get/
+cp ../06-NimbleX/etc/sysctl.conf etc/
+cp ../06-NimbleX/etc/skel/.bashrc etc/skel/
+cp ../06-NimbleX/etc/skel/.bashrc root/
+# cp ../06-NimbleX/etc/slapt-get/slapt-getrc etc/slapt-get/
 cp ../06-NimbleX/etc/rc.d/rc.* etc/rc.d/
 # cp ../06-NimbleX/usr/share/wallpapers/nimblex-wallpaper.jpg usr/share/wallpapers/
 cp ../06-NimbleX/var/spool/mail/root var/spool/mail/root
 
 cp ../06-NimbleX/etc/os-release etc/
-cp ../06-NimbleX/lib/systemd/system/*.{service,socket} lib/systemd/system/
+cp ../06-NimbleX/lib/udev/rules.d/*.rules lib/udev/rules.d/
+cp -a ../06-NimbleX/lib/systemd/system/*.{service,socket} lib/systemd/system/
 cp -a ../06-NimbleX/lib/systemd/system/*.target.wants lib/systemd/system/
 
 
@@ -228,9 +243,12 @@ fi
 run-ldconfig() {
 echo "Running ldconfig and others chrooted"
 chroot . ldconfig
+chroot . /usr/sbin/update-ca-certificates --fresh
 chroot . /usr/sbin/groupadd -g215 vboxusers 2> /dev/null
+chroot . /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas/
 }
 
+SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
 
 if [[ -z $1 ]]; then
 	echo "Tell me what to do"
@@ -256,19 +274,18 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $SD/$NP $SD/$NP.lzm -noappend -b 256k -no-xattrs
+	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
 	  downloadpkg
-          upgrade_packages # This should be just temporary untill Slackware upgrades it
 	  echo "...INSTALLING"
 	  instpkg
 	  clean-core
 	  copy-static
 	  run-ldconfig
 	  echo "...LZMFY"
-	  mksquashfs $SD/$NP $SD/$NP.lzm -noappend -b 256k -no-xattrs
+	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

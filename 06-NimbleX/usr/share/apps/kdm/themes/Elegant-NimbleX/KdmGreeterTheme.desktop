@@ -1,0 +1,11 @@
+# Apparently this is not really a .desktop file like the rest, but it's useful
+# to treat it as such
+
+[KdmGreeterTheme]
+Encoding=UTF-8
+Greeter=elegant_nimblex.xml
+Name=Elegant-NimbleX
+Description=Elegant NimbleX KDM theme
+Author=Various Authors
+Copyright=GPL
+Screenshot=screenshot.png

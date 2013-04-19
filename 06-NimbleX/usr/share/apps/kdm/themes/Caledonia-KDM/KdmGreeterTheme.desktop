@@ -1,0 +1,15 @@
+# This is not really a .desktop file like the rest, but it is useful to treat
+# it as such
+
+[KdmGreeterTheme]
+Greeter=caledonia.xml
+Name=Caledonia
+Name[x-test]=xxCaledoniaxx
+Description=Caledonia official KDM theme
+Description[en_GB]=Caledonia official KDM theme
+Description[es]=Tema KDM oficial de Caledonia
+Description[gl]=Tema KDM oficial de Caledonia
+
+Author=Malcer Quaid
+Copyright=CreativeCommons-BY-SA | 2012 Malcer Quaid
+Screenshot=screenshot.jpeg

@@ -23,18 +23,19 @@ wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz
 
 if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/system/gparted/0.14.0/gparted-0.14.0-i486-1sl.txz # 1.4M
- wget -N $extrasrc/network/transmission/2.73/transmission-2.73-i486-1sl.txz # 1.1M
+ wget -N $extrasrc/network/transmission/2.77/transmission-2.77-i486-1sl.txz # 1.1M
  wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-i486-1sl.txz # 350K
-# wget -N $extrasrc/graphic/gimp-save-for-web/0.29.0/gimp-save-for-web-0.29.0-i486-5sl.txz # 40K
 # wget -N $extrasrc/multimedia/Transcoder/0.0.6/Transcoder-0.0.6-i686-1sl.txz # 30K
  wget -N $extrasrc/system/gslapt/0.5.3h/gslapt-0.5.3h-i486-1sl.txz # 124K
 # wget -N $extrasrc/multimedia/mpd/0.15.16/mpd-0.15.16-i486-1sl.txz # 170K
  wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-i486-9sl.txz # 3.5M
 elif [[ $ARCH = "64" ]]; then
- wget -N $extrasrc/system/gparted/0.14.0/gparted-0.14.0-x86_64-2sl.txz # 1.4M
-# wget -N $extrasrc/network/transmission/2.42/transmission-2.42-x86_64-1sl.txz # 1.0M
- wget -N $extrasrc/system/gslapt/0.5.3f/gslapt-0.5.3f-x86_64-1sl.txz # 121K
-# wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-x86_64-1sl.txz # 3.6M
+ wget -N $extrasrc/system/gparted/0.14.1/gparted-0.14.1-x86_64-2sl.txz # 1.4M
+# wget -N $extrasrc/network/qtransmission/2.75/qtransmission-2.75-x86_64-1sl.txz # 1.1M
+ wget -N $extrasrc/network/transmission/2.75/transmission-2.75-x86_64-1sl.txz # 1.0M
+ wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-x86_64-1sl.txz # 350K
+# wget -N $extrasrc/system/gslapt/0.5.3f/gslapt-0.5.3f-x86_64-1sl.txz # 121K
+ wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-x86_64-2sl.txz # 3.5M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz
@@ -85,7 +86,7 @@ cd $SD/$NP
 rm usr/sbin/{winbindd,swat}
 rm usr/bin/{net,rpcclient,smbget,smbcacls,smbclient,smbcquotas,smbtree,smbspool,ntlm_auth,pdbedit,eventlogadm,smbcontrol,smbstatus,nmblookup,wbinfo,testparm,sharesec,profiles,smbta-util}
 rm -r usr/share/swat
-rm usr/lib/libnetapi.*
+rm usr/lib$ARCH/libnetapi.*
 }
 
 cripple_mplayer() {
@@ -94,7 +95,7 @@ rm usr/bin/mencoder # Sorry to let you go, but you're a fat bastartd :|
 cp -a ../06-NimbleX/usr/share/mplayer/skins/proton usr/share/mplayer/skins/
 (cd usr/share/mplayer/skins/ && rm default && ln -s proton default)
 sed -i 's/#framedrop = yes/framedrop = yes/g' etc/mplayer/mplayer.conf
-sed -i 's/#cache = 8192/cache = 8192/g' etc/mplayer/mplayer.conf
+sed -i 's/#cache = 8192/cache = 4096/g' etc/mplayer/mplayer.conf
 sed -i 's/#cache-min = 20.0/cache-min = 20.0/g' etc/mplayer/mplayer.conf
 }
 
@@ -113,6 +114,7 @@ umount $AUFS
 rm -rf $NP/.wh..wh.*
 }
 
+SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
 
 if [[ -z $1 ]]; then
 	echo "Tell me what to do"
@@ -140,7 +142,7 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs
+	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -153,7 +155,7 @@ else
           cripple_mplayer
 	  run-ldconfig
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm -noappend -b 256k -no-xattrs
+	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

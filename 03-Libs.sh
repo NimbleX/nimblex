@@ -13,7 +13,7 @@ mkdir -p $NP $NP-work $NP-removed/usr/{lib${ARCH},share}
 
 whitelist_slacky_l37=(a52dec cairo-perl cairomm gc glitz gssdp gupnp SDL_gfx SDL_Pango libgsm faac openjpeg schroedinger xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc glibmm pangomm imlib2 ffmpeg-0.8 libmspack portaudio dvdauthor videotrans libdv-1 dvgrab libiec61883 faad2 libavc1394 recordmydesktop gtkmm atkmm opencore-amr libcue libmms libmpcdec libshout unrar mjpegtools jack-audio-connection-kit celt liblo libquicktime openal-soft libgnomecanvas libwps libwpg flash-player-plugin zope.interface wildmidi qjson libebml libmatroska ladspa_sdk libva libvpx libbluray libdvdnav libdvdcss libdca libdvbpsi rtmpdump libvdpau libbs2b vo-aacenc vo-amrwbenc ftgl enca-1 orc exif oxygen-gtk qtcurve twolame usbmuxd libxavs mlt-0.7 libmpdclient libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom x264 libcrystalhd slv2 lv2core soundtouch libofa libLASi gst-plugins-ugly gst-ffmpeg goffice8 wv)
 
-whitelist_slacky_14=(a52dec gc gssdp gupnp SDL_gfx libgsm mp4v2 faac openjpeg orc schroedinger xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc++ cairomm glibmm pangomm atkmm gtkmm celt enca-1 libmodplug libva x264 libvpx opus utvideo opencore-amr ffmpeg-1.0 libmspack libdvdnav libdvdcss dvdauthor libdv-1 libiec61883 id3lib faad2 libavc1394 recordmydesktop fdesktoprecorder libmpcdec libshout libaacplus twolame vo-aacenc vo-amrwbenc libquicktime mjpegtools libxml++ libffado jack-audio-connection-kit openal-soft flash-player-plugin unrar qjson libebml libmatroska ladspa_sdk libbluray libdca libdvbpsi rtmpdump libvdpau ftgl exif usbmuxd libimobiledevice libxavs libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom soundtouch libsidplay gst-ffmpeg gst-plugins-ugly imlib2 goffice8 wv geoclue ORBit2 zope.interface)
+whitelist_slacky_14=(a52dec gc gssdp gupnp SDL_gfx libgsm mp4v2 faac openjpeg orc schroedinger xvidcore lame speex-1.2rc1 dirac libdc1394 libsigc++ cairomm glibmm pangomm atkmm gtkmm celt enca-1 libmodplug libva x264 libvpx opus utvideo opencore-amr ffmpeg-1.0 libmspack libdvdnav libdvdcss dvdauthor libdv-1 libiec61883 id3lib faad2 libavc1394 recordmydesktop fdesktoprecorder libmpcdec libshout libaacplus twolame vo-aacenc vo-amrwbenc libquicktime mjpegtools libxml++ libffado jack-audio-connection-kit openal-soft flash-player-plugin unrar qjson libebml libmatroska ladspa_sdk libbluray libdca libdvbpsi rtmpdump libvdpau ftgl exif oxygen-gtk2 usbmuxd libimobiledevice libxavs libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom soundtouch libsidplay gst-ffmpeg gst-plugins-ugly imlib2 goffice8 wv geoclue ORBit2 zope.interface)
 
 downloadpkg() {
 rm -f $LIST && wget $SRC/$LIST
@@ -28,9 +28,8 @@ done
 # We will have to take some of them manually from a different location
 if [[ $ARCH = "" ]]; then
  wget -N http://repository.slacky.eu/slackware-13.37/desktop/qtcurve/1.8.9/qtcurve-1.8.9-i486-1sl.txz		# 580K
- wget -N http://repository.slacky.eu/slackware-13.37/desktop/oxygen-gtk/1.0.4/oxygen-gtk-1.0.4-i486-1sl.txz	# 288K
 elif [[ $ARCH = "64" ]]; then
- wget -N http://repository.slacky.eu/slackware64-13.1/desktop/qtcurve/1.5.0/qtcurve-1.5.0-x86_64-1sl.txz
+ wget -N http://packages.nimblex.net/nimblex/oxygen-gtk3-1.1.1-x86_64-1alien.txz # Should go to -current soon and we'll move it to 02-Xorg
 fi
 
 }
@@ -96,6 +95,7 @@ umount $AUFS
 rm -rf $NP/.wh..wh.*
 }
 
+SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
 
 if [[ -z $1 ]]; then
 	echo "Tell me what to do"
@@ -121,7 +121,7 @@ else
 	 "lzmfy" )
 	  echo "...LZMFY"
 	  rm -f $NP.lzm
-	  mksquashfs $NP $NP.lzm -b 256k -no-xattrs
+	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -132,7 +132,7 @@ else
 	  run-ldconfig
 	  echo "...LZMFY"
 	  rm -f $NP.lzm
-	  mksquashfs $NP $NP.lzm -b 256k -no-xattrs
+	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

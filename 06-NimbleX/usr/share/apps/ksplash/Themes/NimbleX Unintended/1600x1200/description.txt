@@ -1,0 +1,27 @@
+SCALE ON
+BACKGROUND_IMAGE 0 0 background.png
+SCALE OFF
+
+IMAGE_REL CC 0 -52 CT nimblex_logo.png
+IMAGE_REL CC -44 8 CT progress_dot_on.png
+IMAGE_REL CC -22 8 CT progress_dot_on.png
+IMAGE_REL CC   0 8 CT progress_dot_on.png
+IMAGE_REL CC  22 8 CT progress_dot_on.png
+IMAGE_REL CC  44 8 CT progress_dot_on.png
+
+IMAGE_REL CC -44 8 CT progress_dot_off.png
+WAIT_STATE kded
+
+IMAGE_REL CC -22 8 CT progress_dot_off.png
+WAIT_STATE kcminit
+
+IMAGE_REL CC   0 8 CT progress_dot_off.png
+WAIT_STATE ksmserver
+
+IMAGE_REL CC  22 8 CT progress_dot_off.png
+WAIT_STATE wm
+
+IMAGE_REL CC  44 8 CT progress_dot_off.png
+WAIT_STATE desktop
+
+WAIT_STATE ready
