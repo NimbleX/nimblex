@@ -8,10 +8,10 @@ NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
 slacksrc="ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/slackware${ARCH}"
 slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
 
-blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,font-misc*,ttf-indic*,tibmachuni-font*,font-isas*,font-daewoo*,font-jis*,font-cronyx*,font-mutt*,font-bitstream*,font-schumacher*,sinhala_lklug*"
+blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,font-misc*,ttf-indic*,tibmachuni-font*,font-isas*,font-daewoo*,font-jis*,font-cronyx*,font-mutt*,font-schumacher*,sinhala_lklug*"
 blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server-xnest*,xedit*"
 
-whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*"
+whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*"
 
 whitelist_kde="oxygen-gtk2-*,oxygen-gtk3-*"
 
@@ -60,7 +60,7 @@ rm -r usr/share/{gtk-doc/html,gtk-2.0/demo}
 rm -r usr/lib${ARCH}/pygtk/2.0/demos
 rm -r usr/lib${ARCH}/qt/tests
 # We only handle these only if we are using the standard Qt package
-# mv usr/lib${ARCH}/qt/lib/libQt{WebKit,Designer,3Support}.* ../$NP-removed/devel/usr/lib${ARCH}/qt/lib/
+mv usr/lib${ARCH}/qt/lib/libQt{WebKit,Designer,3Support}.* ../$NP-removed/devel/usr/lib${ARCH}/qt/lib/
 rm -r usr/lib${ARCH}/qt/translations # 1.4MB
 mv usr/lib${ARCH}/qt/include/* ../$NP-removed/devel/usr/lib${ARCH}/qt/include/
 mv usr/lib${ARCH}/qt/bin/{qmake,uic,uic3,l*,qdoc3,rcc,moc,qt3to4,qhelpconverter} ../$NP-removed/devel/usr/lib${ARCH}/qt/bin/
@@ -95,6 +95,8 @@ chroot $AUFS update-mime-database /usr/share/mime
 chroot $AUFS update-gtk-immodules
 chroot $AUFS update-gdk-pixbuf-loaders
 chroot $AUFS update-pango-querymodules
+chroot $AUFS rm -rf /etc/gtk-2.0/gtkrc
+chroot $AUFS ln -sf /usr/share/themes/oxygen-gtk/gtk-2.0/gtkrc /etc/gtk-2.0/gtkrc
 
 umount $AUFS
 rm -rf $NP/.wh..wh.*

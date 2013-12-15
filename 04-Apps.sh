@@ -31,10 +31,9 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-i486-9sl.txz # 3.5M
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/gparted/0.14.1/gparted-0.14.1-x86_64-2sl.txz # 1.4M
-# wget -N $extrasrc/network/qtransmission/2.75/qtransmission-2.75-x86_64-1sl.txz # 1.1M
  wget -N $extrasrc/network/transmission/2.75/transmission-2.75-x86_64-1sl.txz # 1.0M
  wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-x86_64-1sl.txz # 350K
-# wget -N $extrasrc/system/gslapt/0.5.3f/gslapt-0.5.3f-x86_64-1sl.txz # 121K
+ wget -N $extrasrc/system/gslapt/0.5.3h/gslapt-0.5.3h-x86_64-1sl.txz # 124K
  wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-x86_64-2sl.txz # 3.5M
 fi
 
@@ -83,10 +82,10 @@ rm usr/share/gimp/2.0/patterns/{stone33,cracked,crinklepaper,pink_marble,starfie
 
 cripple_samba() {
 cd $SD/$NP
-rm usr/sbin/{winbindd,swat}
-rm usr/bin/{net,rpcclient,smbget,smbcacls,smbclient,smbcquotas,smbtree,smbspool,ntlm_auth,pdbedit,eventlogadm,smbcontrol,smbstatus,nmblookup,wbinfo,testparm,sharesec,profiles,smbta-util}
-rm -r usr/share/swat
-rm usr/lib$ARCH/libnetapi.*
+rm usr/sbin/winbindd
+rm -r usr/share/samba/setup
+rm usr/bin/{smbtorture,net,rpcclient}
+rm -r usr/lib$ARCH/service
 }
 
 cripple_mplayer() {

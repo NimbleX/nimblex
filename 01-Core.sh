@@ -15,13 +15,12 @@ extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 ToBeAdded=(ipcalc madwifi)
 
 
-blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,apmd*,sysvinit-*,udev-*"
-blacklist_ap="ghostscript*,hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*"
-whitelist_ap="mc*,flac*,rpm*,cdrtools*,screen*,sox*,sqlite*,nano*,xfsdump*,ntfsprogs*,lsof*,diffutils*,sysstat*,gphoto2*,vorbis-tools*,dc3dd*,lm_sensors*,sudo*,dvd+rw-tools*,cdparanoia*,bc*,ash*,normalize*,madplay*,aumix*,slackpkg*,dmidecode*,seejpeg*,bpe*,pm-utils*,most*,at*,dmapi*,lsscsi*,vbetool*,rzip*,diffstat*,libx86*,radeontool*"
+blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,apmd*,sysvinit-*,udev-*,grub-*" # For now we exclude grub untill we decide to just clean it.
+blacklist_ap="ghostscript*,hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*,pm-utils-*"
 whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit-*"
-whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*"
+whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*"
 
-whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*"
+whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*"
 
 slacky_get() {
@@ -56,7 +55,6 @@ wget -N $slacksrc/d/perl-5.*.txz		# 14500K - should be 5.3M after cleanup
 wget -N $slacksrc/d/libtool-2.*.txz		# 365K
 wget -N $slacksrc/tcl/tcl-8.*.txz		# 1655K
 wget -N $slacksrc/../extra/wicd/wicd-1.*.txz	# 347K
-wget -N ftp://ftp.osuosl.org/pub/slackware/slackware${ARCH}-13.37/slackware${ARCH}/n/dhcpcd-5.2.11-*.txz # 56K - we need to downgrade for now because wicd doesn't work with the latest
 wget -N http://packages.nimblex.net/nimblex/b43-firmware-5.100.138-fw-1.txz	# 145K
 if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/sshfs-fuse-2.3-i486-1.tgz		# 55K
@@ -83,21 +81,20 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/network/nss-mdns/0.10/nss-mdns-0.10-i486-7sl.txz		# 25K
  wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-i486-2sl.txz		# 60K
  wget -N $extrasrc/system/slapt-get/0.10.2o/slapt-get-0.10.2o-i486-3sl.txz	# 170K
- wget -N $extrasrc/libraries/libevent/2.0.21/libevent-2.0.21-i486-1sl.txz	# 206K
  wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-i486-1sl.txz			# 198K
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-2sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/sshfs-fuse/2.4/sshfs-fuse-2.4-x86_64-1sl.txz		# 53K
- wget -N http://packages.nimblex.net/nimblex/systemd-200-x86_64-1.txz		# 1.9M
+ wget -N http://packages.nimblex.net/nimblex/systemd-208-x86_64-1.txz		# 2.1M
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-x86_64-1.txz	# 46K
  wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.76-x86_64-1.txz #52K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-x86_64-1.txz  #6K
+ wget -N http://packages.nimblex.net/nimblex/pysetuptools-0.6c11-x86_64-1.txz	# 283K
  wget -N $extrasrc/libraries/perl-archive-zip/1.31_04/perl-archive-zip-1.31_04-x86_64-1sl.txz # 88 K
  wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-x86_64-2sl.txz		# 40K
  wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-x86_64-1sl.txz	# 61K
  wget -N $extrasrc/system/slapt-get/0.10.2o/slapt-get-0.10.2o-x86_64-1sl.txz	# 170K
- wget -N $extrasrc/libraries/libevent/2.0.20/libevent-2.0.20-x86_64-1sl.txz	# 235K
  wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-x86_64-3sl.txz		# 178K
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-x86_64-1sl.txz # 51K
 fi
@@ -130,7 +127,7 @@ ln -s /bin/systemctl bin/halt
 ln -s /bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
 sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
-echo "PACKAGE NAME:     udev-198" > var/log/packages/udev-198-`uname -m`-1
+echo "PACKAGE NAME:     udev-208" > var/log/packages/udev-208-`uname -m`-1
 
 rm etc/slackware-version
 
@@ -217,8 +214,8 @@ cp ../06-NimbleX/etc/localtime etc/
 cp ../06-NimbleX/etc/bootchartd.conf etc/
 cp ../06-NimbleX/etc/profile etc/
 cp ../06-NimbleX/etc/sysctl.conf etc/
-cp ../06-NimbleX/etc/skel/.bashrc etc/skel/
-cp ../06-NimbleX/etc/skel/.bashrc root/
+cp ../06-NimbleX/etc/skel/{\.bashrc,\.screenrc} etc/skel/
+cp ../06-NimbleX/etc/skel/{\.bashrc,\.screenrc} root/
 # cp ../06-NimbleX/etc/slapt-get/slapt-getrc etc/slapt-get/
 cp ../06-NimbleX/etc/rc.d/rc.* etc/rc.d/
 # cp ../06-NimbleX/usr/share/wallpapers/nimblex-wallpaper.jpg usr/share/wallpapers/

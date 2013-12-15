@@ -12,9 +12,9 @@ extrasrc="http://repository.slacky.eu/slackware${ARCH}-13.1/"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}/"
 
 blacklist_kde="kdeartwork-*,calligra-*,marble-*,kstars-*,kiten-*,kgeography-*,parley-*,kalzium-*,ktouch-*,kig-*,kwordquiz-*,kremotecontrol-*,kbruch-*,khangman-*,kmplot-*,kanagram-*,klettres-*,kdevelop-*,ktorrent-*,libktorrent-*,blinken-*,kalgebra-*,cantor-*,kdetoys*,skanlite*,kdeadmin*,networkmanagement-*,amarok-*,kdepim-*,kplayer-*"
-blacklist_kde=$blacklist_kde",ktuberling-*,kdiamond-*,pairs-*,kpat-*,kajongg-*,libkmahjongg-*,kgoldrunner-*,palapeli-*,kbounce-*,granatier-*,kbreakout-*,kigo-*,kwordquiz-*,ksirk-*"
+blacklist_kde=$blacklist_kde",ktuberling-*,kdiamond-*,pairs-*,kpat-*,kmahjongg-*,libkmahjongg-*,kgoldrunner-*,palapeli-*,kbounce-*,granatier-*,kbreakout-*,kigo-*,kwordquiz-*,ksirk-*,rocs-*,kturtle-*,step-*"
 whitelist_l="clucene*,soprano*,qimageblitz*,strigi*,phonon-*,redland*,qca*,liblastfm*,libxklavier*,poppler*,libtiff*,libspectre*,libwnck*,attica*,eggdbus*,ebook-tools*,libdiscid*,shared-desktop-ontologies*,libiodbc*,herqq-*,libbluedevil-*,NOTYET_akonadi*"
-blacklist_kde=$blacklist_kde",kdevplatform*,kdewebdev*,kfloppy*" # Saves just 2MB
+blacklist_kde=$blacklist_kde",kdevplatform-*,kdewebdev-*,kdesdk-*,kfloppy-*,kdf-*,kmouth-*"
 
 mkdir -p $NP-work $NP $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/locale $NP-removed/devel/usr/{include,lib${ARCH}}
 
@@ -22,8 +22,6 @@ downloadpkg() {
 cd $SD/$NP-work
 wget -R "$blacklist_kde" "$slacksrc"/kde/*.txz
 wget -A "$whitelist_l" "$slacksrc"/l/*.txz
-
-# wget http://repository.slacky.eu/slackware-13.0/libraries/fam/2.7.0/fam-2.7.0-i486-4sl.txz
 }
 
 instpkg() {
@@ -46,10 +44,6 @@ rm -r usr/share/poppler/cMap/Adobe-Japan1	# ~620K
 rm -r usr/share/poppler/cMap/Adobe-Korea1	# ~280K
 rm -r usr/share/apps/ksplash/Themes/Default	# Instead we will use our own
 rm -r usr/share/apps/kdm/themes/{circles,horos,oxygen,oxygen-air}
-# ln -s /usr/share/wallpapers/Air/contents/images/1920x1200.jpg usr/share/apps/ksplash/Themes/Default/1920x1200/background.png 
-# ln -s /usr/share/wallpapers/Air/contents/images/1600x1200.jpg usr/share/apps/ksplash/Themes/Default/1600x1200/background.png
-# ln -s /usr/share/wallpapers/Air/contents/images/1280x1024.jpg usr/share/apps/ksplash/Themes/Default/1280x1024/background.png 
-# ln -s /usr/share/wallpapers/Air/contents/images/1024x768.jpg usr/share/apps/ksplash/Themes/Default/1024x768/background.png
 
 # Copy lzm related ServiceMenus
 cp ../06-NimbleX/usr/share/kde4/services/ServiceMenus/dir2lzm.desktop usr/share/kde4/services/ServiceMenus/
@@ -69,6 +63,9 @@ rm usr/share/apps/remoteview/zeroconf.desktop
 
 # Don't autostart stuff that we don't care about
 rm usr/share/autostart/{nepomukserver.desktop,nepomukcontroller.desktop}
+
+# Clean things from various packages
+rm -r usr/share/apps/carddecks/{svg-dondorf,svg-gm-paris,svg-oxygen-white,svg-jolly-royal,svg-oxygen}
 
 echo "Moving other usless crap.(doc/include/man/locale)"
 # Handle Man pages

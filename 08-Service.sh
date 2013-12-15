@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+START=`date +%s`
+
 cp_new_lzm() {
 rsync -av	01-Core${ARCH}.lzm \
 		02-Xorg${ARCH}-3D.lzm \
@@ -77,6 +79,9 @@ if [[ $1 = "" || $2 = "" ]]; then
 	create_iso
 	cp_new_lzm
 	build
+	world
+	big-world
+	small-world
 	
 	ARCH:
 	32
@@ -94,18 +99,62 @@ elif [ $2 = "32" ]; then
 	VM_IP="192.168.122.11"
 fi
 
-if [ $1 = "" ]; then
-	cp_new_lzm
-elif [ $1 = "reset" ]; then
+case $1 in
+  "reset" )
 	virsh reset `virsh list | grep -w NX${ARCH} | awk '{print $1}'`
-elif [ $1 = "run" ]; then
+  ;;
+  "run" )
 	run_vm
-elif [ $1 = "create_iso" ]; then
+  ;;
+  "create_iso" )
 	create_iso
-elif [ $1 = "cp_new_lzm" ]; then
+  ;;
+  "cp_new_lzm" )
 	cp_new_lzm
-elif [ $1 = "build" ]; then
+  ;;
+  "build" )
 	build_package $3
-else
-	echo "Unknown command"
-fi
+  ;;
+  "world" )
+	./01-Core.sh clean
+	./01-Core.sh world
+	./02-Xorg.sh clean
+	./02-Xorg.sh world
+	./03-Libs.sh clean
+	./03-Libs.sh world
+	./04-Apps.sh clean
+	./04-Apps.sh world
+	./05-KDE.sh clean
+	./05-KDE.sh world
+	./07-Devel.sh clean
+	./07-Devel.sh world
+  ;;
+  "big-world" )
+	./01-Core.sh clean
+	./01-Core.sh world
+	./02-Xorg.sh clean
+	./02-Xorg.sh world
+	./03-Libs.sh clean
+	./03-Libs.sh world
+	./04-Apps.sh clean
+	./04-Apps.sh world
+	./05-KDE.sh clean
+	./05-KDE.sh world
+	./07-Devel.sh clean
+	./07-Devel.sh world
+	cp_new_lzm	# Something not OK here
+	create_iso
+	run_vm
+  ;;
+   "small-world" )
+	cp_new_lzm
+	create_iso
+	run_vm
+  ;;
+ * )
+	echo "Wazzup?"
+  ;;
+
+esac
+
+echo "Finished in $((`date +%s` - $START))"

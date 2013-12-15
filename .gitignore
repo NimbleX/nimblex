@@ -16,7 +16,9 @@
 !05-KDE.sh
 07-Devel*
 !07-Devel.sh
-ISO-test-*
+09-Multilib*
+!09-Multilib.sh
+ISO-test*
 FILELIST.TXT
 linux-live
 #       Kernels/
