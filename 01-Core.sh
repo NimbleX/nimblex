@@ -71,32 +71,34 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-i486-1.txz	# 46K
  wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.76-i486-1ponce.txz #52K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-i486-1ponce.txz #5K
+ wget -N http://packages.nimblex.net/nimblex/slapt-get-0.10.2p-i386-1.tgz	# 170K
+ wget -N http://packages.nimblex.net/nimblex/confuse-2.6-i486-1.txz		# 42K
 # wget -N $extrasrc/network/airpwn/1.4/airpwn-1.4-i486-4sl.txz			# 60K
 # wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-i486-1sl.txz		# 37K
-# wget -N $extrasrc/security/tomoyo-tools/2.3.0p2/tomoyo-tools-2.3.0p2-i486-1sl.txz # 100K
  wget -N $extrasrc/libraries/libasyncns/0.8/libasyncns-0.8-i486-4sl.txz		# 24K
- wget -N $extrasrc/libraries/libdaemon/0.14/libdaemon-0.14-i486-3sl.txz		# 27K
- wget -N $extrasrc/libraries/libnet/1.1.6/libnet-1.1.6-i486-3sl.txz		# 152K
- wget -N $extrasrc/system/fuseiso/20070708/fuseiso-20070708-i486-7sl.txz	# 26K
- wget -N $extrasrc/network/nss-mdns/0.10/nss-mdns-0.10-i486-7sl.txz		# 25K
- wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-i486-2sl.txz		# 60K
- wget -N $extrasrc/system/slapt-get/0.10.2o/slapt-get-0.10.2o-i486-3sl.txz	# 170K
- wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-i486-1sl.txz			# 198K
- wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-2sl.txz # 47K
+ wget -N $extrasrc/libraries/libdaemon/0.14/libdaemon-0.14-i486-4sl.txz		# 27K
+ wget -N $extrasrc/libraries/libnet/1.1.6/libnet-1.1.6-i486-4sl.txz		# 150K
+ wget -N $extrasrc/system/fuseiso/20070708/fuseiso-20070708-i486-8sl.txz	# 26K
+ wget -N $extrasrc/network/nss-mdns/0.10/nss-mdns-0.10-i486-8sl.txz		# 25K
+ wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-i486-3sl.txz		# 60K
+ wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-i486-2sl.txz			# 196K
+ wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-4sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
- wget -N $extrasrc/system/sshfs-fuse/2.4/sshfs-fuse-2.4-x86_64-1sl.txz		# 53K
+# wget -N $extrasrc/system/sshfs-fuse/2.4/sshfs-fuse-2.4-x86_64-1sl.txz		# 53K
  wget -N http://packages.nimblex.net/nimblex/systemd-208-x86_64-1.txz		# 2.1M
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-x86_64-1.txz	# 46K
- wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.76-x86_64-1.txz #52K
+ wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.967-x86_64-1.txz #82K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-x86_64-1.txz  #6K
- wget -N http://packages.nimblex.net/nimblex/pysetuptools-0.6c11-x86_64-1.txz	# 283K
- wget -N $extrasrc/libraries/perl-archive-zip/1.31_04/perl-archive-zip-1.31_04-x86_64-1sl.txz # 88 K
- wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-x86_64-2sl.txz		# 40K
- wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-x86_64-1sl.txz	# 61K
- wget -N $extrasrc/system/slapt-get/0.10.2o/slapt-get-0.10.2o-x86_64-1sl.txz	# 170K
- wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-x86_64-3sl.txz		# 178K
- wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-x86_64-1sl.txz # 51K
+ wget -N http://packages.nimblex.net/nimblex/pysetuptools-2.2-x86_64-1.txz	# 304K
+ wget -N http://packages.nimblex.net/nimblex/slapt-get-0.10.2p-x86_64-1.tgz	# 170K
+ wget -N http://packages.nimblex.net/nimblex/tmux-1.8-x86_64-1.txz		# 209K
+# wget -N $extrasrc/libraries/perl-archive-zip/1.31_04/perl-archive-zip-1.31_04-x86_64-1sl.txz # 88 K
+ wget -N $extrasrc/libraries/confuse/2.7/confuse-2.7-x86_64-3sl.txz		# 42K
+ wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-x86_64-3sl.txz		# 41K
+ wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-x86_64-2sl.txz	# 61K
+ wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-x86_64-2sl.txz		# 203K
+ wget -N $extrasrc/utilities/slackyd/1.0.20110808/slackyd-1.0.20110808-x86_64-2sl.txz # 51K
 fi
 }
 

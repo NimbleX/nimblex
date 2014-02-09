@@ -23,6 +23,15 @@ wget -N -R "$blacklist_x" "$slacksrc"/x/*.txz
 wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
 wget -N -A "$whitelist_kde" "$slacksrc"/kde/*.txz
 
+if [[ $ARCH = "" ]]; then
+ wget -N http://packages.nimblex.net/nimblex/i3-4.2-i486-2.txz		# 641K
+ wget -N http://packages.nimblex.net/nimblex/i3status-2.5.1-i486-1.txz	# 31K
+elif [[ $ARCH = "64" ]]; then
+ wget -N http://packages.nimblex.net/nimblex/i3-4.7.2-x86_64-1.txz	# 646K
+ wget -N http://packages.nimblex.net/nimblex/i3status-2.8-x86_64-1.txz	# 38K
+ wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-x86_64-1.txz	# 15K
+fi
+
 }
 
 instpkg() {

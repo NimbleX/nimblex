@@ -1,2 +1,2 @@
 #!/bin/sh
-links http://public.nimblex.net/cgi-bin/man-cgi?$1
+links http://man.he.net/?topic=$1\&section=all
