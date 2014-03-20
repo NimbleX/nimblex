@@ -85,11 +85,12 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-4sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
 # wget -N $extrasrc/system/sshfs-fuse/2.4/sshfs-fuse-2.4-x86_64-1sl.txz		# 53K
- wget -N http://packages.nimblex.net/nimblex/systemd-208-x86_64-1.txz		# 2.1M
+ wget -N http://packages.nimblex.net/nimblex/systemd-211-x86_64-1.txz		# 2.1M
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-x86_64-1.txz	# 46K
  wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.967-x86_64-1.txz #82K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-x86_64-1.txz  #6K
+ wget -N http://packages.nimblex.net/nimblex/perl-TermReadKey-2.31-x86_64-0.txz	# 25K
  wget -N http://packages.nimblex.net/nimblex/pysetuptools-2.2-x86_64-1.txz	# 304K
  wget -N http://packages.nimblex.net/nimblex/slapt-get-0.10.2p-x86_64-1.tgz	# 170K
  wget -N http://packages.nimblex.net/nimblex/tmux-1.8-x86_64-1.txz		# 209K
@@ -129,7 +130,7 @@ ln -s /bin/systemctl bin/halt
 ln -s /bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
 sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
-echo "PACKAGE NAME:     udev-208" > var/log/packages/udev-208-`uname -m`-1
+echo "PACKAGE NAME:     udev-211" > var/log/packages/udev-211-`uname -m`-1
 
 rm etc/slackware-version
 
