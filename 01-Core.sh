@@ -85,15 +85,17 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-4sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
 # wget -N $extrasrc/system/sshfs-fuse/2.4/sshfs-fuse-2.4-x86_64-1sl.txz		# 53K
- wget -N http://packages.nimblex.net/nimblex/systemd-211-x86_64-1.txz		# 2.1M
+ wget -N http://packages.nimblex.net/nimblex/systemd-212-x86_64-1.txz		# 3.1M
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-x86_64-1.txz	# 46K
  wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.967-x86_64-1.txz #82K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-x86_64-1.txz  #6K
  wget -N http://packages.nimblex.net/nimblex/perl-TermReadKey-2.31-x86_64-0.txz	# 25K
- wget -N http://packages.nimblex.net/nimblex/pysetuptools-2.2-x86_64-1.txz	# 304K
+ wget -N http://packages.nimblex.net/nimblex/pysetuptools-3.4.4-x86_64-1.txz	# 308K
  wget -N http://packages.nimblex.net/nimblex/slapt-get-0.10.2p-x86_64-1.tgz	# 170K
- wget -N http://packages.nimblex.net/nimblex/tmux-1.8-x86_64-1.txz		# 209K
+ wget -N http://packages.nimblex.net/nimblex/tmux-1.9a-x86_64-1.txz		# 216K
+ wget -N http://packages.nimblex.net/nimblex/audit-2.3.6-x86_64-1.txz		# 449K
+ wget -N http://packages.nimblex.net/nimblex/libseccomp-2.1.1-x86_64-1root.txz	# 55K
 # wget -N $extrasrc/libraries/perl-archive-zip/1.31_04/perl-archive-zip-1.31_04-x86_64-1sl.txz # 88 K
  wget -N $extrasrc/libraries/confuse/2.7/confuse-2.7-x86_64-3sl.txz		# 42K
  wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-x86_64-3sl.txz		# 41K
@@ -120,6 +122,9 @@ chmod -x etc/rc.d/rc.pcmcia
 chmod -x etc/rc.d/rc.inetd
 chmod +x etc/rc.d/rc.bluetooth
 sed -i 's/darkstar/nimblex/g' etc/hosts
+sed -i 's/#   ForwardAgent no/    ForwardAgent yes/' etc/ssh/ssh_config
+sed -i 's/#   StrictHostKeyChecking ask/    StrictHostKeyChecking no/' etc/ssh/ssh_config
+
 #sed -i 's/darkstar/nimblex/g' etc/rc.d/rc.M
 #sed -i 's/LESS="-M"/LESS="-MR"/' etc/profile
 
