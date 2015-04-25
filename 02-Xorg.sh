@@ -10,8 +10,9 @@ slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware
 
 blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,font-misc*,ttf-indic*,tibmachuni-font*,font-isas*,font-daewoo*,font-jis*,font-cronyx*,font-mutt*,font-schumacher*,sinhala_lklug*"
 blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server-xnest*,xedit*"
+blacklist_x=$blacklist_x",mesa-*" # LLVM is now a hard dependency and it would increase the size with at least 5.6MB
 
-whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,libxml2*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*"
+whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*"
 
 whitelist_kde="oxygen-gtk2-*,oxygen-gtk3-*"
 
@@ -25,11 +26,14 @@ wget -N -A "$whitelist_kde" "$slacksrc"/kde/*.txz
 
 if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/i3-4.2-i486-2.txz		# 641K
- wget -N http://packages.nimblex.net/nimblex/i3status-2.5.1-i486-1.txz	# 31K
+ wget -N http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	# 38K
+ wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
+ wget -N http://packages.nimblex.net/slackware/slackware/x/mesa-10.3.5-i486-1.txz #7MB	# For now we take mesa from Slackware for 32bit.
 elif [[ $ARCH = "64" ]]; then
- wget -N http://packages.nimblex.net/nimblex/i3-4.7.2-x86_64-1.txz	# 646K
+ wget -N http://packages.nimblex.net/nimblex/i3-4.8-x86_64-1.txz	# 671K
  wget -N http://packages.nimblex.net/nimblex/i3status-2.8-x86_64-1.txz	# 38K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-x86_64-1.txz	# 15K
+ wget -N http://packages.nimblex.net/nimblex/mesa-10.3.7-x86_64-1.txz	# 4.7MB
 fi
 
 }
@@ -54,12 +58,6 @@ mv usr/share/locale/* ../$NP-removed/locale/usr/share/locale/ # 250KB compiz and
 mv usr/include/* ../$NP-removed/devel/usr/include/
 mv usr/lib${ARCH}/*.a ../$NP-removed/devel/usr/lib${ARCH}/
 
-echo Handle mesa as a separate package
-
-mkdir -p $SD/$NP-3D/usr/lib${ARCH}/xorg/modules/
-mv usr/lib${ARCH}/xorg/modules/dri $SD/$NP-3D/usr/lib${ARCH}/xorg/modules/
-
-# rm usr/lib${ARCH}/xorg/modules/drivers/sis_drv.so # 200K
 # Handle usr/share/icons # 300KB
 # Handle fonts (usr/share/fonts or txz packagez) (Maybe 2MB of data)
 # Handle usr/share/X11/locale # 144KB
@@ -115,13 +113,12 @@ SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
 
 if [[ -z $1 ]]; then
 	echo "Tell me what to do"
-	echo "You options are: clean download install lzmfy"
+	echo "You options are: clean download install lzmfy world"
 else
 	case $1 in
 	 "clean" )
 	  echo "...CLEANING"
 	  rm -r $NP && echo $NP deleted
-	  rm -r $NP-3D && echo $NP-3D deleted
 	  rm -r $NP-work && echo $NP-work deleted
 	  rm -r $NP-removed && echo $NP-removed deleted
 	 ;;
@@ -139,7 +136,6 @@ else
 	 "lzmfy" )
 	  echo "...LZMFY"
 	  mksquashfs $NP $NP.lzm $SQUASH_OPT
-	  mksquashfs $NP-3D $NP-3D.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -151,7 +147,6 @@ else
 	  run-ldconfig
 	  echo "...LZMFY"
 	  mksquashfs $NP $NP.lzm $SQUASH_OPT
-	  mksquashfs $NP-3D $NP-3D.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

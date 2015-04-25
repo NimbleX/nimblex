@@ -18,9 +18,9 @@ ToBeAdded=(ipcalc madwifi)
 blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,apmd*,sysvinit-*,udev-*,grub-*" # For now we exclude grub untill we decide to just clean it.
 blacklist_ap="ghostscript*,hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*,pm-utils-*"
 whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit-*"
-whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*"
+whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,keyutils-*,libxml2-*"
 
-whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*"
+whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*"
 
 slacky_get() {
@@ -58,24 +58,27 @@ wget -N $slacksrc/../extra/wicd/wicd-1.*.txz	# 347K
 wget -N http://packages.nimblex.net/nimblex/b43-firmware-5.100.138-fw-1.txz	# 145K
 if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/sshfs-fuse-2.3-i486-1.tgz		# 55K
- wget -N http://packages.nimblex.net/nimblex/systemd-200-i486-1.txz		# 1.9M
+ wget -N http://packages.nimblex.net/nimblex/systemd-200-i486-1.txz		# 4.2M
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-i486-1.txz		# 1.1M
  wget -N http://packages.nimblex.net/nimblex/libnih-1.0.3.txz			# 336K
  wget -N http://packages.nimblex.net/nimblex/atop-1.26-i486-1.tgz		# 113K
- wget -N http://packages.nimblex.net/nimblex/curlftpfs-0.9.2-i486-1.tgz		# 41K
  wget -N http://packages.nimblex.net/nimblex/ncdu-1.8-i486-1.tgz		# 28K
  wget -N http://packages.nimblex.net/nimblex/radvd-1.9.1-i486-1.tgz		# 71K
  wget -N http://packages.nimblex.net/nimblex/tdb-1.0.6-i486-1.tgz		# 50K
  wget -N http://packages.nimblex.net/nimblex/csync-0.49.9-i486-1.txz		# 88K
- wget -N http://packages.nimblex.net/nimblex/perl-archive-zip-1.31_02-i486.tgz	# 105K
  wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-i486-1.txz	# 46K
  wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.76-i486-1ponce.txz #52K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-i486-1ponce.txz #5K
- wget -N http://packages.nimblex.net/nimblex/slapt-get-0.10.2p-i386-1.tgz	# 170K
- wget -N http://packages.nimblex.net/nimblex/confuse-2.6-i486-1.txz		# 42K
+ wget -N http://packages.nimblex.net/nimblex/slapt-get-0.10.2r-i386-1.tgz	# 277K
+ wget -N http://packages.nimblex.net/nimblex/tmux-1.9a-x86_64-1.txz		# 216K
+ wget -N http://packages.nimblex.net/nimblex/pyparsing-2.0.3-i686-1.txz		# 99K
+ wget -N http://packages.nimblex.net/nimblex/urlgrabber-3.10-i686-1.txz		# 84K
+ wget -N http://packages.nimblex.net/nimblex/snappy-1.1.2-i686-1.txz		# 49K
+ wget -N http://packages.nimblex.net/nimblex/json-c-0.11-i686-1.txz		# 110K
+ wget -N http://packages.nimblex.net/nimblex/pulseaudio-5.0-i686-1.txz		# 1.1M
+ wget -N http://packages.nimblex.net/nimblex/confuse-2.7-i686-1.txz		# 51K
 # wget -N $extrasrc/network/airpwn/1.4/airpwn-1.4-i486-4sl.txz			# 60K
 # wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-i486-1sl.txz		# 37K
- wget -N $extrasrc/libraries/libasyncns/0.8/libasyncns-0.8-i486-4sl.txz		# 24K
  wget -N $extrasrc/libraries/libdaemon/0.14/libdaemon-0.14-i486-4sl.txz		# 27K
  wget -N $extrasrc/libraries/libnet/1.1.6/libnet-1.1.6-i486-4sl.txz		# 150K
  wget -N $extrasrc/system/fuseiso/20070708/fuseiso-20070708-i486-8sl.txz	# 26K
@@ -84,24 +87,39 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-i486-2sl.txz			# 196K
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-4sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
-# wget -N $extrasrc/system/sshfs-fuse/2.4/sshfs-fuse-2.4-x86_64-1sl.txz		# 53K
- wget -N http://packages.nimblex.net/nimblex/systemd-212-x86_64-1.txz		# 3.1M
+ wget -N $extrasrc/system/sshfs-fuse/2.5/sshfs-fuse-2.5-x86_64-1sl.txz		# 53K
+ wget -N http://packages.nimblex.net/nimblex/systemd-218-x86_64-1.txz		# 3.1M
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
+ wget -N http://packages.nimblex.net/nimblex/atop-2.1-x86_64-1.txz		# 111K
+ wget -N http://packages.nimblex.net/nimblex/ncdu-1.10-x86_64-1.txz		# 36K
  wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-x86_64-1.txz	# 46K
  wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.967-x86_64-1.txz #82K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-x86_64-1.txz  #6K
  wget -N http://packages.nimblex.net/nimblex/perl-TermReadKey-2.31-x86_64-0.txz	# 25K
  wget -N http://packages.nimblex.net/nimblex/pysetuptools-3.4.4-x86_64-1.txz	# 308K
- wget -N http://packages.nimblex.net/nimblex/slapt-get-0.10.2p-x86_64-1.tgz	# 170K
+ wget -N http://packages.nimblex.net/nimblex/slapt-get-0.10.2r-x86_64-1.tgz	# 281K
  wget -N http://packages.nimblex.net/nimblex/tmux-1.9a-x86_64-1.txz		# 216K
  wget -N http://packages.nimblex.net/nimblex/audit-2.3.6-x86_64-1.txz		# 449K
  wget -N http://packages.nimblex.net/nimblex/libseccomp-2.1.1-x86_64-1root.txz	# 55K
-# wget -N $extrasrc/libraries/perl-archive-zip/1.31_04/perl-archive-zip-1.31_04-x86_64-1sl.txz # 88 K
+ wget -N http://packages.nimblex.net/nimblex/pyparsing-2.0.1-x86_64-1.txz	# 96K
+ wget -N http://packages.nimblex.net/nimblex/urlgrabber-3.10-x86_64-1.txz	# 84K
+ wget -N http://packages.nimblex.net/nimblex/snappy-1.1.2-x86_64-1.txz		# 49K
+ wget -N http://packages.nimblex.net/nimblex/ipaddr-py-2.1.11-x86_64-1.txz	# 29K
+ wget -N http://packages.nimblex.net/nimblex/pbr-0.8.0-x86_64-1.txz		# 63K
+ wget -N http://packages.nimblex.net/nimblex/mod_wsgi-3.4-x86_64-1.txz		# 64K
+ wget -N http://packages.nimblex.net/nimblex/json-c-0.11-x86_64-1.txz		# 109K
+ wget -N http://packages.nimblex.net/nimblex/pulseaudio-5.0-x86_64-1.txz	# 1.2M
  wget -N $extrasrc/libraries/confuse/2.7/confuse-2.7-x86_64-3sl.txz		# 42K
  wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-x86_64-3sl.txz		# 41K
  wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-x86_64-2sl.txz	# 61K
  wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-x86_64-2sl.txz		# 203K
  wget -N $extrasrc/utilities/slackyd/1.0.20110808/slackyd-1.0.20110808-x86_64-2sl.txz # 51K
+ # The following are some basic music apps related libs
+ wget -N http://packages.nimblex.net/nimblex/dssi-1.1.1-x86_64-1.txz		# 48K
+ wget -N http://packages.nimblex.net/nimblex/libconfig-1.4.9-x86_64-1.txz	# 93K
+ wget -N http://packages.nimblex.net/nimblex/liblo-0.28-x86_64-1.txz		# 69K
+ wget -N http://packages.nimblex.net/nimblex/lv2-1.10.0-x86_64-1.txz		# 146K
+ wget -N http://packages.nimblex.net/nimblex/slv2-0.6.6-x86_64-2.txz		# 56K
 fi
 }
 
@@ -128,14 +146,17 @@ sed -i 's/#   StrictHostKeyChecking ask/    StrictHostKeyChecking no/' etc/ssh/s
 #sed -i 's/darkstar/nimblex/g' etc/rc.d/rc.M
 #sed -i 's/LESS="-M"/LESS="-MR"/' etc/profile
 
-# systemD related
+# systemD related. Perhaps these would be better ran from tmpfiles.d/nimblex.conf
 ln -s /usr/lib/libffi.so.6.0.0 usr/lib/libffi.so.4
 ln -s /bin/systemctl bin/reboot
 ln -s /bin/systemctl bin/halt
 ln -s /bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
 sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
-echo "PACKAGE NAME:     udev-211" > var/log/packages/udev-211-`uname -m`-1
+echo "PACKAGE NAME:     udev-219" > var/log/packages/udev-219-`uname -m`-1
+
+rm -r etc/localtime
+# ln -s /usr/share/zoneinfo/GMT0 etc/localtime # This should be handled by tmpfiles.d/etc.conf
 
 rm etc/slackware-version
 
@@ -145,7 +166,6 @@ mkdir -p etc/smack/accesses.d
 echo "nimblex" > etc/HOSTNAME
 echo "NimbleX Linux." > etc/motd
 echo "<html><body><h1>NimbleX is running your web server!</h1></body></html>" > var/www/htdocs/index.html
-echo "nameserver 8.8.8.8" > etc/resolv.conf
 echo "WORKINGDIR=/var/slapt-get
 EXCLUDE=^aaa_elflibs,^devs,^glibc-.*,^kernel-.*,^udev,.*-[0-9]+dl$
 SOURCE=http://packages.nimblex.net/slackware${ARCH}/:OFFICIAL
@@ -182,6 +202,7 @@ mkdir -p ../$NP-removed/man_pages/usr/local/man/ && mv usr/local/man/* $_
 
 # Handle locale
 mkdir -p ../$NP-removed/locale/usr/share/locale/ && mv usr/share/locale/* $_
+#mkdir -p ../$NP-removed/locale/usr/lib/locale/ && mv usr/lib/locale/* $_
 
 # Handle .h & .a files
 mkdir -p ../$NP-removed/devel/usr/include/ && mv usr/include/* $_
@@ -218,9 +239,9 @@ echo "Copying stuff from 06-NimbleX"
 cp ../06-NimbleX/etc/issue* etc/
 cp ../06-NimbleX/etc/dhcpd.conf etc/
 cp ../06-NimbleX/etc/vsftpd.conf etc/
-cp ../06-NimbleX/etc/localtime etc/
 cp ../06-NimbleX/etc/bootchartd.conf etc/
 cp ../06-NimbleX/etc/profile etc/
+cp ../06-NimbleX/etc/default/grub etc/default/
 cp ../06-NimbleX/etc/sysctl.conf etc/
 cp ../06-NimbleX/etc/skel/{\.bashrc,\.screenrc} etc/skel/
 cp ../06-NimbleX/etc/skel/{\.bashrc,\.screenrc} root/
@@ -229,10 +250,11 @@ cp ../06-NimbleX/etc/rc.d/rc.* etc/rc.d/
 # cp ../06-NimbleX/usr/share/wallpapers/nimblex-wallpaper.jpg usr/share/wallpapers/
 cp ../06-NimbleX/var/spool/mail/root var/spool/mail/root
 
-cp ../06-NimbleX/etc/os-release etc/
+cp ../06-NimbleX/usr/lib/os-release usr/lib/ && ln -sf /usr/lib/os-release etc/
 cp ../06-NimbleX/lib/udev/rules.d/*.rules lib/udev/rules.d/
 cp -a ../06-NimbleX/lib/systemd/system/*.{service,socket} lib/systemd/system/
 cp -a ../06-NimbleX/lib/systemd/system/*.target.wants lib/systemd/system/
+cp ../06-NimbleX/usr/lib/sysusers.d/pulseaudio.conf usr/lib/sysusers.d/pulseaudio.conf
 
 
 cp ../06-NimbleX/usr/bin.noarch/* usr/bin/
@@ -249,7 +271,7 @@ run-ldconfig() {
 echo "Running ldconfig and others chrooted"
 chroot . ldconfig
 chroot . /usr/sbin/update-ca-certificates --fresh
-chroot . /usr/sbin/groupadd -g215 vboxusers 2> /dev/null
+#chroot . /usr/sbin/groupadd -g215 vboxusers 2> /dev/null # We'll move this to sysusers.d
 chroot . /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas/
 }
 

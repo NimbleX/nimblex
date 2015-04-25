@@ -4,6 +4,9 @@ set -e
 START=`date +%s`
 
 cp_new_lzm() {
+
+REMOTE="admin@seif:/share/Bogdan/packages/nimblex/lzm/"
+
 rsync -av	01-Core${ARCH}.lzm \
 		02-Xorg${ARCH}-3D.lzm \
 		02-Xorg${ARCH}.lzm \
@@ -12,6 +15,16 @@ rsync -av	01-Core${ARCH}.lzm \
 		05-KDE${ARCH}.lzm \
 		07-Devel${ARCH}.lzm \
 ISO-test${ARCH}/nimblex${ARCH}/
+
+rsync -av	01-Core${ARCH}.lzm \
+		02-Xorg${ARCH}-3D.lzm \
+		02-Xorg${ARCH}.lzm \
+		03-Libs${ARCH}.lzm \
+		04-Apps${ARCH}.lzm \
+		05-KDE${ARCH}.lzm \
+		07-Devel${ARCH}.lzm \
+$REMOTE
+
 }
 
 create_iso() {
@@ -46,7 +59,7 @@ while ! virsh list | grep -w NX${ARCH}; do
 	echo -n .
 done
 
-for i in {9..0}; do echo -en "\r$i"; sleep 1;done; echo -en "\r"
+for i in {9..0}; do echo -en "\r$i"; sleep 3;done; echo -en "\r"
 TRIES=10
 a=1
 while [ "$a" -le "$TRIES" ]; do

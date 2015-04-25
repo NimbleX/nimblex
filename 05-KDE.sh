@@ -77,7 +77,7 @@ mv usr/include/* ../$NP-removed/devel/usr/include/
 }
 
 run-ldconfig() {
-echo "Running ldconfig and others chrooted inside $AUFS"
+echo "Running ldconfig chrooted inside $AUFS"
 
 cd $SD && AUFS="aufs-temp" && mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
