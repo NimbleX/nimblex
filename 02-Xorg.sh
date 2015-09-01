@@ -12,7 +12,7 @@ blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,f
 blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server-xnest*,xedit*"
 blacklist_x=$blacklist_x",mesa-*" # LLVM is now a hard dependency and it would increase the size with at least 5.6MB
 
-whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*"
+whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libplist*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,polkit*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*"
 
 whitelist_kde="oxygen-gtk2-*,oxygen-gtk3-*"
 
@@ -28,11 +28,12 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/i3-4.2-i486-2.txz		# 641K
  wget -N http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	# 38K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
- wget -N http://packages.nimblex.net/slackware/slackware/x/mesa-10.3.5-i486-1.txz #7MB	# For now we take mesa from Slackware for 32bit.
+ wget -N http://packages.nimblex.net/slackware/slackware/x/mesa-10.5.4-i586-1.txz #6.6MB	# For now we take mesa from Slackware for 32bit.
 elif [[ $ARCH = "64" ]]; then
- wget -N http://packages.nimblex.net/nimblex/i3-4.8-x86_64-1.txz	# 671K
- wget -N http://packages.nimblex.net/nimblex/i3status-2.8-x86_64-1.txz	# 38K
+ wget -N http://packages.nimblex.net/nimblex/i3-4.10.2-x86_64-1.txz	# 681K
+ wget -N http://packages.nimblex.net/nimblex/i3status-2.9-x86_64-1.txz	# 43K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-x86_64-1.txz	# 15K
+ wget -N http://packages.nimblex.net/nimblex/libxkbcommon-0.5.0-x86_64-1.txz	# 225K
  wget -N http://packages.nimblex.net/nimblex/mesa-10.3.7-x86_64-1.txz	# 4.7MB
 fi
 
@@ -91,11 +92,13 @@ run-ldconfig() {
 cd $SD && AUFS="aufs-temp"
 echo "Running ldconfig and others chrooted inside $AUFS"
 
+mount | grep aufs-temp && umount aufs-temp
 mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 mount -t aufs -o remount,append:$NP-3D=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
+chroot $AUFS ln -s /lib/libudev.so.1.3.1 /lib/libudev.so.0	# Remove this after systemd update to 20.1
 chroot $AUFS ldconfig
 chroot $AUFS fc-cache
 chroot $AUFS update-mime-database /usr/share/mime

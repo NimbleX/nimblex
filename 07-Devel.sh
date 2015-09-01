@@ -9,6 +9,7 @@ NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
 slacksrc="ftp://ftp.rdsbv.ro/mirrors/slackware/slackware${ARCH}-current/slackware${ARCH}"
 slacksrc="ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/slackware${ARCH}"
 slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
+extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 
 blacklist_d="perl*,python*,llvm-*,gcc-java-*,gcc-gnat-*,gcc-go-*,gcc-gfortran-*"
 whitelist_l="glibc*,mpfr*,db4*"
@@ -21,6 +22,12 @@ cd $SD/$NP-work
 wget -R "$blacklist_d" "$slacksrc"/d/*.txz
 wget -A "$whitelist_l" "$slacksrc"/l/*.txz
 wget -A "$whitelist_ap" "$slacksrc"/ap/*.txz
+
+if [[ $ARCH = "" ]]; then
+ echo "We are not suporting 32bit for the virtualizaton functionality"
+elif [[ $ARCH = "64" ]]; then
+ wget -N $extrasrc/development/vala/0.28/vala-0.28-x86_64-1sl.txz	#1.7M
+fi
 }
 
 instpkg() {

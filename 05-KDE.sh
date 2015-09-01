@@ -11,9 +11,9 @@ slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware
 extrasrc="http://repository.slacky.eu/slackware${ARCH}-13.1/"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}/"
 
-blacklist_kde="kdeartwork-*,calligra-*,marble-*,kstars-*,kiten-*,kgeography-*,parley-*,kalzium-*,ktouch-*,kig-*,kwordquiz-*,kremotecontrol-*,kbruch-*,khangman-*,kmplot-*,kanagram-*,klettres-*,kdevelop-*,ktorrent-*,libktorrent-*,blinken-*,kalgebra-*,cantor-*,kdetoys*,skanlite*,kdeadmin*,networkmanagement-*,amarok-*,kdepim-*,kplayer-*"
-blacklist_kde=$blacklist_kde",ktuberling-*,kdiamond-*,pairs-*,kpat-*,kmahjongg-*,libkmahjongg-*,kgoldrunner-*,palapeli-*,kbounce-*,granatier-*,kbreakout-*,kigo-*,kwordquiz-*,ksirk-*,rocs-*,kturtle-*,step-*"
-whitelist_l="clucene*,soprano*,qimageblitz*,strigi*,phonon-*,redland*,qca*,liblastfm*,libxklavier*,poppler*,libtiff*,libspectre*,libwnck*,attica*,eggdbus*,ebook-tools*,libdiscid*,shared-desktop-ontologies*,libiodbc*,herqq-*,libbluedevil-*,NOTYET_akonadi*"
+blacklist_kde="kdeartwork-*,calligra-*,marble-*,kstars-*,kiten-*,kgeography-*,parley-*,kalzium-*,ktouch-*,kig-*,kwordquiz-*,kremotecontrol-*,kbruch-*,khangman-*,kmplot-*,kanagram-*,klettres-*,kdevelop-*,ktorrent-*,libktorrent-*,blinken-*,kalgebra-*,cantor-*,kdetoys*,skanlite*,kdeadmin*,networkmanagement-*,amarok-*,kdepim-*,kplayer-*,amor-*,artikulate-*"
+blacklist_kde=$blacklist_kde",ktuberling-*,kdiamond-*,pairs-*,kpat-*,kmahjongg-*,libkmahjongg-*,kajongg-*,kgoldrunner-*,palapeli-*,kbounce-*,granatier-*,kbreakout-*,kigo-*,kwordquiz-*,ksirk-*,rocs-*,kturtle-*,step-*,nepomuk-*,kget-*,cervisia-*,kapptemplate-*,kcachegrind-*,kde-dev-*,kdev-python-*,kompare-*,ksystemlog-*,ktux-*,lokalize-*,okteta-*,umbrello-*"
+whitelist_l="clucene*,soprano*,qimageblitz*,strigi*,phonon-*,redland*,qca*,liblastfm*,libxklavier*,poppler*,libtiff*,libspectre*,libwnck*,attica*,eggdbus*,ebook-tools*,libdiscid*,shared-desktop-ontologies*,libiodbc*,herqq-*,libbluedevil-*,xapian-core-*,NOTYET_akonadi*"
 blacklist_kde=$blacklist_kde",kdevplatform-*,kdewebdev-*,kdesdk-*,kfloppy-*,kdf-*,kmouth-*"
 
 mkdir -p $NP-work $NP $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/locale $NP-removed/devel/usr/{include,lib${ARCH}}
@@ -62,7 +62,7 @@ rm usr/share/applications/kde4/kwalletmanager.desktop
 rm usr/share/apps/remoteview/zeroconf.desktop
 
 # Don't autostart stuff that we don't care about
-rm usr/share/autostart/{nepomukserver.desktop,nepomukcontroller.desktop}
+#rm usr/share/autostart/nepomukserver.desktop
 
 # Clean things from various packages
 rm -r usr/share/apps/carddecks/{svg-dondorf,svg-gm-paris,svg-oxygen-white,svg-jolly-royal,svg-oxygen}

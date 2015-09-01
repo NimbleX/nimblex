@@ -11,6 +11,7 @@ slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware
 extrasrc="http://repository.slacky.eu/slackware${ARCH}-13.37/"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}/"
 
+# In April 2015 XINE grew by 8MB.
 whitelist_xap="gimp*,mozilla-firefox*,imagemagick*,xine*,xmms*,rdesktop*,blueman*,MPlayer-*"
 whitelist_n="samba-*"
 

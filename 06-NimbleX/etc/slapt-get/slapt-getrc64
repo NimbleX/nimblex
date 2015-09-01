@@ -1,0 +1,38 @@
+# Working directory for local storage/cache.
+WORKINGDIR=/var/slapt-get
+
+# Exclude package names and expressions.
+# To exclude pre and beta packages, add this to the exclude: 
+#   [0-9\_\.\-]{1}pre[0-9\-\.\-]{1}
+EXCLUDE=^aaa_elflibs,^devs,^glibc-.*,^kernel-.*,^udev,.*-[0-9]+dl$,i[3-6]86
+
+# Base url to directory with a PACKAGES.TXT.
+# This can point to any release, ie: 9.0, 10.0, current, etc.
+SOURCE=http://packages.nimblex.net/slackware64/:OFFICIAL
+SOURCE=http://packages.nimblex.net/slacky64/:OFFICIAL
+
+# SOURCE=ftp://ftp.slackware.com/pub/slackware/slackware-14.0/:OFFICIAL
+
+# Sources for the testing, extra, and pasture areas - if you use them.
+# SOURCE=ftp://ftp.slackware.com/pub/slackware/slackware-14.0/extra/:PREFERRED
+# SOURCE=ftp://ftp.slackware.com/pub/slackware/slackware-14.0/testing/
+# SOURCE=ftp://ftp.slackware.com/pub/slackware/slackware-14.0/pasture/
+
+# Source for slapt-get.
+# SOURCE=http://software.jaos.org/slackpacks/14.0/:OFFICIAL
+
+# Packages on a CD/DVD.
+# SOURCE=file:///mnt/cdrom/:OFFICIAL
+
+# Home made packages.
+# SOURCE=file:///var/www/packages/:CUSTOM
+
+# Slacky.eu 32bit source
+# SOURCE=http://repository.slacky.eu/slackware-14.0/:CUSTOM
+# SOURCE=http://darkstar.ist.utl.pt/slackware/addon/slacky/slackware-14.0/:CUSTOM
+# SOURCE=http://slack.isper.sk/pub/slackware-14.0/:CUSTOM
+
+# Slacky.eu 64bit source
+# SOURCE=http://repository.slacky.eu/slackware64-14.0/:CUSTOM
+# SOURCE=http://darkstar.ist.utl.pt/slackware/addon/slacky/slackware64-14.0/:CUSTOM
+# SOURCE=http://slack.isper.sk/pub/slackware64-14.0/:CUSTOM
