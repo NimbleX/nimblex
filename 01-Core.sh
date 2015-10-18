@@ -2,13 +2,14 @@
 #bash +x
 set -e
 
+. .ftp-credentials
+
 SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
-slacksrc="ftp://ftp.rdsbv.ro/mirrors/slackware/slackware${ARCH}-current/slackware${ARCH}"
-slacksrc="ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/slackware${ARCH}"
-slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
+slacksrc="ftp://slackware.telecoms.bg/slackware/slackware${ARCH}-current/slackware${ARCH}"
+slacksrc="ftp://${USERNAME}:${PASSWORD}@${HOSTNAME}/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
 extrasrc="http://repository.slacky.eu/slackware${ARCH}-14.0/"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 
@@ -107,7 +108,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/pbr-0.8.0-x86_64-1.txz		# 63K
  wget -N http://packages.nimblex.net/nimblex/mod_wsgi-3.4-x86_64-1.txz		# 64K
  wget -N http://packages.nimblex.net/nimblex/json-c-0.11-x86_64-1.txz		# 109K
- wget -N http://packages.nimblex.net/nimblex/pulseaudio-6.0-x86_64-1.txz	# 1.3M
+ wget -N http://packages.nimblex.net/nimblex/pulseaudio-7.0-x86_64-1.txz	# 1.3M
  wget -N http://packages.nimblex.net/nimblex/tinyxml-2.6.2-x86_64-1.txz		# 55K
  wget -N http://packages.nimblex.net/nimblex/yajl-2.1.0-x86_64-1.txz		# 38K
  wget -N $extrasrc/libraries/confuse/2.7/confuse-2.7-x86_64-3sl.txz		# 42K

@@ -18,6 +18,8 @@
 !07-Devel.sh
 09-Multilib*
 !09-Multilib.sh
+10-Virtual*
+!10-Virtual.sh
 ISO-test*
 FILELIST.TXT
 linux-live

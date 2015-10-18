@@ -2,11 +2,13 @@
 #bash +x
 set -e
 
+. .ftp-credentials
+
 SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
-slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
+slacksrc="ftp://${USERNAME}:${PASSWORD}@${HOSTNAME}/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 nxsrc="http://packages.nimblex.net/nimblex"
 
@@ -21,10 +23,10 @@ elif [[ $ARCH = "64" ]]; then
  wget -N $nxsrc/acpica-20150410-x86_64-1.txz		# 685K
  wget -N $slacksrc/l/boost-1.58.0-x86_64-1.txz		# ~7M
  wget -N $nxsrc/drbd-utils-8.9.2-x86_64-1.txz		# 182K
- wget -N $slacksrc/l/gobject-introspection-1.42.0-x86_64-1.txz	# 1M
+ wget -N $slacksrc/l/gobject-introspection-1.44.0-x86_64-1.txz	# 1M
  wget -N $nxsrc/leveldb-1.18-x86_64-1.txz		# 116K
  wget -N $nxsrc/libedit-20150325_3.1-x86_64-1.txz	# 87K
- wget -N $nxsrc/libvirt-1.2.18-x86_64-1.txz		# 7.3M
+ wget -N $nxsrc/libvirt-1.2.20-x86_64-1.txz		# 7.3M
  wget -N $nxsrc/libvirt-glib-0.2.2-x86_64-1.txz		# 300K
  wget -N $nxsrc/pygobject3-3.14.0-x86_64-1.txz		# 250K
  wget -N $nxsrc/qemu-2.4.0-x86_64-1.txz			# 6.7M

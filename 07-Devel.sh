@@ -2,13 +2,14 @@
 #bash +x
 set -e
 
+. .ftp-credentials
+
 SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
-slacksrc="ftp://ftp.rdsbv.ro/mirrors/slackware/slackware${ARCH}-current/slackware${ARCH}"
-slacksrc="ftp://ftp.iasi.roedu.net/mirrors/ftp.slackware.com/pub/slackware/slackware${ARCH}-current/slackware${ARCH}"
-slacksrc="ftp://admin:crdq2f6qwv@seif/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
+slacksrc="ftp://slackware.telecoms.bg/slackware/slackware${ARCH}-current/slackware${ARCH}"
+slacksrc="ftp://${USERNAME}:${PASSWORD}@${HOSTNAME}/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 
 blacklist_d="perl*,python*,llvm-*,gcc-java-*,gcc-gnat-*,gcc-go-*,gcc-gfortran-*"
