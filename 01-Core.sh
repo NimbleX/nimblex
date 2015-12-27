@@ -16,10 +16,10 @@ extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 ToBeAdded=(ipcalc madwifi)
 
 
-blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,apmd*,sysvinit-*,udev-*,grub-*" # For now we exclude grub untill we decide to just clean it.
+blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,apmd*,sysvinit-*,udev-*,grub-*,dbus-*" # For now we exclude grub untill we decide to just clean it.
 blacklist_ap="ghostscript*,hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*,pm-utils-*,qpdf-*"
-whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit-*,libunistring-*"
-whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*"
+whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit2-*,libunistring-*"
+whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*"
 
 whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*"
@@ -62,7 +62,6 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/sshfs-fuse-2.3-i486-1.tgz		# 55K
  wget -N http://packages.nimblex.net/nimblex/systemd-221-i686-1.txz		# 5.1M
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-i486-1.txz		# 1.1M
- wget -N http://packages.nimblex.net/nimblex/libnih-1.0.3.txz			# 336K
  wget -N http://packages.nimblex.net/nimblex/atop-1.26-i486-1.tgz		# 113K
  wget -N http://packages.nimblex.net/nimblex/ncdu-1.8-i486-1.tgz		# 28K
  wget -N http://packages.nimblex.net/nimblex/radvd-1.9.1-i486-1.tgz		# 71K
@@ -91,6 +90,7 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/sshfs-fuse/2.5/sshfs-fuse-2.5-x86_64-1sl.txz		# 53K
  wget -N http://packages.nimblex.net/nimblex/systemd-220-x86_64-1.txz		# 5.1M
+ wget -N http://packages.nimblex.net/nimblex/dbus-1.10.6-x86_64-1.txz		# 472K
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/atop-2.1-x86_64-1.txz		# 111K
  wget -N http://packages.nimblex.net/nimblex/ncdu-1.11-x86_64-1.txz		# 36K
