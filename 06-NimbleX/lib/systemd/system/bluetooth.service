@@ -1,16 +1,16 @@
 [Unit]
 Description=Bluetooth service
 Documentation=man:bluetoothd(8)
+ConditionPathIsDirectory=/sys/class/bluetooth
 
 [Service]
 Type=dbus
 BusName=org.bluez
-ExecStart=/usr/sbin/bluetoothd -n
-#NotifyAccess=main
-#WatchdogSec=30
-Restart=on-failure
-RestartSec=30
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
+ExecStart=/usr/libexec/bluetooth/bluetoothd
+NotifyAccess=main
+#WatchdogSec=10
+#Restart=on-failure
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 LimitNPROC=1
 
 [Install]

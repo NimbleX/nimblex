@@ -13,7 +13,7 @@ extrasrc="http://repository.slacky.eu/slackware${ARCH}-13.37/"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}/"
 
 # In April 2015 XINE grew by 8MB.
-whitelist_xap="gimp*,mozilla-firefox*,imagemagick*,xine*,xmms*,rdesktop*,blueman*,MPlayer-*"
+whitelist_xap="gimp*,mozilla-firefox*,imagemagick*,xine*,xmms*,rdesktop*,blueman*,MPlayer-*,pavucontrol-*,gparted-*"
 whitelist_n="samba-*"
 
 mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/locale $NP-removed/devel/usr/{include,lib${ARCH}}
@@ -24,13 +24,11 @@ wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
 wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz
 
 if [[ $ARCH = "" ]]; then
-# wget -N $extrasrc/system/gparted/0.14.0/gparted-0.14.0-i486-1sl.txz # 1.4M
  wget -N $extrasrc/network/transmission/2.84/transmission-2.84-i486-1sl.txz # 1.2M
  wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-i486-2sl.txz # 347K
  wget -N $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
  wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-i486-10sl.txz # 3.5M
 elif [[ $ARCH = "64" ]]; then
- wget -N $extrasrc/system/gparted/0.18.0/gparted-0.18.0-x86_64-1sl.txz # 816K
  wget -N $extrasrc/network/transmission/2.84/transmission-2.84-x86_64-1sl.txz # 1.2M
 # wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-x86_64-1sl.txz # 350K
  wget -N http://packages.nimblex.net/nimblex/gslapt-0.5.4a-x86_64-1.tgz #167K
