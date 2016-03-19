@@ -36,7 +36,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/i3status-2.9-x86_64-1.txz	# 43K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-x86_64-1.txz	# 15K
  wget -N http://packages.nimblex.net/nimblex/libxkbcommon-0.5.0-x86_64-1.txz	# 225K
- wget -N http://packages.nimblex.net/nimblex/mesa-10.3.7-x86_64-1.txz	# 4.7MB
+ wget -N http://packages.nimblex.net/nimblex/mesa-11.1.2-x86_64-1.txz	# 5.7MB
 fi
 
 }
