@@ -8,8 +8,14 @@ SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
-slacksrc="ftp://slackware.telecoms.bg/slackware/slackware${ARCH}-current/slackware${ARCH}"
-slacksrc="ftp://${USERNAME}:${PASSWORD}@${HOSTNAME}/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
+
+if [[ -f .ftp-credentials ]]; then
+  . .ftp-credentials
+  slacksrc="ftp://${USERNAME}:${PASSWORD}@${HOSTNAME}/Bogdan/packages/slackware${ARCH}/slackware${ARCH}"
+else
+  slacksrc="ftp://slackware.telecoms.bg/slackware/slackware${ARCH}-current/slackware${ARCH}"
+fi
+
 extrasrc="http://repository.slacky.eu/slackware${ARCH}-14.0/"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 

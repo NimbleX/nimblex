@@ -141,6 +141,7 @@ case $1 in
 	./05-KDE.sh world
 	./07-Devel.sh clean
 	./07-Devel.sh world
+	./10-Virtual.sh world
   ;;
   "big-world" )
 	./01-Core.sh clean
@@ -155,6 +156,7 @@ case $1 in
 	./05-KDE.sh world
 	./07-Devel.sh clean
 	./07-Devel.sh world
+	./10-Virtual.sh world
 	cp_new_lzm	# Something not OK here
 	create_iso
 	run_vm
