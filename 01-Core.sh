@@ -224,7 +224,7 @@ mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/python2.7/email/ && mv usr/lib${ARC
 mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/python2.7/json/ && mv usr/lib${ARCH}/python2.7/json/tests $_
 mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/python2.7/lib2to3/ && mv usr/lib${ARCH}/python2.7/lib2to3/tests $_
 mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/python2.7/sqlite3/ && mv usr/lib${ARCH}/python2.7/sqlite3/test $_
-mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/python2.7/site-packages/urwid/ && mv usr/lib${ARCH}/python2.7/site-packages/urwid/tests $_
+mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/python2.7/site-packages/urwid/ && mv usr/lib${ARCH}/python2.7/site-packages/urwid/tests* $_
 rm usr/lib${ARCH}/python2.7/distutils/command/wininst*
 
 # Slim down Perl some more because it's a HUGE bitch

@@ -3,6 +3,7 @@
 *.txz
 *.tgz
 *.tar.bz2
+.ftp-credentials
 
 01-Core*
 !01-Core.sh
