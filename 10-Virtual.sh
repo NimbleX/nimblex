@@ -19,9 +19,9 @@ fi
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 nxsrc="http://packages.nimblex.net/nimblex"
 
-mkdir -p $NP $NP-work $NP-removed
 
 downloadpkg() {
+mkdir -p $NP $NP-work $NP-removed
 cd $SD/$NP-work
 
 if [[ $ARCH = "" ]]; then
@@ -33,7 +33,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N $slacksrc/l/gobject-introspection-1.46.0-x86_64-1.txz	# 1M
  wget -N $nxsrc/leveldb-1.18-x86_64-1.txz		# 116K
  wget -N $nxsrc/libedit-20150325_3.1-x86_64-1.txz	# 87K
- wget -N $nxsrc/libvirt-1.3.0-x86_64-1.txz		# 7.4M
+ wget -N $nxsrc/libvirt-1.3.2-x86_64-1.txz		# 7.4M
  wget -N $nxsrc/libvirt-glib-0.2.3-x86_64-1.txz		# 300K
  wget -N $nxsrc/pygobject3-3.14.0-x86_64-1.txz		# 250K
  wget -N $nxsrc/qemu-2.5.0-x86_64-1.txz			# 7.2M
@@ -109,6 +109,10 @@ else
 	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
+	  echo "...CLEANING"
+	  rm -r $NP && echo $NP deleted
+	  rm -r $NP-work && echo $NP-work deleted
+	  rm -r $NP-removed && echo $NP-removed deleted
 	  echo "...DOWNLOADING"
 	  downloadpkg
 	  echo "...INSTALLING"

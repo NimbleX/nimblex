@@ -4,7 +4,7 @@ Description=Policy Manager
 [Service]
 Type=dbus
 BusName=org.freedesktop.PolicyKit1
-ExecStart=/usr/libexec/polkitd --no-debug
+ExecStart=/usr/lib/polkit-1/polkitd --no-debug
 
 [Install]
 # We pull this in by graphical.target instead of waiting for the bus
