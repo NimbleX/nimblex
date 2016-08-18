@@ -35,8 +35,10 @@ if [ "$TERM" = "" -o "$TERM" = "unknown" ]; then
  TERM=linux
 fi
 
-if [ "`id -u`" = "0" ]; then
- PS1="\h:\w\`if [ \$? = 0 ]; then echo -e '\e[01;32m\\$'; else echo -e '\e[01;31m\\$'; fi\`\[\e[00m\] "
+if [ "$SHELL" = "/bin/zsh" ]; then
+ PS1='%n@%m:%~%# '
+elif [ "`id -u`" = "0" ]; then
+ PS1='\h:\w\$ '
 else
  PS1='\u@\h:\w\$ '
 fi
@@ -60,9 +62,4 @@ for profile_script in /etc/profile.d/*.sh ; do
   fi
 done
 unset profile_script
-
-# For non-root users, add the current directory to the search path:
-if [ ! "`id -u`" = "0" ]; then
- PATH="$PATH:."
-fi
 

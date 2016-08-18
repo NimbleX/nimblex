@@ -93,7 +93,7 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-4sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/sshfs-fuse/2.5/sshfs-fuse-2.5-x86_64-1sl.txz		# 53K
- wget -N http://packages.nimblex.net/nimblex/systemd-220-x86_64-1.txz		# 5.1M
+ wget -N http://packages.nimblex.net/nimblex/systemd-231-x86_64-1.txz		# 3.8M
  wget -N http://packages.nimblex.net/nimblex/dbus-1.10.6-x86_64-1.txz		# 472K
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/atop-2.1-x86_64-1.txz		# 111K
@@ -129,6 +129,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/sratom-0.4.6-x86_64-1.txz		# 16K
  wget -N http://packages.nimblex.net/nimblex/liblrdf-0.5.0-x86_64-1.txz		# 24K
  wget -N http://packages.nimblex.net/nimblex/lilv-0.20.0-x86_64-1.txz		# 59K
+ wget -N http://packages.nimblex.net/nimblex/celt051-0.5.1.3-x86_64-2.txz	# 47K
 fi
 }
 

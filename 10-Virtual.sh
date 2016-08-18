@@ -33,15 +33,20 @@ elif [[ $ARCH = "64" ]]; then
  wget -N $slacksrc/l/gobject-introspection-1.46.0-x86_64-1.txz	# 1M
  wget -N $nxsrc/leveldb-1.18-x86_64-1.txz		# 116K
  wget -N $nxsrc/libedit-20150325_3.1-x86_64-1.txz	# 87K
- wget -N $nxsrc/libvirt-1.3.2-x86_64-1.txz		# 7.4M
+ wget -N $nxsrc/libvirt-2.1.0-x86_64-1.txz		# 8M
  wget -N $nxsrc/libvirt-glib-0.2.3-x86_64-1.txz		# 300K
  wget -N $nxsrc/pygobject3-3.14.0-x86_64-1.txz		# 250K
- wget -N $nxsrc/qemu-2.5.0-x86_64-1.txz			# 7.2M
- wget -N $nxsrc/spice-0.12.6-x86_64-1.txz		# 469K
+ wget -N $nxsrc/qemu-2.6.0-x86_64-1.txz			# 9.0M
+ wget -N $nxsrc/libosinfo-0.3.1-x86_64-1.txz		# 339K
+ wget -N $nxsrc/spice-0.12.8-x86_64-1.txz		# 469K
  wget -N $nxsrc/spice-gtk-0.28-x86_64-1.txz		# 423K
- wget -N $nxsrc/spice-protocol-0.12.10-noarch-1.txz	# 49K
+ wget -N $nxsrc/spice-protocol-0.12.11-noarch-1.txz	# 49K
  wget -N $nxsrc/ceph-0.94.1-x86_64-1.txz		# 43M
  wget -N $nxsrc/openvswitch-utils-2.3.1-x86_64-1.txz	# 1M
+ wget -N $nxsrc/virt-manager-1.4.0-x86_64-1.txz		# 1M
+ wget -N $nxsrc/usbredir-0.7-x86_64-1.txz		# 50K
+ wget -N $nxsrc/gtk-vnc-0.5.4-x86_64-2.txz		# 176K
+ wget -N $nxsrc/vte3-0.44.2-x86_64-1.txz		# 566K
 fi
 }
 
