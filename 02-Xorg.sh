@@ -37,11 +37,11 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
  wget -N http://packages.nimblex.net/slackware/slackware/x/mesa-10.5.4-i586-1.txz #6.6MB	# For now we take mesa from Slackware for 32bit.
 elif [[ $ARCH = "64" ]]; then
- wget -N http://packages.nimblex.net/nimblex/i3-4.10.2-x86_64-1.txz	# 681K
- wget -N http://packages.nimblex.net/nimblex/i3status-2.9-x86_64-1.txz	# 43K
- wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-x86_64-1.txz	# 15K
+ wget -N http://packages.nimblex.net/nimblex/i3-4.13-x86_64-1.txz	# 714K
+ wget -N http://packages.nimblex.net/nimblex/i3status-2.10-x86_64-1.txz	# 38K
+ wget -N http://packages.nimblex.net/nimblex/dmenu-4.6-x86_64-1.txz	# 20K
  wget -N http://packages.nimblex.net/nimblex/libxkbcommon-0.5.0-x86_64-1.txz	# 225K
- wget -N http://packages.nimblex.net/nimblex/mesa-12.0.1-x86_64-1.txz	# 5.7MB
+ wget -N http://packages.nimblex.net/nimblex/mesa-13.0.1-x86_64-1.txz	# 6.5MB
 fi
 
 }

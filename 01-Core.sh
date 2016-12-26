@@ -82,6 +82,7 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/snappy-1.1.2-i686-1.txz		# 49K
  wget -N http://packages.nimblex.net/nimblex/confuse-2.7-i686-1.txz		# 51K
  wget -N http://packages.nimblex.net/nimblex/yajl-2.1.0-i686-1.txz		# 41K
+ wget -N http://packages.nimblex.net/nimblex/libev-4.11-i486-2.txz		# 134K
 # wget -N $extrasrc/network/airpwn/1.4/airpwn-1.4-i486-4sl.txz			# 60K
 # wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-i486-1sl.txz		# 37K
  wget -N $extrasrc/libraries/libdaemon/0.14/libdaemon-0.14-i486-4sl.txz		# 27K
@@ -94,7 +95,7 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/sshfs-fuse/2.5/sshfs-fuse-2.5-x86_64-1sl.txz		# 53K
  wget -N http://packages.nimblex.net/nimblex/systemd-231-x86_64-1.txz		# 3.8M
- wget -N http://packages.nimblex.net/nimblex/dbus-1.10.6-x86_64-1.txz		# 472K
+ wget -N http://packages.nimblex.net/nimblex/dbus-1.10.10-x86_64-1.txz		# 473K
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/atop-2.1-x86_64-1.txz		# 111K
  wget -N http://packages.nimblex.net/nimblex/ncdu-1.11-x86_64-1.txz		# 36K
@@ -112,6 +113,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/mod_wsgi-3.4-x86_64-1.txz		# 64K
  wget -N http://packages.nimblex.net/nimblex/tinyxml-2.6.2-x86_64-1.txz		# 55K
  wget -N http://packages.nimblex.net/nimblex/yajl-2.1.0-x86_64-1.txz		# 38K
+ wget -N http://packages.nimblex.net/nimblex/libev-4.23-x86_64-1.txz		# 131K
  wget -N $extrasrc/libraries/confuse/2.7/confuse-2.7-x86_64-3sl.txz		# 42K
  wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-x86_64-3sl.txz		# 41K
  wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-x86_64-2sl.txz	# 61K
