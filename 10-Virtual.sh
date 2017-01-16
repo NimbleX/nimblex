@@ -35,6 +35,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N $nxsrc/libedit-20150325_3.1-x86_64-1.txz	# 87K
  wget -N $nxsrc/libvirt-2.5.0-x86_64-1.txz		# 9M
  wget -N $nxsrc/libvirt-glib-1.0.0-x86_64-1.txz		# 300K
+ wget -N $nxsrc/libvirt-python-2.5.0-x86_64-1.txz	# 207K
  wget -N $nxsrc/pygobject3-3.14.0-x86_64-1.txz		# 250K
  wget -N $nxsrc/qemu-2.8.0-x86_64-1.txz			# 10.5M
  wget -N $nxsrc/libosinfo-0.3.1-x86_64-1.txz		# 339K
