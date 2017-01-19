@@ -28,7 +28,6 @@ if [[ $ARCH = "" ]]; then
  echo "We are not suporting 32bit for the virtualizaton functionality"
 elif [[ $ARCH = "64" ]]; then
  wget -N $nxsrc/acpica-20150410-x86_64-1.txz		# 685K
- wget -N $slacksrc/l/boost-1.61.0-x86_64-1.txz		# ~7M
  wget -N $nxsrc/drbd-utils-8.9.2-x86_64-1.txz		# 182K
  wget -N $slacksrc/l/gobject-introspection-1.46.0-x86_64-2.txz	# 1M
  wget -N $nxsrc/leveldb-1.19-x86_64-1.txz		# 117K

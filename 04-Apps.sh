@@ -38,7 +38,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/network/transmission/2.84/transmission-2.84-x86_64-1sl.txz # 1.2M
 # wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-x86_64-1sl.txz # 350K
  wget -N http://packages.nimblex.net/nimblex/gslapt-0.5.4a-x86_64-1.tgz #167K
-# wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-x86_64-2sl.txz # 3.5M
+ wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg64/current/flashplayer-plugin-24.0.0.194-x86_64-1alien.txz # 7.5M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz

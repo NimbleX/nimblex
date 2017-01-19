@@ -60,7 +60,7 @@ echo Use the script that downloads slacky packages by name because this is a bit
 wget -N $slacksrc/d/python-2.*.txz		# 11500K
 wget -N $slacksrc/d/perl-5.*.txz		# 14500K - should be 5.3M after cleanup
 wget -N $slacksrc/d/libtool-2.*.txz		# 365K
-wget -N $slacksrc/d/python-setuptools-19.*.txz	# 257K
+wget -N $slacksrc/d/python-setuptools-22.*.txz	# 388K
 wget -N $slacksrc/tcl/tcl-8.*.txz		# 1655K
 wget -N $slacksrc/../extra/wicd/wicd-1.*.txz	# 347K
 wget -N http://packages.nimblex.net/nimblex/b43-firmware-5.100.138-fw-1.txz	# 145K
@@ -95,7 +95,7 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/sshfs-fuse/2.5/sshfs-fuse-2.5-x86_64-1sl.txz		# 53K
  wget -N http://packages.nimblex.net/nimblex/systemd-231-x86_64-1.txz		# 3.8M
- wget -N http://packages.nimblex.net/nimblex/dbus-1.10.10-x86_64-1.txz		# 473K
+ wget -N http://packages.nimblex.net/nimblex/dbus-1.10.14-x86_64-1.txz		# 473K
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/atop-2.1-x86_64-1.txz		# 111K
  wget -N http://packages.nimblex.net/nimblex/ncdu-1.11-x86_64-1.txz		# 36K
