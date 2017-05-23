@@ -11,7 +11,7 @@ SRC="http://packages.nimblex.net/slacky${ARCH}"
 
 mkdir -p $NP $NP-work $NP-removed/usr/{lib${ARCH},share}
 
-whitelist_slacky_14=(gssdp gupnp SDL_gfx libgsm mp4v2 faac schroedinger xvidcore lame speex-1.2rc1 dirac libdc1394 celt enca-1 libmodplug x264 opus utvideo opencore-amr libmspack libdvdcss dvdauthor libdv-1 libiec61883 id3lib faad2 libavc1394 recordmydesktop fdesktoprecorder libmpcdec libshout libaacplus twolame vo-aacenc vo-amrwbenc libquicktime mjpegtools libxml++ libffado jack-audio-connection-kit openal-soft unrar libebml libmatroska ladspa_sdk libbluray libdca libdvbpsi rtmpdump libvdpau ftgl exif libimobiledevice libxavs libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom soundtouch libsidplay gst-ffmpeg gst-plugins-ugly imlib2 goffice8 wv geoclue ORBit2 zope.interface)
+whitelist_slacky_14=(gssdp gupnp libgsm mp4v2 faac schroedinger xvidcore speex-1.2rc1 dirac libdc1394 celt enca-1 libmodplug x264 opus utvideo opencore-amr libmspack libdvdcss dvdauthor libdv-1 libiec61883 id3lib faad2 libavc1394 recordmydesktop fdesktoprecorder libmpcdec libshout libaacplus twolame vo-aacenc vo-amrwbenc libquicktime mjpegtools libxml++ libffado jack-audio-connection-kit openal-soft unrar libebml libmatroska ladspa_sdk libdca libdvbpsi rtmpdump libvdpau ftgl exif libimobiledevice libxavs libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom soundtouch libsidplay gst-ffmpeg gst-plugins-ugly imlib2 goffice8 wv geoclue ORBit2 zope.interface)
 
 downloadpkg() {
 rm -f $LIST && wget $SRC/$LIST

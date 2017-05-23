@@ -29,6 +29,7 @@ cd $SD/$NP-work
 wget -R "$blacklist_d" "$slacksrc"/d/*.txz
 wget -A "$whitelist_l" "$slacksrc"/l/*.txz
 wget -A "$whitelist_ap" "$slacksrc"/ap/*.txz
+wget http://www.slackware.com/~alien/slackbuilds/xorriso/pkg64/current/xorriso-1.4.2-x86_64-1alien.tgz
 
 if [[ $ARCH = "" ]]; then
  echo "We are not suporting 32bit for the virtualizaton functionality"
