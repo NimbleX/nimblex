@@ -22,7 +22,7 @@ extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 ToBeAdded=(ipcalc madwifi)
 
 
-blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,sysvinit-*,udev-*,grub-*,dbus-*" # For now we exclude grub untill we decide to just clean it.
+blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,sysvinit-*,eudev-*,grub-*,dbus-*" # For now we exclude grub untill we decide to just clean it.
 blacklist_ap="ghostscript*,hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*,pm-utils-*,qpdf-*"
 whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit2-*,libunistring-*,elfutils-*"
 whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++-*,speexdsp-*,libssh2-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*"
@@ -94,7 +94,7 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-4sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/sshfs-fuse/2.5/sshfs-fuse-2.5-x86_64-1sl.txz		# 53K
- wget -N http://packages.nimblex.net/nimblex/systemd-233-x86_64-1.txz		# 4M
+ wget -N http://packages.nimblex.net/nimblex/systemd-234-x86_64-1.txz		# 4.1M
  wget -N http://packages.nimblex.net/nimblex/dbus-1.10.14-x86_64-1.txz		# 473K
  wget -N http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/atop-2.1-x86_64-1.txz		# 111K
@@ -148,8 +148,8 @@ echo "Starting the core cleanup procedure ... smen ;)"
 
 ln -s /mnt/live/bin/vi bin/vi
 
-chmod -x etc/rc.d/rc.pcmcia
-chmod -x etc/rc.d/rc.inetd
+rm etc/rc.d/rc.pcmcia
+rm etc/rc.d/rc.inetd
 chmod +x etc/rc.d/rc.bluetooth
 sed -i 's/darkstar/nimblex/g' etc/hosts
 sed -i 's/#   ForwardAgent no/    ForwardAgent yes/' etc/ssh/ssh_config
@@ -165,9 +165,8 @@ ln -s /bin/systemctl bin/halt
 ln -s /bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
 sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
-echo "PACKAGE NAME:     udev-221" > var/log/packages/udev-221-`uname -m`-1
 
-rm -r etc/localtime
+rm etc/localtime
 # ln -s /usr/share/zoneinfo/GMT0 etc/localtime # This should be handled by tmpfiles.d/etc.conf
 
 rm etc/slackware-version
@@ -256,6 +255,8 @@ cp ../06-NimbleX/etc/dhcpd.conf etc/
 cp ../06-NimbleX/etc/vsftpd.conf etc/
 cp ../06-NimbleX/etc/bootchartd.conf etc/
 cp ../06-NimbleX/etc/profile etc/
+cp ../06-NimbleX/etc/locale.conf etc/
+cp ../06-NimbleX/etc/vconsole.conf etc/
 cp ../06-NimbleX/etc/default/grub etc/default/
 cp ../06-NimbleX/etc/sysctl.d/99-nimblex.conf etc/sysctl.d/
 cp ../06-NimbleX/etc/skel/{\.bashrc,\.screenrc} etc/skel/
@@ -267,6 +268,7 @@ cp ../06-NimbleX/var/spool/mail/root var/spool/mail/root
 
 cp ../06-NimbleX/usr/lib/os-release usr/lib/ && ln -sf /usr/lib/os-release etc/
 cp ../06-NimbleX/lib/udev/rules.d/*.rules lib/udev/rules.d/
+cp ../06-NimbleX/etc/systemd/coredump.conf etc/systemd/
 cp -a ../06-NimbleX/lib/systemd/system/*.{service,socket} lib/systemd/system/
 cp -a ../06-NimbleX/lib/systemd/system/*.target.wants lib/systemd/system/
 

@@ -8,7 +8,6 @@ cp_new_lzm() {
 REMOTE="admin@seif:/share/Bogdan/packages/nimblex/lzm/"
 
 rsync -av	01-Core${ARCH}.lzm \
-		02-Xorg${ARCH}-3D.lzm \
 		02-Xorg${ARCH}.lzm \
 		03-Libs${ARCH}.lzm \
 		04-Apps${ARCH}.lzm \
@@ -17,7 +16,6 @@ rsync -av	01-Core${ARCH}.lzm \
 ISO-test${ARCH}/nimblex${ARCH}/
 
 rsync -av	01-Core${ARCH}.lzm \
-		02-Xorg${ARCH}-3D.lzm \
 		02-Xorg${ARCH}.lzm \
 		03-Libs${ARCH}.lzm \
 		04-Apps${ARCH}.lzm \

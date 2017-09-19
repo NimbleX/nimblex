@@ -44,7 +44,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/libxkbcommon-0.5.0-x86_64-1.txz	# 225K
  wget -N http://packages.nimblex.net/nimblex/rxvt-unicode-9.22-x86_64-1.txz	# 692K
  wget -N http://packages.nimblex.net/nimblex/feh-2.14-x86_64-1.txz	# 168K
- wget -N http://packages.nimblex.net/nimblex/mesa-13.0.1-x86_64-1.txz	# 6.5MB
+ wget -N http://packages.nimblex.net/nimblex/mesa-17.1.5-x86_64-1.txz	# 6.6MB
 fi
 
 }
