@@ -29,7 +29,7 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget -N $nxsrc/acpica-20150410-x86_64-1.txz		# 685K
  wget -N $nxsrc/drbd-utils-8.9.2-x86_64-1.txz		# 182K
- wget -N $slacksrc/l/gobject-introspection-1.52.1-x86_64-1.txz	# 1M
+ wget -N $slacksrc/l/gobject-introspection-1.54.1-x86_64-1.txz	# 1M
  wget -N $nxsrc/leveldb-1.19-x86_64-1.txz		# 117K
  wget -N $nxsrc/libedit-20150325_3.1-x86_64-1.txz	# 87K
  wget -N $nxsrc/libvirt-3.5.0-x86_64-1.txz		# 9.1M
