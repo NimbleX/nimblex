@@ -27,22 +27,22 @@ cd $SD/$NP-work
 if [[ $ARCH = "" ]]; then
  echo "We are not suporting 32bit for the virtualizaton functionality"
 elif [[ $ARCH = "64" ]]; then
- wget -N $nxsrc/acpica-20150410-x86_64-1.txz		# 685K
+ wget -N $nxsrc/acpica-20170531-x86_64-1.txz		# 741K
  wget -N $nxsrc/drbd-utils-8.9.2-x86_64-1.txz		# 182K
  wget -N $slacksrc/l/gobject-introspection-1.54.1-x86_64-1.txz	# 1M
- wget -N $nxsrc/leveldb-1.19-x86_64-1.txz		# 117K
- wget -N $nxsrc/libedit-20150325_3.1-x86_64-1.txz	# 87K
- wget -N $nxsrc/libvirt-3.5.0-x86_64-1.txz		# 9.1M
+ wget -N $slacksrc/l/libedit-20170329_3.1-x86_64-1.txz	# 98K
+ wget -N $nxsrc/leveldb-1.9.0-x86_64-1.txz		# 160K
+ wget -N $nxsrc/libvirt-3.9.0-x86_64-1.txz		# 9.3M
  wget -N $nxsrc/libvirt-glib-1.0.0-x86_64-1.txz		# 300K
- wget -N $nxsrc/libvirt-python-2.5.0-x86_64-1.txz	# 207K
+ wget -N $nxsrc/libvirt-python-3.9.0-x86_64-1.txz	# 215K
  wget -N $nxsrc/pygobject3-3.14.0-x86_64-1.txz		# 250K
- wget -N $nxsrc/qemu-2.8.0-x86_64-1.txz			# 10.5M
+ wget -N $nxsrc/qemu-2.10.1-x86_64-1.txz		# 12M
  wget -N $nxsrc/libosinfo-0.3.1-x86_64-1.txz		# 339K
- wget -N $nxsrc/spice-0.13.3-x86_64-1.txz		# 534K
+ wget -N $nxsrc/spice-0.14.0-x86_64-1.txz		# 558K
  wget -N $nxsrc/spice-gtk-0.33-x86_64-1.txz		# 470K
  wget -N $nxsrc/spice-protocol-0.12.13-noarch-1.txz	# 24K
  wget -N $nxsrc/ceph-10.2.2-x86_64-1.txz		# 272M
- wget -N $nxsrc/openvswitch-utils-2.3.1-x86_64-1.txz	# 1M
+ wget -N $nxsrc/openvswitch-utils-2.8.1-x86_64-1.txz	# 1.8M
  wget -N $nxsrc/virt-manager-1.4.0-x86_64-1.txz		# 1M
  wget -N $nxsrc/usbredir-0.7.1-x86_64-1.txz		# 50K
  wget -N $nxsrc/gtk-vnc-0.5.4-x86_64-2.txz		# 176K

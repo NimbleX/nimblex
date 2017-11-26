@@ -24,10 +24,10 @@ ToBeAdded=(ipcalc madwifi)
 
 blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,sysvinit-*,eudev-*,grub-*,dbus-*" # For now we exclude grub untill we decide to just clean it.
 blacklist_ap="ghostscript*,hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*,pm-utils-*,qpdf-*"
-whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit2-*,libunistring-*,elfutils-*,libmnl-*"
-whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++-*,speexdsp-*,libssh2-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*"
+whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit2-*,libunistring-*,elfutils-*"
+whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++-*,speexdsp-*,libssh2-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*"
 
-whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*"
+whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn-*,libmnl-*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*"
 
 slacky_get() {
@@ -77,7 +77,6 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.76-i486-1ponce.txz #52K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-i486-1ponce.txz #5K
  wget -N http://software.jaos.org/slackpacks/14.2/slapt-get/slapt-get-0.10.2s-i386-1.tgz
- wget -N http://packages.nimblex.net/nimblex/pyparsing-2.0.3-i686-1.txz		# 99K
  wget -N http://packages.nimblex.net/nimblex/urlgrabber-3.10-i686-1.txz		# 84K
  wget -N http://packages.nimblex.net/nimblex/snappy-1.1.2-i686-1.txz		# 49K
  wget -N http://packages.nimblex.net/nimblex/confuse-2.7-i686-1.txz		# 51K
@@ -102,15 +101,14 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/perl-Authen-SASL-2.16-x86_64-1.txz	# 46K
  wget -N http://packages.nimblex.net/nimblex/perl-IO-Socket-SSL-1.967-x86_64-1.txz #82K
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-x86_64-1.txz  #6K
- wget -N http://software.jaos.org/slackpacks/14.2-x86_64/slapt-get/slapt-get-0.10.2s-x86_64-1.tgz
+ wget -N http://software.jaos.org/slackpacks/14.2-x86_64/slapt-get/slapt-get-0.10.2t-x86_64-1.tgz
  wget -N http://packages.nimblex.net/nimblex/audit-2.3.6-x86_64-1.txz		# 449K
  wget -N http://packages.nimblex.net/nimblex/libseccomp-2.1.1-x86_64-1root.txz	# 55K
- wget -N http://packages.nimblex.net/nimblex/pyparsing-2.0.1-x86_64-1.txz	# 96K
  wget -N http://packages.nimblex.net/nimblex/urlgrabber-3.10-x86_64-1.txz	# 84K
  wget -N http://packages.nimblex.net/nimblex/snappy-1.1.2-x86_64-1.txz		# 49K
  wget -N http://packages.nimblex.net/nimblex/ipaddr-py-2.1.11-x86_64-1.txz	# 29K
- wget -N http://packages.nimblex.net/nimblex/pbr-0.8.0-x86_64-1.txz		# 63K
- wget -N http://packages.nimblex.net/nimblex/mod_wsgi-3.4-x86_64-1.txz		# 64K
+ wget -N http://packages.nimblex.net/nimblex/pbr-3.1.1-x86_64-1.txz		# 110K
+ wget -N http://packages.nimblex.net/nimblex/mod_wsgi-4.5.20-x86_64-1.txz	# 74K
  wget -N http://packages.nimblex.net/nimblex/tinyxml-2.6.2-x86_64-1.txz		# 55K
  wget -N http://packages.nimblex.net/nimblex/yajl-2.1.0-x86_64-1.txz		# 38K
  wget -N http://packages.nimblex.net/nimblex/libev-4.23-x86_64-1.txz		# 131K
@@ -121,7 +119,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/utilities/slackyd/1.0.20110808/slackyd-1.0.20110808-x86_64-2sl.txz # 51K
  # The following are some basic music apps related libs
  wget -N http://packages.nimblex.net/nimblex/dssi-1.1.1-x86_64-1.txz		# 48K
- wget -N http://packages.nimblex.net/nimblex/libconfig-1.4.9-x86_64-1.txz	# 93K
+ wget -N http://packages.nimblex.net/nimblex/libconfig-1.6-x86_64-1.txz		# 86K
  wget -N http://packages.nimblex.net/nimblex/liblo-0.28-x86_64-1.txz		# 69K
  wget -N http://packages.nimblex.net/nimblex/lv2-1.10.0-x86_64-1.txz		# 146K
  wget -N http://packages.nimblex.net/nimblex/slv2-0.6.6-x86_64-2.txz		# 56K
@@ -198,7 +196,6 @@ rm -r var/www/htdocs/manual # 730KB
 rm usr/share/sounds/alsa/* # 730KB
 rm usr/bin/omshell	# 470KB
 rm usr/sbin/dhcrelay	# 480KB
-rm sbin/dhclient*	# 512KB
 
 # Removing firmware for hardware which is not mainstream. Saves 10M
 cd lib/firmware
