@@ -13,6 +13,7 @@ rsync -av	01-Core${ARCH}.lzm \
 		04-Apps${ARCH}.lzm \
 		05-KDE${ARCH}.lzm \
 		07-Devel${ARCH}.lzm \
+		10-Virtual${ARCH}.lzm \
 ISO-test${ARCH}/nimblex${ARCH}/
 
 rsync -av	01-Core${ARCH}.lzm \
@@ -21,6 +22,7 @@ rsync -av	01-Core${ARCH}.lzm \
 		04-Apps${ARCH}.lzm \
 		05-KDE${ARCH}.lzm \
 		07-Devel${ARCH}.lzm \
+		10-Virtual${ARCH}.lzm \
 $REMOTE
 
 }
