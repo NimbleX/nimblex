@@ -48,7 +48,7 @@ cd $SD/$NP
 echo "Adding stuff removed from the other packages"
 cp -a ../01-Core${ARCH}-removed/devel/* .
 cp -a ../02-Xorg${ARCH}-removed/devel/* .
-cp -a ../03-Libs${ARCH}-removed/devel/* .
+#cp -a ../03-Libs${ARCH}-removed/devel/* .
 cp -a ../04-Apps${ARCH}-removed/devel/* .
 cp -a ../05-KDE${ARCH}-removed/devel/* .
 }
@@ -60,8 +60,7 @@ cd $SD && AUFS="aufs-temp" && mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 mount -t aufs -o remount,append:05-KDE${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:04-Apps${ARCH}=ro none $AUFS
-mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
-mount -t aufs -o remount,append:02-Xorg${ARCH}-3D=ro none $AUFS
+#mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 

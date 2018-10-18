@@ -9,7 +9,6 @@ REMOTE="admin@seif:/share/Bogdan/packages/nimblex/lzm/"
 
 rsync -av	01-Core${ARCH}.lzm \
 		02-Xorg${ARCH}.lzm \
-		03-Libs${ARCH}.lzm \
 		04-Apps${ARCH}.lzm \
 		05-KDE${ARCH}.lzm \
 		07-Devel${ARCH}.lzm \
@@ -18,7 +17,6 @@ ISO-test${ARCH}/nimblex${ARCH}/
 
 rsync -av	01-Core${ARCH}.lzm \
 		02-Xorg${ARCH}.lzm \
-		03-Libs${ARCH}.lzm \
 		04-Apps${ARCH}.lzm \
 		05-KDE${ARCH}.lzm \
 		07-Devel${ARCH}.lzm \
@@ -30,7 +28,7 @@ $REMOTE
 create_iso() {
 # First we have to make sure a VM is not booted of this
 set +e
-lsof ../../NimbleX${ARCH}-test.iso | grep -q qemu
+lsof ../NimbleX${ARCH}-test.iso | grep -q qemu
 if [ $? -eq "0" ]; then
 	echo -e "A VM is started with this ISO.\nDo you want to shut it down? (y/n)"
 	read -s -n 1 ANS
@@ -45,13 +43,11 @@ if [ $? -eq "0" ]; then
 fi
 set -e
 
-#rsync -Pha --checksum ../../NimbleX${ARCH}-test.iso /tmp/  # for some reason the checksum doesn't help
-cp -av ../../NimbleX${ARCH}-test.iso /tmp/ 
-grub-mkrescue -o ../../NimbleX${ARCH}-test.iso ISO-test${ARCH}
+grub-mkrescue -o ../NimbleX${ARCH}-test.iso ISO-test${ARCH}
 }
 
 run_vm() {
-virsh create ../NimbleX${ARCH}-test.xml
+virsh create NimbleX${ARCH}-test.xml
 
 set +e
 
@@ -133,8 +129,6 @@ case $1 in
 	./01-Core.sh world
 	./02-Xorg.sh clean
 	./02-Xorg.sh world
-	./03-Libs.sh clean
-	./03-Libs.sh world
 	./04-Apps.sh clean
 	./04-Apps.sh world
 	./05-KDE.sh clean
@@ -148,8 +142,6 @@ case $1 in
 	./01-Core.sh world
 	./02-Xorg.sh clean
 	./02-Xorg.sh world
-	./03-Libs.sh clean
-	./03-Libs.sh world
 	./04-Apps.sh clean
 	./04-Apps.sh world
 	./05-KDE.sh clean

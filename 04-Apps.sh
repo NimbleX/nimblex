@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-. .ftp-credentials
-
 SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
@@ -15,12 +13,12 @@ else
   slacksrc="ftp://slackware.telecoms.bg/slackware/slackware${ARCH}-current/slackware${ARCH}"
 fi
 
-extrasrc="http://repository.slacky.eu/slackware${ARCH}-13.37/"
-extrasrc="http://packages.nimblex.net/slacky${ARCH}/"
+extrasrc="https://packages.slackonly.com/pub/packages/"
 
 # In April 2015 XINE grew by 8MB.
 whitelist_xap="gimp*,mozilla-firefox*,imagemagick*,xine*,xmms*,rdesktop*,blueman*,MPlayer-*,pavucontrol-*,gparted-*"
 whitelist_n="samba-*"
+whitelist_l="talloc-*,tevent-*"
 
 mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/locale $NP-removed/devel/usr/{include,lib${ARCH}}
 
@@ -28,17 +26,15 @@ downloadpkg() {
 cd $NP-work
 wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
 wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz
+wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
 
 if [[ $ARCH = "" ]]; then
- wget -N $extrasrc/network/transmission/2.84/transmission-2.84-i486-1sl.txz # 1.2M
- wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-i486-2sl.txz # 347K
  wget -N $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
- wget -N $extrasrc/office/abiword/2.8.6/abiword-2.8.6-i486-10sl.txz # 3.5M
+ wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg/current/flashplayer-plugin-31.0.0.108-i386-1alien.txz # 6.8M
 elif [[ $ARCH = "64" ]]; then
- wget -N $extrasrc/network/transmission/2.84/transmission-2.84-x86_64-1sl.txz # 1.2M
-# wget -N $extrasrc/utilities/yakuake/2.9.9/yakuake-2.9.9-x86_64-1sl.txz # 350K
+ wget -N $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
  wget -N http://packages.nimblex.net/nimblex/gslapt-0.5.4a-x86_64-1.tgz #167K
- wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg64/current/flashplayer-plugin-28.0.0.161-x86_64-1alien.txz # 7M
+ wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg64/current/flashplayer-plugin-31.0.0.122-x86_64-1alien.txz # 7M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz
@@ -71,7 +67,6 @@ cp -a ../06-NimbleX/root/.config/transmission root/.config/
 
 cd $SD/$NP/usr/lib${ARCH}
 ln -s firefox-*/lib*.so .
-echo "Please test if FF libs are linked"
 }
 
 cripple_gimp() {
@@ -81,7 +76,6 @@ rm usr/share/gimp/2.0/brushes/Media/Acrylic-{04,05}.gih
 rm usr/share/gimp/2.0/brushes/Splatters/Splats-0*.gih
 rm usr/share/gimp/2.0/brushes/gimp-obsolete-files/{Grass1,feltpen}.gih
 rm usr/share/gimp/2.0/brushes/Legacy/vine.gih
-rm usr/share/gimp/2.0/patterns/{stone33,cracked,crinklepaper,pink_marble,starfield,walnut,nops,bluesquares,ice}.pat
 }
 
 cripple_samba() {
@@ -106,12 +100,12 @@ run-ldconfig() {
 cd $SD && AUFS="aufs-temp" && mkdir -p $AUFS
 echo "Running ldconfig and others chrooted inside $AUFS"
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
-mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
-mount -t aufs -o remount,append:02-Xorg${ARCH}-3D=ro none $AUFS
+#mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
 chroot $AUFS ldconfig
+chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
 
 umount $AUFS
 rm -rf $NP/.wh..wh.*

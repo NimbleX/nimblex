@@ -89,8 +89,7 @@ echo "Running ldconfig chrooted inside $AUFS"
 cd $SD && AUFS="aufs-temp" && mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 mount -t aufs -o remount,append:04-Apps${ARCH}=ro none $AUFS
-mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
-mount -t aufs -o remount,append:02-Xorg${ARCH}-3D=ro none $AUFS
+#mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 

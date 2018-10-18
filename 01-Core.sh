@@ -14,7 +14,6 @@ else
   slacksrc="ftp://slackware.telecoms.bg/slackware/slackware${ARCH}-current/slackware${ARCH}"
 fi
 
-extrasrc="http://repository.slacky.eu/slackware${ARCH}-14.0/"
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 
 ToBeAdded=(ipcalc madwifi)
@@ -23,9 +22,9 @@ ToBeAdded=(ipcalc madwifi)
 blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,sysvinit-*,eudev-*,grub-*,dbus-*" # For now we exclude grub untill we decide to just clean it.
 blacklist_ap="ghostscript*,hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,gutenprint*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*,pm-utils-*,qpdf-*"
 whitelist_l="ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,ConsoleKit2-*,libunistring-*,elfutils-*"
-whitelist_l=$whitelist_l",gmp*,libidn*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++-*,speexdsp-*,libssh2-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,speex-*"
+whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++-*,speexdsp-*,libssh2-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*"
 
-whitelist_n="nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn-*,libmnl-*,openssl*,rsync*,gpgme*,dnsmasq*,wireless-tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*"
+whitelist_n="nghttp2-*,nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn-*,libmnl-*,openssl*,rsync*,gpgme*,dnsmasq*,wireless_tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*"
 
 slacky_get() {
@@ -88,7 +87,6 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/network/nss-mdns/0.10/nss-mdns-0.10-i486-8sl.txz		# 25K
  wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-i486-3sl.txz		# 60K
  wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-i486-2sl.txz			# 196K
- wget -N $extrasrc/utilities/slackyd/1.0.20110809/slackyd-1.0.20110809-i486-4sl.txz # 47K
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/system/sshfs-fuse/2.5/sshfs-fuse-2.5-x86_64-1sl.txz		# 53K
  wget -N http://packages.nimblex.net/nimblex/zstd-1.3.2-x86_64-1.txz		# 853K
@@ -102,7 +100,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/perl-Net-SMTP-SSL-1.01-x86_64-1.txz  #6K
  wget -N http://software.jaos.org/slackpacks/14.2-x86_64/slapt-get/slapt-get-0.10.2t-x86_64-1.tgz
  wget -N http://packages.nimblex.net/nimblex/audit-2.3.6-x86_64-1.txz		# 449K
- wget -N http://packages.nimblex.net/nimblex/libseccomp-2.1.1-x86_64-1root.txz	# 55K
+ wget -N http://packages.nimblex.net/nimblex/libseccomp-2.3.3-x86_64-1.txz	# 72K
  wget -N http://packages.nimblex.net/nimblex/urlgrabber-3.10-x86_64-1.txz	# 84K
  wget -N http://packages.nimblex.net/nimblex/snappy-1.1.2-x86_64-1.txz		# 49K
  wget -N http://packages.nimblex.net/nimblex/ipaddr-py-2.1.11-x86_64-1.txz	# 29K
@@ -115,11 +113,12 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/jsoncpp-1.8.1-x86_64-1.txz		# 88K
  wget -N http://packages.nimblex.net/nimblex/libb64-1.2.1-x86_64-1.txz		# 10K
  wget -N http://packages.nimblex.net/nimblex/iperf3-3.1.3-x86_64-1.txz		# 69K
+ wget -N http://packages.nimblex.net/nimblex/xl2tpd-1.3.2-x86_64-1.txz		# 430K
+ wget -N http://packages.nimblex.net/nimblex/strongswan-5.6.2-x86_64-1.txz	# 863K
  wget -N $extrasrc/libraries/confuse/2.7/confuse-2.7-x86_64-3sl.txz		# 42K
  wget -N $extrasrc/utilities/bar/1.11.1/bar-1.11.1-x86_64-3sl.txz		# 41K
  wget -N $extrasrc/utilities/cabextract/1.4/cabextract-1.4-x86_64-2sl.txz	# 61K
  wget -N $extrasrc/development/lua/5.1.5/lua-5.1.5-x86_64-2sl.txz		# 203K
- wget -N $extrasrc/utilities/slackyd/1.0.20110808/slackyd-1.0.20110808-x86_64-2sl.txz # 51K
  # The following are some basic music apps related libs
  wget -N http://packages.nimblex.net/nimblex/dssi-1.1.1-x86_64-1.txz		# 48K
  wget -N http://packages.nimblex.net/nimblex/libconfig-1.6-x86_64-1.txz		# 86K
@@ -160,14 +159,13 @@ sed -i 's/#   StrictHostKeyChecking ask/    StrictHostKeyChecking no/' etc/ssh/s
 #sed -i 's/LESS="-M"/LESS="-MR"/' etc/profile
 
 # systemD related. Perhaps these would be better ran from tmpfiles.d/nimblex.conf
-ln -s /usr/lib/libffi.so.6.0.0 usr/lib/libffi.so.4
+ln -s /usr/lib64/libidn.so.12.6.0 usr/lib64/libidn.so.11
 ln -s /bin/systemctl bin/reboot
 ln -s /bin/systemctl bin/halt
 ln -s /bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
 sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
 
-rm etc/localtime
 # ln -s /usr/share/zoneinfo/GMT0 etc/localtime # This should be handled by tmpfiles.d/etc.conf
 
 rm etc/slackware-version
@@ -181,13 +179,7 @@ echo "<html><body><h1>NimbleX is running your web server!</h1></body></html>" > 
 echo "WORKINGDIR=/var/slapt-get
 EXCLUDE=^aaa_elflibs,^devs,^glibc-.*,^kernel-.*,^udev,.*-[0-9]+dl$
 SOURCE=http://packages.nimblex.net/slackware${ARCH}/:OFFICIAL
-SOURCE=http://packages.nimblex.net/slacky${ARCH}/:OFFICIAL
 " > etc/slapt-get/slapt-getrc
-echo "cache = /var/slackyd
-repository = http://packages.nimblex.net/slackware${ARCH}/
-repository slacky${ARCH} = http://packages.nimblex.net/slacky${ARCH}/
-blacklist ^udev-.* ^kernel-.*
-" > etc/slackyd/slackyd.conf
 
 rm -r media/* mnt/*
 rm -r usr/{doc,share/gtk-doc}
@@ -202,7 +194,7 @@ rm usr/sbin/dhcrelay	# 480KB
 
 # Removing firmware for hardware which is not mainstream. Saves 10M
 cd lib/firmware
-rm -r ueagle-atm/ libertas/ phanfw.bin i6050-fw-usb-1.5.sbcf ti-connectivity/ bnx2/ i2400m-fw-usb-1.* bnx2x* vxge/ myri10ge_* slicoss/ ql2*_fw.bin qlogic/ cxgb* liquidio/
+rm -r ueagle-atm/ libertas/ phanfw.bin i6050-fw-usb-1.5.sbcf ti-connectivity/ bnx2/ i2400m-fw-usb-1.* bnx2x* vxge/ myri10ge_* slicoss/ ql2*_fw.bin qlogic/ cxgb* liquidio/ netronome/ mellanox/ qed/
 cd ../..
 
 # Clean sone small stuff
@@ -214,7 +206,7 @@ mkdir -p ../$NP-removed/man_pages/usr/local/man/ && mv usr/local/man/* $_
 
 # Handle locale
 mkdir -p ../$NP-removed/locale/usr/share/locale/ && mv usr/share/locale/* $_
-mkdir -p ../$NP-removed/locale/usr/lib${ARCH}/locale/ && mv usr/lib${ARCH}/locale/* $_
+#mkdir -p ../$NP-removed/locale/usr/lib${ARCH}/locale/ && mv usr/lib${ARCH}/locale/* $_
 
 # Handle .h & .a files
 mkdir -p ../$NP-removed/devel/usr/include/ && mv usr/include/* $_
@@ -262,7 +254,6 @@ cp ../06-NimbleX/etc/sysctl.d/99-nimblex.conf etc/sysctl.d/
 cp ../06-NimbleX/etc/skel/{\.bashrc,\.screenrc} etc/skel/
 cp ../06-NimbleX/etc/skel/{\.bashrc,\.screenrc} root/
 # cp ../06-NimbleX/etc/slapt-get/slapt-getrc etc/slapt-get/
-cp ../06-NimbleX/etc/rc.d/rc.* etc/rc.d/
 # cp ../06-NimbleX/usr/share/wallpapers/nimblex-wallpaper.jpg usr/share/wallpapers/
 cp ../06-NimbleX/var/spool/mail/root var/spool/mail/root
 
@@ -285,9 +276,8 @@ fi
 run-ldconfig() {
 echo "Running ldconfig and others chrooted"
 chroot . ldconfig
-chroot . /usr/sbin/update-ca-certificates --fresh
+chroot . /usr/sbin/update-ca-certificates
 #chroot . /usr/sbin/groupadd -g215 vboxusers 2> /dev/null # We'll move this to sysusers.d
-chroot . /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas/
 }
 
 SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"

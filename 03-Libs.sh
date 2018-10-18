@@ -6,7 +6,6 @@ ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
 LIST="FILELIST.TXT"
-SRC="http://darkstar.ist.utl.pt/slackware/addon/slacky/slackware${ARCH}-13.37"
 SRC="http://packages.nimblex.net/slacky${ARCH}"
 
 mkdir -p $NP $NP-work $NP-removed/usr/{lib${ARCH},share}
@@ -64,7 +63,6 @@ echo "Running ldconfig and others chrooted inside $AUFS"
 
 mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:03-Libs${ARCH} none $AUFS
-mount -t aufs -o remount,append:02-Xorg${ARCH}-3D=ro none $AUFS
 mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
@@ -103,6 +101,8 @@ else
 	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
+	  echo "It's possible this will be made obsolete. So far it's just disabled."
+	  exit
 	  echo "...DOWNLOADING"
 	  downloadpkg
 	  echo "...INSTALLING"

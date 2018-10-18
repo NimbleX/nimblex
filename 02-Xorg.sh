@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-. .ftp-credentials
-
 SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
@@ -19,7 +17,9 @@ blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,f
 blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server-xnest*,xedit*"
 blacklist_x=$blacklist_x",mesa-*" # LLVM is now a hard dependency and it would increase the size with at least 5.6MB
 
-whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*"
+whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*"
+
+whitelist_xap="rxvt-unicode-*"
 
 whitelist_kde="oxygen-gtk2-*,oxygen-gtk3-*"
 
@@ -29,6 +29,7 @@ downloadpkg() {
 cd $SD/$NP-work
 wget -N -R "$blacklist_x" "$slacksrc"/x/*.txz
 wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
+wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
 wget -N -A "$whitelist_kde" "$slacksrc"/kde/*.txz
 
 if [[ $ARCH = "" ]]; then
@@ -37,14 +38,16 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
  wget -N http://packages.nimblex.net/slackware/slackware/x/mesa-10.5.4-i586-1.txz #6.6MB	# For now we take mesa from Slackware for 32bit.
 elif [[ $ARCH = "64" ]]; then
- wget -N http://packages.nimblex.net/nimblex/i3-4.13-x86_64-1.txz	# 714K
- wget -N http://packages.nimblex.net/nimblex/i3status-2.10-x86_64-1.txz	# 38K
+ wget -N http://packages.nimblex.net/nimblex/i3-4.15-x86_64-1.txz	# 726K
+ wget -N http://packages.nimblex.net/nimblex/i3status-2.11-x86_64-1.txz	# 41K
  wget -N http://packages.nimblex.net/nimblex/xcb-util-xrm-1.2-x86_64-1.txz	# 32K
- wget -N http://packages.nimblex.net/nimblex/dmenu-4.6-x86_64-1.txz	# 20K
+ wget -N http://packages.nimblex.net/nimblex/dmenu-4.8-x86_64-1.txz	# 20K
  wget -N http://packages.nimblex.net/nimblex/libxkbcommon-0.5.0-x86_64-1.txz	# 225K
- wget -N http://packages.nimblex.net/nimblex/rxvt-unicode-9.22-x86_64-1.txz	# 692K
+ wget -N http://packages.nimblex.net/nimblex/imlib2-1.5.1-x86_64-1.txz	# 532K
  wget -N http://packages.nimblex.net/nimblex/feh-2.14-x86_64-1.txz	# 168K
  wget -N http://packages.nimblex.net/nimblex/mesa-17.2.4-x86_64-1.txz	# 7.1MB
+ wget -N http://packages.nimblex.net/nimblex/libxdg-basedir-1.2.0-x86_64-1.txz	# 9K
+ wget -N http://packages.nimblex.net/nimblex/dunst-1.3.1-x86_64-1.txz	# 48K
 fi
 
 }
@@ -92,10 +95,11 @@ cd $SD/$NP
 echo "Copying NimbleX specific shared files"
 cp -a ../06-NimbleX/usr/share/icons/oxygen usr/share/icons/
 cp ../06-NimbleX/usr/share/mime/packages/nimblex.xml usr/share/mime/packages/
-mkdir -p usr/share/mime/application/
+mkdir -p usr/share/mime/application/ root/.config/
 cp ../06-NimbleX/usr/share/mime/application/x-lzm.xml usr/share/mime/application/
 
 cp -a ../06-NimbleX/usr/share/wallpapers usr/share/
+cp -a ../06-NimbleX/root/.config/dunst root/.config/
 }
 
 run-ldconfig() {
@@ -105,7 +109,6 @@ echo "Running ldconfig and others chrooted inside $AUFS"
 mount | grep aufs-temp && umount aufs-temp
 mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
-mount -t aufs -o remount,append:$NP-3D=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
 chroot $AUFS ln -s /lib/libudev.so.1.3.1 /lib/libudev.so.0	# Remove this after systemd update to 20.1
@@ -114,6 +117,7 @@ chroot $AUFS fc-cache
 chroot $AUFS update-mime-database /usr/share/mime
 chroot $AUFS update-gtk-immodules
 chroot $AUFS update-gdk-pixbuf-loaders
+chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
 chroot $AUFS rm -rf /etc/gtk-2.0/gtkrc
 chroot $AUFS ln -sf /usr/share/themes/oxygen-gtk/gtk-2.0/gtkrc /etc/gtk-2.0/gtkrc
 
