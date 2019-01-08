@@ -34,7 +34,7 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
  wget -N http://packages.nimblex.net/nimblex/gslapt-0.5.4a-x86_64-1.tgz #167K
- wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg64/current/flashplayer-plugin-31.0.0.122-x86_64-1alien.txz # 7M
+ wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg64/current/flashplayer-plugin-32.0.0.101-x86_64-1alien.txz # 7.1M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz
