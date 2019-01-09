@@ -38,9 +38,9 @@ elif [[ $ARCH = "64" ]]; then
  wget -N $nxsrc/pygobject3-3.14.0-x86_64-1.txz		# 250K
  wget -N $nxsrc/qemu-2.10.1-x86_64-1.txz		# 12M
  wget -N $nxsrc/libosinfo-0.3.1-x86_64-1.txz		# 339K
- wget -N $nxsrc/spice-0.14.0-x86_64-1.txz		# 558K
- wget -N $nxsrc/spice-gtk-0.33-x86_64-1.txz		# 470K
- wget -N $nxsrc/spice-protocol-0.12.13-noarch-1.txz	# 24K
+ wget -N $nxsrc/spice-0.14.1-x86_64-1.txz		# 580K
+ wget -N $nxsrc/spice-gtk-0.35-x86_64-1.txz		# 470K
+ wget -N $nxsrc/spice-protocol-0.12.14-noarch-1.txz	# 24K
  wget -N $nxsrc/ceph-10.2.2-x86_64-1.txz		# 272M
  wget -N $nxsrc/openvswitch-utils-2.8.1-x86_64-1.txz	# 1.8M
  wget -N $nxsrc/virt-manager-1.4.0-x86_64-1.txz		# 1M
