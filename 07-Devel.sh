@@ -2,8 +2,6 @@
 #bash +x
 set -e
 
-. .ftp-credentials
-
 SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi

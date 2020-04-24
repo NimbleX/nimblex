@@ -2,8 +2,6 @@
 #bash +x
 set -e
 
-. .ftp-credentials
-
 SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
@@ -29,9 +27,9 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget -N $nxsrc/acpica-20170531-x86_64-1.txz		# 741K
  wget -N $nxsrc/drbd-utils-8.9.2-x86_64-1.txz		# 182K
- wget -N $slacksrc/l/gobject-introspection-1.58.3-x86_64-1.txz	# 1.1M
- wget -N $slacksrc/l/libedit-20181209_3.1-x86_64-1.txz	# 101K
- wget -N $nxsrc/leveldb-1.9.0-x86_64-1.txz		# 160K
+ wget -N $slacksrc/l/gobject-introspection-1.*-x86_64-1.txz	# 1.2M
+ wget -N $slacksrc/l/libedit-*-x86_64-1.txz	# 104K
+ wget -N $nxsrc/leveldb-1.15.0-x86_64-1.txz		# 151K
  wget -N $nxsrc/libvirt-3.9.0-x86_64-1.txz		# 9.3M
  wget -N $nxsrc/libvirt-glib-1.0.0-x86_64-1.txz		# 300K
  wget -N $nxsrc/libvirt-python-3.9.0-x86_64-1.txz	# 215K

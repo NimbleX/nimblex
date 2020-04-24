@@ -30,11 +30,11 @@ wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
 
 if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
- wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg/current/flashplayer-plugin-31.0.0.108-i386-1alien.txz # 6.8M
+ wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg/current/flashplayer-plugin-32.0.0.293-i386-1alien.txz # 6.8M
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
  wget -N http://packages.nimblex.net/nimblex/gslapt-0.5.4a-x86_64-1.tgz #167K
- wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg64/current/flashplayer-plugin-32.0.0.101-x86_64-1alien.txz # 7.1M
+ wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg64/current/flashplayer-plugin-32.0.0.293-x86_64-1alien.txz # 7.3M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz
