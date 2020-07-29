@@ -5,7 +5,10 @@ START=`date +%s`
 
 cp_new_lzm() {
 
-REMOTE="admin@seif:/share/Bogdan/packages/nimblex/lzm/"
+# Uncomment to enable REMOTE
+#REMOTE="admin@seif:/share/Bogdan/packages/nimblex/lzm/"
+
+if [ ! -d ISO-test${ARCH} ]; then mkdir ISO-test${ARCH}; fi
 
 rsync -av	01-Core${ARCH}.lzm \
 		02-Xorg${ARCH}.lzm \
@@ -15,13 +18,15 @@ rsync -av	01-Core${ARCH}.lzm \
 		10-Virtual${ARCH}.lzm \
 ISO-test${ARCH}/nimblex${ARCH}/
 
-rsync -av	01-Core${ARCH}.lzm \
-		02-Xorg${ARCH}.lzm \
-		04-Apps${ARCH}.lzm \
-		05-KDE${ARCH}.lzm \
-		07-Devel${ARCH}.lzm \
-		10-Virtual${ARCH}.lzm \
-$REMOTE
+if [ ! -z $REMOTE ]; then
+	rsync -av	01-Core${ARCH}.lzm \
+			02-Xorg${ARCH}.lzm \
+			04-Apps${ARCH}.lzm \
+			05-KDE${ARCH}.lzm \
+			07-Devel${ARCH}.lzm \
+			10-Virtual${ARCH}.lzm \
+	$REMOTE
+fi
 
 }
 

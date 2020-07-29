@@ -54,12 +54,12 @@ wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz			# 17.2	MB
 
 echo Use the script that downloads slacky packages by name because this is a bit to much to maintain
 
-wget -N $slacksrc/d/python-2.*.txz		# 11500K
-wget -N $slacksrc/d/perl-5.*.txz		# 14500K - should be 5.3M after cleanup
-wget -N $slacksrc/d/libtool-2.*.txz		# 365K
-wget -N $slacksrc/d/python-setuptools-22.*.txz	# 388K
-wget -N $slacksrc/tcl/tcl-8.*.txz		# 1655K
-wget -N $slacksrc/../extra/wicd/wicd-1.*.txz	# 347K
+wget -N $slacksrc/d/python2-2.*.txz		# 12732K
+wget -N $slacksrc/d/perl-5.*.txz		# 15532K - should be 5.3M after cleanup
+wget -N $slacksrc/d/libtool-2.*.txz		# 420K
+wget -N $slacksrc/d/python-setuptools-*.txz	# 676K
+wget -N $slacksrc/tcl/tcl-8.*.txz		# 2856K
+wget -N $slacksrc/../extra/wicd/wicd-*.txz	# 416K
 wget -N http://packages.nimblex.net/nimblex/b43-firmware-5.100.138-fw-1.txz	# 145K
 if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/sshfs-fuse-2.3-i486-1.tgz		# 55K
