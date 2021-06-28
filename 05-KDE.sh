@@ -39,38 +39,24 @@ clean-KDE() {
 cd $SD/$NP
 echo "Removing SOME of the most usless crap (doc/wallpapers/k3b-themes)"
 rm -r usr/doc
-rm -r usr/share/wallpapers/{Autumn,Blue_Wood,Grass,Hanami,Horos,Flying_Field,Azul,Ariya,Prato,Auros}
-rm -r usr/share/apps/k3b/pics/73lab		# ~ 200K
-rm -r usr/share/apps/k3b/pics/crystal		# ~ 300K
-rm -r usr/share/apps/k3b/extra			# Photo2vcd crap ~ 600K
-rm -r usr/share/apps/kopete/styles/Konqi	# ~ 820K
+rm -r usr/share/wallpapers/{Next,Canopee,Volna,Kokkini,Flow,Cluster,Opal,IceCold,Cascade,Shell}
+#rm -r usr/share/apps/k3b/pics/73lab		# ~ 200K
+#rm -r usr/share/apps/k3b/pics/crystal		# ~ 300K
+rm -r usr/share/k3b/extra			# Photo2vcd crap ~ 600K
+rm -r usr/share/kopete/styles/Konqi	# ~ 820K
 rm -r usr/share/gtk-doc/html		
 rm -r usr/share/poppler/cMap/Adobe-Japan1	# ~620K
 rm -r usr/share/poppler/cMap/Adobe-Korea1	# ~280K
-rm -r usr/share/apps/ksplash/Themes/Default	# Instead we will use our own
-rm -r usr/share/apps/kdm/themes/{circles,horos,oxygen,oxygen-air}
-
-# Copy lzm related ServiceMenus
-cp ../06-NimbleX/usr/share/kde4/services/ServiceMenus/dir2lzm.desktop usr/share/kde4/services/ServiceMenus/
-cp ../06-NimbleX/usr/share/kde4/services/ServiceMenus/lzm2dir.desktop usr/share/kde4/services/ServiceMenus/
-cp ../06-NimbleX/usr/share/kde4/services/ServiceMenus/lzm_activate.desktop usr/share/kde4/services/ServiceMenus/
+#rm -r usr/share/apps/ksplash/Themes/Default	# Instead we will use our own
+#rm -r usr/share/apps/kdm/themes/{circles,horos,oxygen,oxygen-air}
 
 # Copy NimbleX specific files
-cp -a ../06-NimbleX/usr/share/apps/{konsole,ksplash,kdm} usr/share/apps/
-cp -a ../06-NimbleX/usr/share/config/{kickoffrc,konquerorrc,kxkbrc,kwalletrc,kppprc,ksplashrc} usr/share/config/
-cp -a ../06-NimbleX/usr/share/apps/konsole/ usr/share/apps/
-cp ../06-NimbleX/etc/kde/kdm/kdmrc etc/kde/kdm/
-
-# Clean the little things
-rm usr/share/applications/kde4/{Help.desktop,dbpedia_references.desktop}
-rm usr/share/applications/kde4/kwalletmanager.desktop
-rm usr/share/apps/remoteview/zeroconf.desktop
-
-# Don't autostart stuff that we don't care about
-#rm usr/share/autostart/nepomukserver.desktop
-
-# Clean things from various packages
-rm -r usr/share/apps/carddecks/{svg-dondorf,svg-gm-paris,svg-oxygen-white,svg-jolly-royal,svg-oxygen}
+#!TODO 03-25-2021 -> Check if the following still make sense
+#cp -a ../06-NimbleX/usr/share/kde4/services/ServiceMenus usr/share/kde4/services/
+#cp -a ../06-NimbleX/usr/share/apps/{konsole,ksplash,kdm} usr/share/apps/
+#cp -a ../06-NimbleX/usr/share/config/{kickoffrc,konquerorrc,kxkbrc,kwalletrc,kppprc,ksplashrc} usr/share/config/
+#cp -a ../06-NimbleX/usr/share/apps/konsole/ usr/share/apps/
+#cp ../06-NimbleX/etc/kde/kdm/kdmrc etc/kde/kdm/
 
 echo "Moving other usless crap.(doc/include/man/locale)"
 # Handle Man pages

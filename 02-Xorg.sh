@@ -15,11 +15,12 @@ fi
 
 blacklist_x="sazanami*,font-adobe*,wqy-zenhei-font*,xorg-docs*,anthy*,font-bh*,font-misc*,ttf-indic*,tibmachuni-font*,font-isas*,font-daewoo*,font-jis*,font-cronyx*,font-mutt*,font-schumacher*,sinhala_lklug*"
 blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server-xnest*,xedit*"
-blacklist_x=$blacklist_x",mesa-*" # LLVM is now a hard dependency and it would increase the size with at least 5.6MB
 
-whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*"
+whitelist_d="llvm-*" # We need this for using standard mesa. If we want to save a lot of space we should compile mesa without llvm and should exclude llvm from here.
 
-whitelist_xap="rxvt-unicode-*"
+whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*"
+
+whitelist_xap="rxvt-unicode-*,libnma-*,network-manager-applet-*"
 
 whitelist_kde="oxygen-gtk2-*,oxygen-gtk3-*"
 
@@ -28,6 +29,7 @@ mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/{shar
 downloadpkg() {
 cd $SD/$NP-work
 wget -N -R "$blacklist_x" "$slacksrc"/x/*.txz
+wget -N -A "$whitelist_d" "$slacksrc"/d/*.txz
 wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
 wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
 wget -N -A "$whitelist_kde" "$slacksrc"/kde/*.txz
@@ -36,7 +38,6 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/i3-4.2-i486-2.txz		# 641K
  wget -N http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	# 38K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
- wget -N http://packages.nimblex.net/slackware/slackware/x/mesa-10.5.4-i586-1.txz #6.6MB	# For now we take mesa from Slackware for 32bit.
 elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/i3-4.15-x86_64-1.txz	# 726K
  wget -N http://packages.nimblex.net/nimblex/i3status-2.11-x86_64-1.txz	# 41K
@@ -45,7 +46,6 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/libxkbcommon-0.5.0-x86_64-1.txz	# 225K
  wget -N http://packages.nimblex.net/nimblex/imlib2-1.5.1-x86_64-1.txz	# 532K
  wget -N http://packages.nimblex.net/nimblex/feh-2.14-x86_64-1.txz	# 168K
- wget -N http://packages.nimblex.net/nimblex/mesa-17.2.4-x86_64-1.txz	# 7.1MB
  wget -N http://packages.nimblex.net/nimblex/libxdg-basedir-1.2.0-x86_64-1.txz	# 9K
  wget -N http://packages.nimblex.net/nimblex/dunst-1.3.1-x86_64-1.txz	# 48K
 fi
@@ -79,13 +79,12 @@ mv usr/lib${ARCH}/*.a ../$NP-removed/devel/usr/lib${ARCH}/
 echo Cleaning QT/GTK stuff
 rm -r usr/share/{gtk-doc/html,gtk-2.0/demo}
 rm -r usr/lib${ARCH}/pygtk/2.0/demos
-rm -r usr/lib${ARCH}/qt/tests
 # We only handle these only if we are using the standard Qt package
-mv usr/lib${ARCH}/qt/lib/libQt{WebKit,Designer,3Support}.* ../$NP-removed/devel/usr/lib${ARCH}/qt/lib/
-rm -r usr/lib${ARCH}/qt/translations # 1.4MB
-mv usr/lib${ARCH}/qt/include/* ../$NP-removed/devel/usr/lib${ARCH}/qt/include/
-mv usr/lib${ARCH}/qt/bin/{qmake,uic,uic3,l*,qdoc3,rcc,moc,qt3to4,qhelpconverter} ../$NP-removed/devel/usr/lib${ARCH}/qt/bin/
-mv usr/lib${ARCH}/qt/mkspecs ../$NP-removed/devel/usr/lib${ARCH}/qt/
+#mv usr/lib${ARCH}/qt/lib/libQt{WebKit,Designer,3Support}.* ../$NP-removed/devel/usr/lib${ARCH}/qt/lib/
+#rm -r usr/lib${ARCH}/qt/translations # 1.4MB
+#mv usr/lib${ARCH}/qt/include/* ../$NP-removed/devel/usr/lib${ARCH}/qt/include/
+#mv usr/lib${ARCH}/qt/bin/{qmake,uic,uic3,l*,qdoc3,rcc,moc,qt3to4,qhelpconverter} ../$NP-removed/devel/usr/lib${ARCH}/qt/bin/
+#mv usr/lib${ARCH}/qt/mkspecs ../$NP-removed/devel/usr/lib${ARCH}/qt/
 rm -r usr/share/libwmf
 }
 
@@ -99,6 +98,7 @@ mkdir -p usr/share/mime/application/ root/.config/
 cp ../06-NimbleX/usr/share/mime/application/x-lzm.xml usr/share/mime/application/
 
 cp -a ../06-NimbleX/usr/share/wallpapers usr/share/
+cp -a ../06-NimbleX/usr/share/X11/xorg.conf.d usr/share/X11/
 cp -a ../06-NimbleX/root/.config/dunst root/.config/
 }
 

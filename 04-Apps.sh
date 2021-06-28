@@ -18,7 +18,7 @@ extrasrc="https://packages.slackonly.com/pub/packages/"
 # In April 2015 XINE grew by 8MB.
 whitelist_xap="gimp*,mozilla-firefox*,imagemagick*,xine*,xmms*,rdesktop*,blueman*,MPlayer-*,pavucontrol-*,gparted-*"
 whitelist_n="samba-*"
-whitelist_l="talloc-*,tevent-*"
+whitelist_l="talloc-*,tevent-*,gcr-*,mozjs68-*"
 
 mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/locale $NP-removed/devel/usr/{include,lib${ARCH}}
 
@@ -30,11 +30,10 @@ wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
 
 if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
- wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg/current/flashplayer-plugin-32.0.0.293-i386-1alien.txz # 6.8M
 elif [[ $ARCH = "64" ]]; then
  wget -N $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
  wget -N http://packages.nimblex.net/nimblex/gslapt-0.5.4a-x86_64-1.tgz #167K
- wget -N http://www.slackware.com/~alien/slackbuilds/flashplayer-plugin/pkg64/current/flashplayer-plugin-32.0.0.293-x86_64-1alien.txz # 7.3M
+ wget -N http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-91.0.4472.114-x86_64-1alien.txz #73M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz
