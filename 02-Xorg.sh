@@ -18,7 +18,7 @@ blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server
 
 whitelist_d="llvm-*" # We need this for using standard mesa. If we want to save a lot of space we should compile mesa without llvm and should exclude llvm from here.
 
-whitelist_l="qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*"
+whitelist_l="libxkbcommon-*,libxdg-basedir-*,qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libappindicator-*"
 
 whitelist_xap="rxvt-unicode-*,libnma-*,network-manager-applet-*"
 
@@ -39,15 +39,13 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	# 38K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
 elif [[ $ARCH = "64" ]]; then
- wget -N http://packages.nimblex.net/nimblex/i3-4.15-x86_64-1.txz	# 726K
- wget -N http://packages.nimblex.net/nimblex/i3status-2.11-x86_64-1.txz	# 41K
- wget -N http://packages.nimblex.net/nimblex/xcb-util-xrm-1.2-x86_64-1.txz	# 32K
+ wget -N http://packages.nimblex.net/nimblex/i3-4.21-x86_64-1.txz	# 987K
+ wget -N http://packages.nimblex.net/nimblex/i3status-2.14-x86_64-1.txz	# 49K
+ wget -N http://packages.nimblex.net/nimblex/xcb-util-xrm-1.3-x86_64-1.txz	# 32K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.8-x86_64-1.txz	# 20K
- wget -N http://packages.nimblex.net/nimblex/libxkbcommon-0.5.0-x86_64-1.txz	# 225K
- wget -N http://packages.nimblex.net/nimblex/imlib2-1.5.1-x86_64-1.txz	# 532K
- wget -N http://packages.nimblex.net/nimblex/feh-2.14-x86_64-1.txz	# 168K
- wget -N http://packages.nimblex.net/nimblex/libxdg-basedir-1.2.0-x86_64-1.txz	# 9K
- wget -N http://packages.nimblex.net/nimblex/dunst-1.3.1-x86_64-1.txz	# 48K
+ wget -N http://packages.nimblex.net/nimblex/imlib2-1.7.1-x86_64-1.txz	# 536K
+ wget -N http://packages.nimblex.net/nimblex/feh-3.6.1-x86_64-1.txz	# 166K
+ wget -N http://packages.nimblex.net/nimblex/dunst-1.5.0-x86_64-2.txz	# 70K
 fi
 
 }

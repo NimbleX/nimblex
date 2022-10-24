@@ -5,7 +5,7 @@ After=syslog.target
 
 [Service]
 ExecStartPre=/usr/bin/dbus-uuidgen --ensure
-ExecStartPre=-/bin/rm -f /var/run/dbus/dbus.pid
+ExecStartPre=-/bin/rm -f /run/dbus/dbus.pid
 ExecStart=/usr/bin/dbus-daemon --system --address=systemd: --nofork --systemd-activation
 ExecReload=/usr/bin/dbus-send --print-reply --system --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig
 OOMScoreAdjust=-900

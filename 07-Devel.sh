@@ -31,7 +31,8 @@ wget -A "$whitelist_ap" "$slacksrc"/ap/*.txz
 if [[ $ARCH = "" ]]; then
  echo "We are not suporting 32bit for the virtualizaton functionality"
 elif [[ $ARCH = "64" ]]; then
- wget -N $extrasrc/development/vala/0.28/vala-0.28-x86_64-1sl.txz	#1.7M
+# wget -N $extrasrc/development/vala/0.28/vala-0.28-x86_64-1sl.txz	#1.7M
+ echo We don\'t need vala anymore
 fi
 }
 
@@ -63,6 +64,7 @@ mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
 chroot $AUFS ldconfig
+chroot $AUFS update-mime-database /usr/share/mime
 
 umount $AUFS
 rm -rf $NP/.wh..wh.*
