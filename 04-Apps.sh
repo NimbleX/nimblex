@@ -32,7 +32,7 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
 elif [[ $ARCH = "64" ]]; then
 # wget -N $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
- wget -N -v4 http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-106.0.5249.103-x86_64-1alien.txz #86M
+ wget -N -v4 http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-120.0.6099.216-x86_64-1alien.txz #93M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz

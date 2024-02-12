@@ -18,13 +18,13 @@ blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server
 
 whitelist_d="llvm-*" # We need this for using standard mesa. If we want to save a lot of space we should compile mesa without llvm and should exclude llvm from here.
 
-whitelist_l="libxkbcommon-*,libxdg-basedir-*,qt-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-qt*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libappindicator-*"
+whitelist_l="libxkbcommon-*,libxdg-basedir-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libindicator-*,libappindicator-*,openal-soft-*,qt5-*"
 
 whitelist_xap="rxvt-unicode-*,libnma-*,network-manager-applet-*"
 
 whitelist_kde="oxygen-gtk2-*,oxygen-gtk3-*"
 
-mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/{share/locale,lib${ARCH}/qt} $NP-removed/devel/usr/{include,lib${ARCH}/qt/include,lib${ARCH}/qt/bin,lib${ARCH}/qt/lib}
+mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/{locale,qt5} $NP-removed/devel/usr/{include,lib64}
 
 downloadpkg() {
 cd $SD/$NP-work
@@ -39,13 +39,14 @@ if [[ $ARCH = "" ]]; then
  wget -N http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	# 38K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
 elif [[ $ARCH = "64" ]]; then
- wget -N http://packages.nimblex.net/nimblex/i3-4.21-x86_64-1.txz	# 987K
+ wget -N http://packages.nimblex.net/nimblex/i3-4.23-x86_64-1.txz	# 1.1M
  wget -N http://packages.nimblex.net/nimblex/i3status-2.14-x86_64-1.txz	# 49K
  wget -N http://packages.nimblex.net/nimblex/xcb-util-xrm-1.3-x86_64-1.txz	# 32K
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.8-x86_64-1.txz	# 20K
  wget -N http://packages.nimblex.net/nimblex/imlib2-1.7.1-x86_64-1.txz	# 536K
  wget -N http://packages.nimblex.net/nimblex/feh-3.6.1-x86_64-1.txz	# 166K
  wget -N http://packages.nimblex.net/nimblex/dunst-1.5.0-x86_64-2.txz	# 70K
+ wget -N http://packages.nimblex.net/nimblex/xsel-1.2.1-x86_64-1.txz	# 24K
 fi
 
 }
@@ -77,12 +78,10 @@ mv usr/lib${ARCH}/*.a ../$NP-removed/devel/usr/lib${ARCH}/
 echo Cleaning QT/GTK stuff
 rm -r usr/share/{gtk-doc/html,gtk-2.0/demo}
 rm -r usr/lib${ARCH}/pygtk/2.0/demos
-# We only handle these only if we are using the standard Qt package
+# We only handle these only if we are using the standard Qt package. There are many others which can be removed with QT5
 #mv usr/lib${ARCH}/qt/lib/libQt{WebKit,Designer,3Support}.* ../$NP-removed/devel/usr/lib${ARCH}/qt/lib/
-#rm -r usr/lib${ARCH}/qt/translations # 1.4MB
-#mv usr/lib${ARCH}/qt/include/* ../$NP-removed/devel/usr/lib${ARCH}/qt/include/
-#mv usr/lib${ARCH}/qt/bin/{qmake,uic,uic3,l*,qdoc3,rcc,moc,qt3to4,qhelpconverter} ../$NP-removed/devel/usr/lib${ARCH}/qt/bin/
-#mv usr/lib${ARCH}/qt/mkspecs ../$NP-removed/devel/usr/lib${ARCH}/qt/
+rm -r usr/share/qt5/{translations,phrasebooks} # 1.4MB
+#mv usr/lib${ARCH}/qt5/bin/{qmake,qgltf,uic,uic,l*,qdoc,rcc,moc,qhelpconverter} ../$NP-removed/devel/usr/lib${ARCH}/qt5/bin/
 rm -r usr/share/libwmf
 }
 
