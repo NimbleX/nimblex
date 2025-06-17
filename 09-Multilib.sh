@@ -37,8 +37,7 @@ mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 mount -t aufs -o remount,append:07-Devel64=ro none $AUFS
 mount -t aufs -o remount,append:05-KDE64=ro none $AUFS
 mount -t aufs -o remount,append:04-Apps64=ro none $AUFS
-mount -t aufs -o remount,append:03-Libs64=ro none $AUFS
-mount -t aufs -o remount,append:02-Xorg64-3D=ro none $AUFS
+#mount -t aufs -o remount,append:03-Libs64=ro none $AUFS
 mount -t aufs -o remount,append:02-Xorg64=ro none $AUFS
 mount -t aufs -o remount,append:01-Core64=ro none $AUFS
 

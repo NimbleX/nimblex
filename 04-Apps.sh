@@ -16,9 +16,9 @@ fi
 extrasrc="https://packages.slackonly.com/pub/packages/"
 
 # In April 2015 XINE grew by 8MB.
-whitelist_xap="gimp*,mozilla-firefox*,xine*,xmms*,rdesktop*,blueman*,MPlayer-*,pavucontrol-*,gparted-*"
+whitelist_xap="gimp*,mozilla-firefox*,xine*,xmms*,rdesktop*,blueman*,MPlayer-*,pavucontrol-*,gparted-*,sane-*"
 whitelist_n="samba-*"
-whitelist_l="talloc-*,tevent-*,gcr-*,mozjs68-*,imagemagick-*"
+whitelist_l="talloc-*,tevent-*,gcr-*,mozjs68-*,imagemagick-*,lensfun-*,libass-*,opencv-*"
 
 mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/locale $NP-removed/devel/usr/{include,lib${ARCH}}
 
@@ -32,7 +32,7 @@ if [[ $ARCH = "" ]]; then
  wget -N $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
 elif [[ $ARCH = "64" ]]; then
 # wget -N $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
- wget -N -v4 http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-120.0.6099.216-x86_64-1alien.txz #93M
+ wget -N -v4 http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-137.0.7151.55-x86_64-1alien.txz #104M
 fi
 
 wget -N $slacksrc/l/system-config-printer-*.txz
@@ -68,11 +68,13 @@ ln -s firefox-*/lib*.so .
 
 cripple_gimp() {
 cd $SD/$NP
-rm usr/share/gimp/2.0/brushes/Texture/Texture-Hose*.gih
-rm usr/share/gimp/2.0/brushes/Media/Acrylic-{04,05}.gih
-rm usr/share/gimp/2.0/brushes/Splatters/Splats-0*.gih
-rm usr/share/gimp/2.0/brushes/gimp-obsolete-files/{Grass1,feltpen}.gih
-rm usr/share/gimp/2.0/brushes/Legacy/vine.gih
+rm usr/share/gimp/3.0/brushes/Fun/Wilber.gih
+rm usr/share/gimp/3.0/brushes/Texture/Texture-Hose*.gih
+rm usr/share/gimp/3.0/brushes/Texture/Stone-Work-01.gih
+rm usr/share/gimp/3.0/brushes/Media/Acrylic-{04,05}.gih
+rm usr/share/gimp/3.0/brushes/Splatters/Splats-0*.gih
+rm usr/share/gimp/3.0/brushes/Splatters/Grunge-01.gih
+rm usr/share/gimp/3.0/brushes/Legacy/vine.gih
 }
 
 cripple_samba() {

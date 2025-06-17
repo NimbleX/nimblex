@@ -16,8 +16,8 @@ fi
 
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 
-blacklist_d="perl*,python*,llvm-*,gcc-java-*,gcc-gnat-*,gcc-go-*,gcc-gfortran-*,rust-*"
-whitelist_l="glibci-*,mpfr-*,db4-*,boost-*"
+blacklist_d="perl*,llvm-*,gcc-java-*,gcc-gnat-*,gcc-go-*,gcc-gfortran-*,rust-*"
+whitelist_l="glibci-*,mpfr-*,db4-*,boost-*,python-packaging-*,python-pygments-*"
 whitelist_ap="linuxdoc-tools*,texinfo*"
 
 mkdir -p $NP $NP-work $NP-removed

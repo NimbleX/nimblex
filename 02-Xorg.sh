@@ -18,7 +18,7 @@ blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server
 
 whitelist_d="llvm-*" # We need this for using standard mesa. If we want to save a lot of space we should compile mesa without llvm and should exclude llvm from here.
 
-whitelist_l="libxkbcommon-*,libxdg-basedir-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libindicator-*,libappindicator-*,openal-soft-*,qt5-*"
+whitelist_l="libxkbcommon-*,libxdg-basedir-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,gtkmm4-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libindicator-*,libappindicator-*,openal-soft-*,qt5-*,PyQt5-*,grantlee-*,gobject-introspection-*,Imath-*,aom-*,dav1d-*,gsettings-desktop-schemas-*,libplacebo-*,vid.stab-*,editorconfig-core-c-*"
 
 whitelist_xap="rxvt-unicode-*,libnma-*,network-manager-applet-*"
 
@@ -45,7 +45,7 @@ elif [[ $ARCH = "64" ]]; then
  wget -N http://packages.nimblex.net/nimblex/dmenu-4.8-x86_64-1.txz	# 20K
  wget -N http://packages.nimblex.net/nimblex/imlib2-1.7.1-x86_64-1.txz	# 536K
  wget -N http://packages.nimblex.net/nimblex/feh-3.6.1-x86_64-1.txz	# 166K
- wget -N http://packages.nimblex.net/nimblex/dunst-1.5.0-x86_64-2.txz	# 70K
+ wget -N http://packages.nimblex.net/nimblex/dunst-1.11.0-x86_64-1.txz  # 116K
  wget -N http://packages.nimblex.net/nimblex/xsel-1.2.1-x86_64-1.txz	# 24K
 fi
 
@@ -77,7 +77,7 @@ mv usr/lib${ARCH}/*.a ../$NP-removed/devel/usr/lib${ARCH}/
 
 echo Cleaning QT/GTK stuff
 rm -r usr/share/{gtk-doc/html,gtk-2.0/demo}
-rm -r usr/lib${ARCH}/pygtk/2.0/demos
+#rm -r usr/lib${ARCH}/pygtk/2.0/demos
 # We only handle these only if we are using the standard Qt package. There are many others which can be removed with QT5
 #mv usr/lib${ARCH}/qt/lib/libQt{WebKit,Designer,3Support}.* ../$NP-removed/devel/usr/lib${ARCH}/qt/lib/
 rm -r usr/share/qt5/{translations,phrasebooks} # 1.4MB
