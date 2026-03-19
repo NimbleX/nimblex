@@ -1,0 +1,17 @@
+[Unit]
+Description=Avahi mDNS/DNS-SD Stack
+Requires=avahi-daemon.socket
+After=network.target
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.Avahi
+ExecStart=/usr/sbin/avahi-daemon -s
+ExecReload=/usr/sbin/avahi-daemon -r
+NotifyAccess=main
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+Also=avahi-daemon.socket

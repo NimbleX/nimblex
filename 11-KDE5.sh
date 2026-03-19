@@ -6,6 +6,7 @@ SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`
+WGET_OPTS="${WGET_OPTS:--q -N}"
 
 if [[ -f .ftp-credentials ]]; then
   . .ftp-credentials
@@ -32,18 +33,18 @@ downloadpkg() {
 
 
 cd $SD/$NP-work
-wget -N -R "$blacklist_kde" "$kde5src"/deps/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/deps/telepathy/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/plasma/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/plasma-extra/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/telepathy/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/frameworks/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/applications/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/applications-extra/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/kdepim/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/kde4/*.txz
-wget -N -R "$blacklist_kde" "$kde5src"/kde/kde4-extragear/*.txz
-wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/deps/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/deps/telepathy/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/plasma/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/plasma-extra/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/telepathy/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/frameworks/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/applications/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/applications-extra/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/kdepim/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/kde4/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$kde5src"/kde/kde4-extragear/*.txz
+wget $WGET_OPTS -A "$whitelist_l" "$slacksrc"/l/*.txz
 
 }
 

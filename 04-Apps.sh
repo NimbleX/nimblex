@@ -5,6 +5,7 @@ SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
+WGET_OPTS="${WGET_OPTS:--q -N}"
 
 if [[ -f .ftp-credentials ]]; then
   . .ftp-credentials
@@ -18,24 +19,24 @@ extrasrc="https://packages.slackonly.com/pub/packages/"
 # In April 2015 XINE grew by 8MB.
 whitelist_xap="gimp*,mozilla-firefox*,xine*,xmms*,rdesktop*,blueman*,MPlayer-*,pavucontrol-*,gparted-*,sane-*"
 whitelist_n="samba-*"
-whitelist_l="talloc-*,tevent-*,gcr-*,mozjs68-*,imagemagick-*,lensfun-*,libass-*,opencv-*"
+whitelist_l="talloc-*,tevent-*,gcr-*,mozjs68-*,imagemagick-*,lensfun-*,libass-*,opencv-*,appstream-glib-*"
 
 mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/locale $NP-removed/devel/usr/{include,lib${ARCH}}
 
 downloadpkg() {
 cd $NP-work
-wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
-wget -N -A "$whitelist_n" "$slacksrc"/n/*.txz
-wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
+wget $WGET_OPTS -A "$whitelist_xap" "$slacksrc"/xap/*.txz
+wget $WGET_OPTS -A "$whitelist_n" "$slacksrc"/n/*.txz
+wget $WGET_OPTS -A "$whitelist_l" "$slacksrc"/l/*.txz
 
 if [[ $ARCH = "" ]]; then
- wget -N $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
+ wget $WGET_OPTS $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
 elif [[ $ARCH = "64" ]]; then
-# wget -N $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
- wget -N -v4 http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-137.0.7151.55-x86_64-1alien.txz #104M
+# wget $WGET_OPTS $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
+ wget $WGET_OPTS http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-145.0.7632.116-x86_64-1alien.txz #107M
 fi
 
-wget -N $slacksrc/l/system-config-printer-*.txz
+wget $WGET_OPTS $slacksrc/l/system-config-printer-*.txz
 }
 
 instpkg() {
@@ -47,7 +48,7 @@ done
 clean-apps() {
 cd $SD/$NP
 rm -r usr/doc/*
-rm -r usr/share/gtk-doc/*
+#rm -r usr/share/gtk-doc/*
 rm -r usr/share/xine/visuals/*
 
 echo Moving .h, .a files, man pages and localizations

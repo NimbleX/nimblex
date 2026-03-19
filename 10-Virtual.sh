@@ -6,6 +6,7 @@ SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
+WGET_OPTS="${WGET_OPTS:--q -N}"
 
 if [[ -f .ftp-credentials ]]; then
   . .ftp-credentials
@@ -25,26 +26,22 @@ cd $SD/$NP-work
 if [[ $ARCH = "" ]]; then
  echo "We are not suporting 32bit for the virtualizaton functionality"
 elif [[ $ARCH = "64" ]]; then
- wget -N $nxsrc/acpica-20170531-x86_64-1.txz		# 741K
- wget -N $nxsrc/drbd-utils-8.9.2-x86_64-1.txz		# 182K
- wget -N $slacksrc/l/gobject-introspection-1.*-x86_64-1.txz	# 1.2M
- wget -N $slacksrc/l/libedit-*-x86_64-1.txz	# 104K
- wget -N $nxsrc/leveldb-1.15.0-x86_64-1.txz		# 151K
- wget -N $nxsrc/libvirt-3.9.0-x86_64-1.txz		# 9.3M
- wget -N $nxsrc/libvirt-glib-1.0.0-x86_64-1.txz		# 300K
- wget -N $nxsrc/libvirt-python-3.9.0-x86_64-1.txz	# 215K
- wget -N $nxsrc/pygobject3-3.14.0-x86_64-1.txz		# 250K
- wget -N $nxsrc/qemu-2.10.1-x86_64-1.txz		# 12M
- wget -N $nxsrc/libosinfo-0.3.1-x86_64-1.txz		# 339K
- wget -N $nxsrc/spice-0.14.1-x86_64-1.txz		# 580K
- wget -N $nxsrc/spice-gtk-0.35-x86_64-1.txz		# 470K
- wget -N $nxsrc/spice-protocol-0.12.14-noarch-1.txz	# 24K
- wget -N $nxsrc/ceph-10.2.2-x86_64-1.txz		# 272M
- wget -N $nxsrc/openvswitch-utils-2.8.1-x86_64-1.txz	# 1.8M
- wget -N $nxsrc/virt-manager-1.4.0-x86_64-1.txz		# 1M
- wget -N $nxsrc/usbredir-0.7.1-x86_64-1.txz		# 50K
- wget -N $nxsrc/gtk-vnc-0.5.4-x86_64-2.txz		# 176K
- wget -N $nxsrc/vte3-0.44.2-x86_64-1.txz		# 566K
+# wget $WGET_OPTS -N $nxsrc/acpica-20170531-x86_64-1.txz		# 741K
+ wget $WGET_OPTS -N $nxsrc/drbd-utils-9.32.0-x86_64-1.txz  	# 612K
+# wget $WGET_OPTS -N $nxsrc/leveldb-1.15.0-x86_64-1.txz         # 151K
+ wget $WGET_OPTS -N $nxsrc/libvirt-10.10.0-x86_64-1.txz        # 8.0M
+ wget $WGET_OPTS -N $nxsrc/libvirt-glib-5.0.0-x86_64-1.txz		# 300K
+ wget $WGET_OPTS -N $nxsrc/libvirt-python-10.10.0-x86_64-1.txz # 295K
+ wget $WGET_OPTS -N $nxsrc/qemu-10.1.3-x86_64-1.txz            # 26M
+# wget $WGET_OPTS -N $nxsrc/libosinfo-0.3.1-x86_64-1.txz		# 339K
+ wget $WGET_OPTS -N $nxsrc/spice-0.16.0-x86_64-1.txz           # 360K
+ wget $WGET_OPTS -N $nxsrc/spice-gtk-0.42-x86_64-1.txz         # 496K
+ wget $WGET_OPTS -N $nxsrc/spice-protocol-0.14.5-noarch-1.txz	# 24K
+ wget $WGET_OPTS -N $nxsrc/openvswitch-utils-3.3.6-x86_64-1.txz	# 2.1M
+ wget $WGET_OPTS -N $nxsrc/virt-manager-5.0.0-x86_64-1.txz     # 1.1M
+ wget $WGET_OPTS -N $nxsrc/usbredir-0.14.0-x86_64-1.txz	    # 52K
+ wget $WGET_OPTS -N $nxsrc/gtk-vnc-1.5.0-x86_64-1.txz		    # 198K
+# wget $WGET_OPTS -N $nxsrc/vte3-0.44.2-x86_64-1.txz		    # 566K
 fi
 }
 

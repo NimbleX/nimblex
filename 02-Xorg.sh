@@ -5,6 +5,7 @@ SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
+WGET_OPTS="${WGET_OPTS:--q -N}"
 
 if [[ -f .ftp-credentials ]]; then
   . .ftp-credentials
@@ -18,7 +19,7 @@ blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server
 
 whitelist_d="llvm-*" # We need this for using standard mesa. If we want to save a lot of space we should compile mesa without llvm and should exclude llvm from here.
 
-whitelist_l="libxkbcommon-*,libxdg-basedir-*,hicolor-icon-theme*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,gtkmm4-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libindicator-*,libappindicator-*,openal-soft-*,qt5-*,PyQt5-*,grantlee-*,gobject-introspection-*,Imath-*,aom-*,dav1d-*,gsettings-desktop-schemas-*,libplacebo-*,vid.stab-*,editorconfig-core-c-*"
+whitelist_l="libxkbcommon-*,hicolor-icon-theme*,adwaita-icon-theme-*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,gtkmm4-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libindicator-*,libappindicator-*,openal-soft-*,qt5-*,PyQt5-*,grantlee-*,gobject-introspection-*,Imath-*,aom-*,dav1d-*,gsettings-desktop-schemas-*,libplacebo-*,vid.stab-*,editorconfig-core-c-*,gtk4-*,pipewire-*,wireplumber-*"
 
 whitelist_xap="rxvt-unicode-*,libnma-*,network-manager-applet-*"
 
@@ -28,25 +29,30 @@ mkdir -p $NP $NP-work $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share
 
 downloadpkg() {
 cd $SD/$NP-work
-wget -N -R "$blacklist_x" "$slacksrc"/x/*.txz
-wget -N -A "$whitelist_d" "$slacksrc"/d/*.txz
-wget -N -A "$whitelist_l" "$slacksrc"/l/*.txz
-wget -N -A "$whitelist_xap" "$slacksrc"/xap/*.txz
-wget -N -A "$whitelist_kde" "$slacksrc"/kde/*.txz
+wget $WGET_OPTS -R "$blacklist_x" "$slacksrc"/x/*.txz
+wget $WGET_OPTS -A "$whitelist_d" "$slacksrc"/d/*.txz
+wget $WGET_OPTS -A "$whitelist_l" "$slacksrc"/l/*.txz
+wget $WGET_OPTS -A "$whitelist_xap" "$slacksrc"/xap/*.txz
+wget $WGET_OPTS -A "$whitelist_kde" "$slacksrc"/kde/*.txz
 
 if [[ $ARCH = "" ]]; then
- wget -N http://packages.nimblex.net/nimblex/i3-4.2-i486-2.txz		# 641K
- wget -N http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	# 38K
- wget -N http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3-4.2-i486-2.txz		# 641K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	# 38K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
 elif [[ $ARCH = "64" ]]; then
- wget -N http://packages.nimblex.net/nimblex/i3-4.23-x86_64-1.txz	# 1.1M
- wget -N http://packages.nimblex.net/nimblex/i3status-2.14-x86_64-1.txz	# 49K
- wget -N http://packages.nimblex.net/nimblex/xcb-util-xrm-1.3-x86_64-1.txz	# 32K
- wget -N http://packages.nimblex.net/nimblex/dmenu-4.8-x86_64-1.txz	# 20K
- wget -N http://packages.nimblex.net/nimblex/imlib2-1.7.1-x86_64-1.txz	# 536K
- wget -N http://packages.nimblex.net/nimblex/feh-3.6.1-x86_64-1.txz	# 166K
- wget -N http://packages.nimblex.net/nimblex/dunst-1.11.0-x86_64-1.txz  # 116K
- wget -N http://packages.nimblex.net/nimblex/xsel-1.2.1-x86_64-1.txz	# 24K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3-4.25.1-x86_64-1.txz     # 1.1M
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3status-2.15-x86_64-1.txz	# 52K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/xcb-util-xrm-1.3-x86_64-1.txz	# 32K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/dmenu-4.8-x86_64-1.txz	# 20K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/imlib2-1.7.1-x86_64-1.txz	# 536K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/feh-3.6.1-x86_64-1.txz	# 166K
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/dunst-1.12.2-x86_64-1.txz # 127K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/xsel-1.2.1-x86_64-1.txz	# 24K
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/ttf-nerd-fonts-symbols-3.4.0-noarch-1.txz # 2.2M
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/simde-0.8.2-noarch-1.txz  # 428K
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/kitty-0.38.1-x86_64-1.txz # 13M
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/picom-12.5-x86_64-1.txz   # 265K
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/libxdg-basedir-1.2.3-x86_64-1.txz	# 12K 
 fi
 
 }

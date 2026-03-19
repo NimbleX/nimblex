@@ -6,6 +6,7 @@ SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
+WGET_OPTS="${WGET_OPTS:--q -N}"
 
 if [[ -f .ftp-credentials ]]; then
   . .ftp-credentials
@@ -16,24 +17,22 @@ fi
 
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 
+whitelist_a="grub-*,floppy-*"
 blacklist_d="perl*,llvm-*,gcc-java-*,gcc-gnat-*,gcc-go-*,gcc-gfortran-*,rust-*"
-whitelist_l="glibci-*,mpfr-*,db4-*,boost-*,python-packaging-*,python-pygments-*"
+whitelist_l="glibci-*,mpfr-*,db4-*,boost-*,python-packaging-*,python-pygments-*,python-docutils-*"
 whitelist_ap="linuxdoc-tools*,texinfo*"
 
 mkdir -p $NP $NP-work $NP-removed
 
 downloadpkg() {
 cd $SD/$NP-work
-wget -R "$blacklist_d" "$slacksrc"/d/*.txz
-wget -A "$whitelist_l" "$slacksrc"/l/*.txz
-wget -A "$whitelist_ap" "$slacksrc"/ap/*.txz
+wget $WGET_OPTS -A "$whitelist_a" "$slacksrc"/a/*.txz
+wget $WGET_OPTS -R "$blacklist_d" "$slacksrc"/d/*.txz
+wget $WGET_OPTS -A "$whitelist_l" "$slacksrc"/l/*.txz
+wget $WGET_OPTS -A "$whitelist_ap" "$slacksrc"/ap/*.txz
 
-if [[ $ARCH = "" ]]; then
- echo "We are not suporting 32bit for the virtualizaton functionality"
-elif [[ $ARCH = "64" ]]; then
-# wget -N $extrasrc/development/vala/0.28/vala-0.28-x86_64-1sl.txz	#1.7M
- echo We don\'t need vala anymore
-fi
+wget $WGET_OPTS http://packages.nimblex.net/nimblex/device-tree-compiler-1.7.2-x86_64-1.txz # 164K
+wget $WGET_OPTS -N http://packages.nimblex.net/nimblex/pefile-2024.8.26-x86_64-1.txz           # 148K
 }
 
 instpkg() {
@@ -50,6 +49,11 @@ cp -a ../02-Xorg${ARCH}-removed/devel/* .
 #cp -a ../03-Libs${ARCH}-removed/devel/* .
 cp -a ../04-Apps${ARCH}-removed/devel/* .
 cp -a ../05-KDE${ARCH}-removed/devel/* .
+}
+
+fix_grub_font() {
+cd $SD/$NP
+ln -s /boot/grub/fonts/hack.pf2 usr/share/grub/unicode.pf2
 }
 
 run-ldconfig() {
@@ -90,6 +94,7 @@ else
 	 "install" )
 	  echo "...INSTALLING"
 	  instpkg
+      fix_grub_font
 	  copy-removed
 	  run-ldconfig
 	 ;;
@@ -102,6 +107,7 @@ else
 	  downloadpkg
 	  echo "...INSTALLING"
 	  instpkg
+      fix_grub_font
 	  copy-removed
 	  run-ldconfig
 	  echo "...LZMFY"

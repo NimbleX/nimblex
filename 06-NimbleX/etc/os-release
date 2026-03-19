@@ -1,10 +1,10 @@
 NAME=NimbleX
-VERSION="2024"
+VERSION="2026"
 ID=nimblex
-VERSION_ID=2024
-PRETTY_NAME="NimbleX 2024"
+VERSION_ID=2026
+PRETTY_NAME="NimbleX 2026"
 ANSI_COLOR="0;34"
-CPE_NAME="cpe:/o:nimblex:nimblex_linux:2024"
+CPE_NAME="cpe:/o:nimblex:nimblex_linux:2026"
 HOME_URL="https://nimblex.net"
 SUPPORT_URL="https://nimblex.net"
 BUG_REPORT_URL="https://nimblex.net"

@@ -48,7 +48,7 @@ if [ $? -eq "0" ]; then
 fi
 set -e
 
-grub-mkrescue -o ../NimbleX${ARCH}-test.iso ISO-test${ARCH}
+grub-mkrescue -o ../NimbleX${ARCH}-test.iso ISO-test${ARCH} -- -volid "NIMBLEX"
 }
 
 run_vm() {

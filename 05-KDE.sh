@@ -5,6 +5,7 @@ SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
+WGET_OPTS="${WGET_OPTS:--q -N}"
 
 if [[ -f .ftp-credentials ]]; then
   . .ftp-credentials
@@ -25,8 +26,8 @@ mkdir -p $NP-work $NP $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share
 
 downloadpkg() {
 cd $SD/$NP-work
-wget -R "$blacklist_kde" "$slacksrc"/kde/*.txz
-wget -A "$whitelist_l" "$slacksrc"/l/*.txz
+wget $WGET_OPTS -R "$blacklist_kde" "$slacksrc"/kde/*.txz
+wget $WGET_OPTS -A "$whitelist_l" "$slacksrc"/l/*.txz
 }
 
 instpkg() {

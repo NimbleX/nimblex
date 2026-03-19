@@ -5,6 +5,7 @@ SD=`pwd`
 ARCH=""
 if [[ `uname -m` = "x86_64" ]]; then ARCH="64" ; fi
 NP=`basename $0 | cut -d "." -f 1`${ARCH} # NimbleX Package name
+WGET_OPTS="${WGET_OPTS:--q -N}"
 LIST="FILELIST.TXT"
 SRC="http://packages.nimblex.net/slacky${ARCH}"
 
@@ -13,12 +14,12 @@ mkdir -p $NP $NP-work $NP-removed/usr/{lib${ARCH},share}
 whitelist_slacky_14=(gssdp gupnp libgsm mp4v2 faac schroedinger xvidcore dirac libdc1394 celt enca-1 libmodplug x264 utvideo opencore-amr libmspack libdvdcss dvdauthor libdv-1 libiec61883 id3lib faad2 libavc1394 recordmydesktop fdesktoprecorder libmpcdec libshout libaacplus twolame vo-aacenc vo-amrwbenc libquicktime mjpegtools libxml++ libffado jack-audio-connection-kit openal-soft unrar libebml libmatroska ladspa_sdk libdca libdvbpsi rtmpdump libvdpau ftgl exif libimobiledevice libxavs libaacplus libmpeg2 libtar libkate libtiger xosd libass libupnp goom soundtouch libsidplay gst-ffmpeg gst-plugins-ugly imlib2 goffice8 wv geoclue ORBit2 zope.interface)
 
 downloadpkg() {
-rm -f $LIST && wget $SRC/$LIST
+rm -f $LIST && wget $WGET_OPTS $SRC/$LIST
 cd $SD/$NP-work
 for package in $(seq 0 $((${#whitelist_slacky_14[*]} -1))); do
 TXZn=(`cat ../$LIST | awk '/\.txz$/ {print $9}' | grep -w "${whitelist_slacky_14[$package]}" | cut -b 2-`)
   for i in $(seq 0 $((${#TXZn[*]} -1))); do
-    wget -N $SRC${TXZn[i]}
+    wget $WGET_OPTS $SRC${TXZn[i]}
   done
 done
 
