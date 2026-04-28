@@ -33,7 +33,7 @@ if [[ $ARCH = "" ]]; then
  wget $WGET_OPTS $extrasrc/system/gslapt/0.5.3i/gslapt-0.5.3i-i486-1sl.txz # 125K
 elif [[ $ARCH = "64" ]]; then
 # wget $WGET_OPTS $extrasrc/current-x86_64/network/transmission/transmission-2.92-x86_64-3_slonly.txz # 1.5M
- wget $WGET_OPTS http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-145.0.7632.116-x86_64-1alien.txz #107M
+ wget $WGET_OPTS http://www.slackware.com/~alien/slackbuilds/chromium/pkg64/current/chromium-146.0.7680.177-x86_64-1alien.txz #113M
 fi
 
 wget $WGET_OPTS $slacksrc/l/system-config-printer-*.txz
@@ -59,6 +59,9 @@ mv usr/share/locale/* ../$NP-removed/locale/usr/share/locale/
 # Handle .h & .a files
 mv usr/include/* ../$NP-removed/devel/usr/include/
 #mv usr/lib${ARCH}/*.a ../$NP-removed/devel/usr/lib${ARCH}/ # So far there isn't any .a file here
+
+mkdir -p usr/lib/udev && mv lib/udev/* usr/lib/udev/ 2>/dev/null || true
+sed -i 's|/lib/udev/|/usr/lib/udev/|g' usr/lib/udev/rules.d/*.rules 2>/dev/null || true
 
 mkdir -p root/.config/
 cp -a ../06-NimbleX/root/.config/transmission root/.config/

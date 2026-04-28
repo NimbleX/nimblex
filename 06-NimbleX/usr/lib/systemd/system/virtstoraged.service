@@ -1,0 +1,14 @@
+[Unit]
+Description=Libvirt storage daemon
+Documentation=man:virtstoraged(8)
+After=network.target virtlogd.service virtlockd.service
+Requires=virtlogd.service virtlockd.service
+
+[Service]
+Type=notify
+ExecStart=/usr/sbin/virtstoraged
+Restart=on-failure
+
+[Install]
+Also=virtstoraged.socket
+WantedBy=multi-user.target

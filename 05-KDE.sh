@@ -19,7 +19,7 @@ extrasrc="http://packages.nimblex.net/slacky${ARCH}/"
 
 blacklist_kde="kdeartwork-*,calligra-*,marble-*,kstars-*,kiten-*,kgeography-*,parley-*,kalzium-*,ktouch-*,kig-*,kwordquiz-*,kremotecontrol-*,kbruch-*,khangman-*,kmplot-*,kanagram-*,klettres-*,kdevelop-*,ktorrent-*,libktorrent-*,blinken-*,kalgebra-*,cantor-*,kdetoys*,skanlite*,kdeadmin*,networkmanagement-*,amarok-*,kdepim-*,kplayer-*,amor-*,artikulate-*"
 blacklist_kde=$blacklist_kde",ktuberling-*,kdiamond-*,pairs-*,kpat-*,kmahjongg-*,libkmahjongg-*,kajongg-*,kgoldrunner-*,palapeli-*,kbounce-*,granatier-*,kbreakout-*,kigo-*,kwordquiz-*,ksirk-*,rocs-*,kturtle-*,step-*,nepomuk-*,kget-*,cervisia-*,kapptemplate-*,kcachegrind-*,kde-dev-*,kdev-python-*,kompare-*,ksystemlog-*,ktux-*,lokalize-*,okteta-*,umbrello-*"
-whitelist_l="clucene*,soprano*,qimageblitz*,strigi*,phonon-*,redland*,qca*,liblastfm*,libxklavier*,poppler*,libtiff*,libspectre*,libwnck*,attica*,eggdbus*,ebook-tools*,libdiscid*,shared-desktop-ontologies*,libiodbc*,herqq-*,libbluedevil-*,xapian-core-*,NOTYET_akonadi*"
+whitelist_l="clucene*,soprano*,qimageblitz*,strigi*,phonon-*,redland*,qca*,liblastfm*,libxklavier*,poppler*,libtiff*,libspectre*,libwnck*,attica*,eggdbus*,ebook-tools*,libdiscid*,shared-desktop-ontologies*,libiodbc*,herqq-*,libbluedevil-*,xapian-core-*,NOTYET_akonadi*,cfitsio-*"
 blacklist_kde=$blacklist_kde",kdevplatform-*,kdewebdev-*,kdesdk-*,kfloppy-*,kdf-*,kmouth-*"
 
 mkdir -p $NP-work $NP $NP-removed/man_pages/usr/man $NP-removed/locale/usr/share/locale $NP-removed/devel/usr/{include,lib${ARCH}}
@@ -66,6 +66,8 @@ mv usr/man/* ../$NP-removed/man_pages/usr/man/
 mv usr/share/locale/* ../$NP-removed/locale/usr/share/locale/
 # Handle .h & .a files
 mv usr/include/* ../$NP-removed/devel/usr/include/
+mkdir -p usr/lib/udev && mv lib/udev/* usr/lib/udev/ 2>/dev/null || true
+sed -i 's|/lib/udev/|/usr/lib/udev/|g' usr/lib/udev/rules.d/*.rules 2>/dev/null || true
 }
 
 run-ldconfig() {

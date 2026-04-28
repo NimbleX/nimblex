@@ -52,6 +52,8 @@ grub-mkrescue -o ../NimbleX${ARCH}-test.iso ISO-test${ARCH} -- -volid "NIMBLEX"
 }
 
 run_vm() {
+
+create_iso
 virsh create NimbleX${ARCH}-test.xml
 
 set +e
@@ -60,6 +62,9 @@ while ! virsh list | grep -w NX${ARCH}; do
 	echo -n .
 done
 
+spicy --uri=spice+unix:///tmp/nx64-spice.sock
+
+exit
 for i in {9..0}; do echo -en "\r$i"; sleep 3;done; echo -en "\r"
 TRIES=10
 a=1

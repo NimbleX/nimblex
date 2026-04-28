@@ -1,0 +1,35 @@
+[Unit]
+Description=Compressed RAM swap (zram)
+Documentation=man:zram(4) https://docs.kernel.org/admin-guide/blockdev/zram.html
+DefaultDependencies=no
+After=systemd-modules-load.service local-fs.target
+Before=swap.target shutdown.target
+Conflicts=shutdown.target
+# Don't even try where zram is impossible or unwanted.
+ConditionPathExists=/sys/class/zram-control
+ConditionVirtualization=!container
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=-/etc/default/zram-swap
+ExecStart=/usr/libexec/zram-swap start
+ExecStop=/usr/libexec/zram-swap stop
+
+# Minor hardening — no network, no new privs, read-only rootfs except
+# the few paths we actually need to write to. We intentionally keep
+# CAP_SYS_ADMIN because swapon(2) requires it.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/sys/class/zram-control /sys/block /run
+PrivateNetwork=yes
+ProtectKernelLogs=yes
+ProtectHostname=yes
+ProtectClock=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+LockPersonality=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=WirePlumber Session Manager
+Requires=pipewire.service
+After=pipewire.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wireplumber
+Restart=on-failure
+RestartSec=5
+User=pipewire
+Environment=PIPEWIRE_RUNTIME_DIR=/run/pipewire
+
+[Install]
+WantedBy=multi-user.target

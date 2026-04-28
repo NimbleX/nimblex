@@ -1,0 +1,10 @@
+[Unit]
+Description=Libvirt logging daemon socket
+Documentation=man:virtlogd(8)
+
+[Socket]
+ListenStream=/var/run/libvirt/virtlogd-sock
+Service=virtlogd.service
+
+[Install]
+WantedBy=sockets.target

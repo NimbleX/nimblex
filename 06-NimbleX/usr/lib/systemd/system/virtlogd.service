@@ -1,0 +1,14 @@
+[Unit]
+Description=Libvirt logging daemon
+Documentation=man:virtlogd(8)
+Before=libvirtd.service
+After=local-fs.target
+
+[Service]
+Type=notify
+ExecStart=/usr/sbin/virtlogd
+Restart=on-failure
+
+[Install]
+Also=virtlogd.socket
+WantedBy=multi-user.target

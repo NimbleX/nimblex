@@ -1,0 +1,29 @@
+# /etc/default/zram-swap — configuration for zram-swap.service
+#
+# All values are optional. Uncomment and edit to override defaults.
+
+# Size of the zram device. Accepts:
+#   auto   — half of RAM, capped at 8 GiB (default, good for most systems)
+#   50%    — percentage of RAM
+#   4G     — fixed size (suffixes: K, M, G)
+#   4096M  — fixed size
+#
+#ZRAM_SIZE=auto
+
+# Compression algorithm. 'auto' picks the best supported by this kernel,
+# preferring in order:  zstd > lz4 > lz4hc > lzo-rle > lzo > 842 > deflate.
+#   zstd    — best ratio (~3-4x), moderate CPU
+#   lz4     — very fast, moderate ratio (~2-2.5x)
+#   lzo-rle — kernel default since 5.1, balanced (~2.5-3x)
+#
+#ZRAM_COMP=auto
+
+# Swap priority. Higher = used first. Must exceed any disk swap priority
+# (typically -1) so the kernel prefers zram.
+#
+#ZRAM_PRIORITY=100
+
+# Maximum parallel compression streams. Empty = one per CPU (recommended).
+# Lower this to cap CPU usage on weak systems.
+#
+#ZRAM_STREAMS=

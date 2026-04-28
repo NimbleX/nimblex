@@ -16,13 +16,13 @@ else
 fi
 
 blacklist_a="kernel-[ghm]*,mkinitrd*,elvis*,floppy*,mtx*,tcsh*,ed*,sharutils*,loadlin*,devs*,sysvinit-*,eudev-*,grub-*,dbus-*" # For now we exclude grub untill we decide to just clean it.
-blacklist_ap="hplip*,mariadb-*,vim*,linuxdoc*,man*,zsh*,groff*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*,pm-utils-*"
+blacklist_ap="hplip*,mariadb-*,vim*,linuxdoc*,man*,groff*,a2ps*,texinfo*,ksh93*,jed*,enscript*,cupsddk*,joe*,ispell*,jove*,pm-utils-*"
 # These are necessary for printing
 #blacklist_ap=$blacklist_ap"ghostscript-*,gutenprint-*,qpdf-*"
 whitelist_l="libseccomp-*,ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,libunistring-*,elfutils-*,xxHash-*,lz4-*,lmdb-*,libuv-*"
-whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*"
+whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*"
 # These are necessary for printing
-whitelist_l=$whitelist_l",colord-*,graphene-*,libcupsfilters-*,libgusb-*,libpaper-*,libppd-*,poppler-*,fmt-*"
+whitelist_l=$whitelist_l",colord-*,graphene-*,libcupsfilters-*,libgusb-*,libpaper-*,libppd-*,poppler-*,fmt-*,pipewire-*,wireplumber-*"
 
 whitelist_n="libtirpc-*,libndp-*,nghttp2-*,nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn-*,libmnl-*,openssl*,rsync*,gpgme*,dnsmasq*,wireless_tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*,npth-*,ngtcp2-*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*,NetworkManager-*,ModemManager-*,libmbim-*,libqmi-*,mobile-broadband-provider-info-*,ntp-*,libnetfilter_queue-*,libnfnetlink-*,wireguard-tools-*,nghttp3-*,c-ares-*,krb5-*,nss-mdns-*,libqrtr-glib-*"
@@ -65,8 +65,9 @@ if [[ $ARCH = "" ]]; then
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/libev-4.11-i486-2.txz		# 134K
 elif [[ $ARCH = "64" ]]; then
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/audit-3.0.9-x86_64-1.txz		# 629K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/dbus-1.12.20-x86_64-2.txz		# 505K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/systemd-253-x86_64-1.txz		# 6.9M
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/dbus-1.16.2-x86_64-1.txz		# 373K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/systemd-258-x86_64-1.txz		# 8.9M
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/earlyoom-1.9.0-x86_64-1.txz    # 32K
 # wget $WGET_OPTS http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/ncdu-1.15.1-x86_64-1.txz		# 42K
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/confuse-3.2-x86_64-1.txz		# 66K
@@ -125,14 +126,25 @@ sed -i 's/#   StrictHostKeyChecking ask/    StrictHostKeyChecking no/' etc/ssh/s
 #sed -i 's/darkstar/nimblex/g' etc/rc.d/rc.M
 #sed -i 's/LESS="-M"/LESS="-MR"/' etc/profile
 
-# systemD related. Perhaps these would be better ran from tmpfiles.d/nimblex.conf
-mv lib/systemd/systemd.new lib/systemd/systemd
-ln -s /bin/systemctl bin/reboot
-ln -s /bin/systemctl bin/halt
-ln -s /bin/systemctl bin/poweroff
-#ln -s /run/dbus/system_bus_socket var/run/dbus/
+# systemD related.
+mv usr/lib/systemd/systemd.new usr/lib/systemd/systemd
+ln -s /usr/lib/systemd/systemd sbin/init
+#ln -s /usr/bin/udevadm sbin/udevadm
+ln -s /usr/bin/systemctl bin/reboot
+ln -s /usr/bin/systemctl bin/halt
+ln -s /usr/bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
-sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
+mv etc/pam.d/systemd-user.new etc/pam.d/systemd-user
+
+# systemd (>=258) ships /usr/sbin/resolvconf as a symlink to resolvectl
+# Revisit if/when we migrate to systemd-resolved.
+rm usr/sbin/resolvconf && ln -sf /sbin/resolvconf usr/sbin/resolvconf
+
+rm etc/xdg/autostart/pulseaudio.desktop
+#ln -s /run/dbus/system_bus_socket var/run/dbus/
+#sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
+sed -i 's/^autospawn = yes/autospawn = no/' etc/pulse/client.conf
+sed -i 's/^allow-autospawn-for-root = yes/allow-autospawn-for-root = no/' etc/pulse/client.conf
 
 # ln -s /usr/share/zoneinfo/GMT0 etc/localtime # This should be handled by tmpfiles.d/etc.conf
 
@@ -181,6 +193,9 @@ mkdir -p ../$NP-removed/devel/usr/include/ && mv usr/include/* $_
 mkdir -p ../$NP-removed/devel/lib${ARCH}/ && mv lib${ARCH}/*.a $_
 mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/ && mv usr/lib${ARCH}/*.a $_
 
+mkdir -p usr/lib/udev && mv lib/udev/* usr/lib/udev/ 2>/dev/null || true
+sed -i 's|/lib/udev/|/usr/lib/udev/|g' usr/lib/udev/rules.d/*.rules 2>/dev/null || true
+
 # Slim down Perl some more because it's a HUGE bitch
 mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/perl5/auto/Encode/ && mv usr/lib${ARCH}/perl5/auto/Encode/{JP,KR,CN,TW} $_
 mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/perl5/CORE/ && mv usr/lib${ARCH}/perl5/CORE/*.h $_
@@ -194,7 +209,6 @@ mkdir -p ../$NP-removed/devel/usr/share/perl5/ && mv usr/share/perl5/pod $_
 }
 
 copy-static() {
-#mkdir -p usr/lib/sysusers.d # remove this after systemd is upgraded
 echo "Copying stuff from 06-NimbleX"
 cp ../06-NimbleX/etc/issue* etc/
 cp ../06-NimbleX/etc/dhcpd.conf etc/
@@ -212,12 +226,21 @@ cp ../06-NimbleX/etc/skel/{\.bashrc,\.screenrc,\.vimrc} root/
 # cp ../06-NimbleX/usr/share/wallpapers/nimblex-wallpaper.jpg usr/share/wallpapers/
 cp ../06-NimbleX/var/spool/mail/root var/spool/mail/root
 
+# Memory-management shipped config (zram-swap.service, firefox.slice, earlyoom tuning).
+# Units/symlinks/slices are covered by the globs above; these are the non-systemd bits.
+cp ../06-NimbleX/etc/default/zram-swap etc/default/
+cp ../06-NimbleX/usr/libexec/*   usr/libexec/
+cp ../06-NimbleX/usr/local/bin/* usr/local/bin/
+
 cp ../06-NimbleX/etc/os-release etc/
-cp ../06-NimbleX/lib/udev/rules.d/*.rules lib/udev/rules.d/
+cp ../06-NimbleX/lib/udev/rules.d/*.rules usr/lib/udev/rules.d/
 cp ../06-NimbleX/etc/systemd/*.conf etc/systemd/
 #cp ../06-NimbleX/etc/dbus-1/system.d/* etc/dbus-1/system.d/
-cp -a ../06-NimbleX/usr/lib/systemd/system/*.{service,socket} usr/lib/systemd/system/
+cp -a ../06-NimbleX/usr/lib/systemd/system/*.{service,socket,slice} usr/lib/systemd/system/
 cp -a ../06-NimbleX/usr/lib/systemd/system/*.target.wants usr/lib/systemd/system/
+cp -a ../06-NimbleX/usr/lib/sysusers.d usr/lib/
+cp -a ../06-NimbleX/etc/pipewire etc/
+mkdir -p var/lib/pipewire/.local/state/wireplumber/
 
 cp ../06-NimbleX/usr/bin.noarch/* usr/bin/
 if [[ $ARCH = "" ]]; then

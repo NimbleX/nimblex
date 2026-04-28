@@ -4,7 +4,7 @@ Description=Modem Manager
 [Service]
 Type=dbus
 BusName=org.freedesktop.ModemManager
-ExecStart=/usr/sbin/modem-manager
+ExecStart=/usr/sbin/ModemManager
 
 [Install]
 WantedBy=multi-user.target

@@ -68,11 +68,24 @@ mkdir -p ../$NP-removed/locale/usr/share/locale/ && mv usr/share/locale/* $_
 mkdir -p ../$NP-removed/devel/usr/include/ && mv usr/include/* $_
 
 mkdir -p ../$NP-removed/devel/usr/lib${ARCH}/ && mv usr/lib${ARCH}/*.a $_
+
+mkdir -p usr/lib/udev && mv lib/udev/* usr/lib/udev/ 2>/dev/null || true
+sed -i 's|/lib/udev/|/usr/lib/udev/|g' usr/lib/udev/rules.d/*.rules 2>/dev/null || true
 }
 
 copy-static() {
 echo "Copying stuff from 06-NimbleX"
 cp ../06-NimbleX/etc/issue* etc/
+cp -a ../06-NimbleX/usr/lib/systemd/system/virt*.service usr/lib/systemd/system/
+cp -a ../06-NimbleX/usr/lib/systemd/system/virt*.socket usr/lib/systemd/system/
+cp -a ../06-NimbleX/usr/lib/systemd/system/libvirtd*.service usr/lib/systemd/system/
+cp -a ../06-NimbleX/usr/lib/systemd/system/libvirtd*.socket usr/lib/systemd/system/
+mkdir -p etc/systemd/system/multi-user.target.wants
+ln -s /usr/lib/systemd/system/libvirtd.service etc/systemd/system/multi-user.target.wants/libvirtd.service
+ln -s /usr/lib/systemd/system/virtlogd.service etc/systemd/system/multi-user.target.wants/virtlogd.service
+ln -s /usr/lib/systemd/system/virtqemud.service etc/systemd/system/multi-user.target.wants/virtqemud.service
+ln -s /usr/lib/systemd/system/virtnetworkd.service etc/systemd/system/multi-user.target.wants/virtnetworkd.service
+ln -s /usr/lib/systemd/system/virtstoraged.service etc/systemd/system/multi-user.target.wants/virtstoraged.service
 }
 
 run-ldconfig() {
@@ -101,7 +114,7 @@ else
 	  echo "...INSTALLING"
 	  instpkg
 	  clean-virt
-#	  copy-static
+	  copy-static
 #	  run-ldconfig
 	 ;;
 	 "lzmfy" )
@@ -118,7 +131,7 @@ else
 	  echo "...INSTALLING"
 	  instpkg
 	  clean-virt
-#	  copy-static
+	  copy-static
 #	  run-ldconfig
 	  echo "...LZMFY"
 	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT

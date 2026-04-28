@@ -1,0 +1,14 @@
+[Unit]
+Description=Libvirt network daemon
+Documentation=man:virtnetworkd(8)
+After=network.target virtlogd.service virtlockd.service
+Requires=virtlogd.service virtlockd.service
+
+[Service]
+Type=notify
+ExecStart=/usr/sbin/virtnetworkd
+Restart=on-failure
+
+[Install]
+Also=virtnetworkd.socket
+WantedBy=multi-user.target

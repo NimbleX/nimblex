@@ -19,7 +19,7 @@ blacklist_x=$blacklist_x",scim*,m17n*,libhangul*,xorg-server-xephyr*,xorg-server
 
 whitelist_d="llvm-*" # We need this for using standard mesa. If we want to save a lot of space we should compile mesa without llvm and should exclude llvm from here.
 
-whitelist_l="libxkbcommon-*,hicolor-icon-theme*,adwaita-icon-theme-*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,gtkmm4-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libindicator-*,libappindicator-*,openal-soft-*,qt5-*,PyQt5-*,grantlee-*,gobject-introspection-*,Imath-*,aom-*,dav1d-*,gsettings-desktop-schemas-*,libplacebo-*,vid.stab-*,editorconfig-core-c-*,gtk4-*,pipewire-*,wireplumber-*"
+whitelist_l="libxkbcommon-*,hicolor-icon-theme*,adwaita-icon-theme-*,icon-naming-utils*,hal*,exiv2*,gst*,libical*,libungif*,chmlib*,shared-mime-info-*,gtk+*,libgtkhtml*,pygtk*,atk*,at-spi2-*,jasper*,harfbuzz-*,pango*,cairo*,pycairo*,enchant*,gtkspell*,sip*,libglade*,PyQt-*,libxslt*,libnotify*,startup-notification*,libdvdread*,libvncserver*,libgpod*,libmtp*,libjpeg*,libpng*,giflib*,babl*,gegl*,lcms*,pycups*,notify-python*,lesstif*,t1lib*,ilmbase*,librsvg*,imlib*,libgsf*,libexif*,libmng*,libwmf*,openexr*,sdl*,djvulibre*,libwpd*,libart_lgpl*,fribidi*,vte*,gamin*,freetype*,fribidi*,libdbusmenu-*,gdk-pixbuf2*,desktop-file-utils-*,libcroco-*,libsoup-*,GConf-*,libgnome-keyring-*,libcanberra-*,qjson-*,libdvdnav-*,openjpeg-*,libva-*,LibRaw-*,gtkmm2-*,gtkmm3-*,gtkmm4-*,libbluray-*,ocl-icd-*,gsettings-desktop-schemas-*,libwebp-*,libunwind-*,json-glib-*,gexiv2-*,graphite2-*,brotli-*,libsecret-*,libindicator-*,libappindicator-*,openal-soft-*,qt5-*,PyQt5-*,grantlee-*,gobject-introspection-*,Imath-*,aom-*,dav1d-*,gsettings-desktop-schemas-*,libplacebo-*,vid.stab-*,editorconfig-core-c-*,gtk4-*,zxing-cpp-*"
 
 whitelist_xap="rxvt-unicode-*,libnma-*,network-manager-applet-*"
 
@@ -77,6 +77,9 @@ mv usr/share/locale/* ../$NP-removed/locale/usr/share/locale/ # 250KB compiz and
 mv usr/include/* ../$NP-removed/devel/usr/include/
 mv usr/lib${ARCH}/*.a ../$NP-removed/devel/usr/lib${ARCH}/
 
+mkdir -p usr/lib/udev && mv lib/udev/* usr/lib/udev/ 2>/dev/null || true
+sed -i 's|/lib/udev/|/usr/lib/udev/|g' usr/lib/udev/rules.d/*.rules 2>/dev/null || true
+
 # Handle usr/share/icons # 300KB
 # Handle fonts (usr/share/fonts or txz packagez) (Maybe 2MB of data)
 # Handle usr/share/X11/locale # 144KB
@@ -99,10 +102,20 @@ cp -a ../06-NimbleX/usr/share/icons/oxygen usr/share/icons/
 cp ../06-NimbleX/usr/share/mime/packages/nimblex.xml usr/share/mime/packages/
 mkdir -p usr/share/mime/application/ root/.config/
 cp ../06-NimbleX/usr/share/mime/application/x-lzm.xml usr/share/mime/application/
-
 cp -a ../06-NimbleX/usr/share/wallpapers usr/share/
 cp -a ../06-NimbleX/usr/share/X11/xorg.conf.d usr/share/X11/
 cp -a ../06-NimbleX/root/.config/dunst root/.config/
+cp -a ../06-NimbleX/etc/xdg etc/
+
+echo "Enabling startx.service in graphical.target"
+mkdir -p etc/systemd/system/graphical.target.wants
+ln -s /usr/lib/systemd/system/startx.service etc/systemd/system/graphical.target.wants/startx.service
+
+echo "Copying i3 configs"
+cp -a ../06-NimbleX/etc/i3 etc/
+cp -a ../06-NimbleX/etc/i3status.conf etc/
+rm etc/X11/xinit/xinitrc
+ln -s xinitrc.i3 etc/X11/xinit/xinitrc
 }
 
 run-ldconfig() {

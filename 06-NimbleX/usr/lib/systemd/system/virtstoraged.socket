@@ -1,0 +1,10 @@
+[Unit]
+Description=Libvirt storage daemon socket
+Documentation=man:virtstoraged(8)
+
+[Socket]
+ListenStream=/var/run/libvirt/virtstoraged-sock
+Service=virtstoraged.service
+
+[Install]
+WantedBy=sockets.target

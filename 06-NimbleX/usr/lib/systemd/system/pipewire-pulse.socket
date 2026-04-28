@@ -1,0 +1,10 @@
+[Unit]
+Description=PipeWire PulseAudio Compatibility Socket
+
+[Socket]
+Priority=6
+Backlog=5
+ListenStream=/run/pipewire/pulse/native
+
+[Install]
+WantedBy=sockets.target

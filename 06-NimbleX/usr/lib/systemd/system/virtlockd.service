@@ -1,0 +1,13 @@
+[Unit]
+Description=Libvirt lock daemon
+Documentation=man:virtlockd(8)
+After=local-fs.target
+
+[Service]
+Type=notify
+ExecStart=/usr/sbin/virtlockd
+Restart=on-failure
+
+[Install]
+Also=virtlockd.socket
+WantedBy=multi-user.target

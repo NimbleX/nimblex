@@ -1,0 +1,15 @@
+[Unit]
+Description=Libvirt QEMU daemon
+Documentation=man:virtqemud(8)
+After=network.target virtlogd.service virtlockd.service
+Requires=virtlogd.service virtlockd.service
+Wants=virtnetworkd.service virtstoraged.service
+
+[Service]
+Type=notify
+ExecStart=/usr/sbin/virtqemud
+Restart=on-failure
+
+[Install]
+Also=virtqemud.socket virtqemud-ro.socket virtqemud-admin.socket
+WantedBy=multi-user.target

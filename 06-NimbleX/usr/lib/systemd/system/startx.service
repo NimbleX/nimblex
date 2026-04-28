@@ -1,0 +1,10 @@
+[Unit]
+Description=Start X
+After=systemd-user-sessions.service dbus.service systemd-logind.service
+Wants=dbus.service systemd-logind.service
+
+[Service]
+ExecStart=/bin/su root -l -c /usr/bin/startx -- VT08
+
+[Install]
+WantedBy=graphical.target

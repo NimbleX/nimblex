@@ -1,0 +1,10 @@
+[Unit]
+Description=Libvirt network daemon socket
+Documentation=man:virtnetworkd(8)
+
+[Socket]
+ListenStream=/var/run/libvirt/virtnetworkd-sock
+Service=virtnetworkd.service
+
+[Install]
+WantedBy=sockets.target

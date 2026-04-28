@@ -1,0 +1,10 @@
+[Unit]
+Description=Libvirt QEMU daemon admin socket
+Documentation=man:virtqemud(8)
+
+[Socket]
+ListenStream=/var/run/libvirt/virtqemud-admin-sock
+Service=virtqemud.service
+
+[Install]
+WantedBy=sockets.target

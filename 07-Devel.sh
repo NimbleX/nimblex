@@ -43,12 +43,15 @@ done
 
 copy-removed() {
 cd $SD/$NP
+# 1st we need to fix this
+rm etc/passwd etc/group
 echo "Adding stuff removed from the other packages"
 cp -a ../01-Core${ARCH}-removed/devel/* .
 cp -a ../02-Xorg${ARCH}-removed/devel/* .
 #cp -a ../03-Libs${ARCH}-removed/devel/* .
 cp -a ../04-Apps${ARCH}-removed/devel/* .
 cp -a ../05-KDE${ARCH}-removed/devel/* .
+
 }
 
 fix_grub_font() {

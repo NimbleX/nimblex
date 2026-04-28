@@ -1,0 +1,10 @@
+[Unit]
+Description=Libvirt monolithic daemon socket
+Documentation=man:libvirtd(8)
+
+[Socket]
+ListenStream=/var/run/libvirt/libvirt-sock
+Service=libvirtd.service
+
+[Install]
+WantedBy=sockets.target

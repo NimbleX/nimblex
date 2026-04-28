@@ -1,0 +1,15 @@
+[Unit]
+Description=Libvirt monolithic daemon (legacy compatibility)
+Documentation=man:libvirtd(8)
+After=network.target virtlogd.service virtlockd.service
+Requires=virtlogd.service virtlockd.service
+Wants=virtnetworkd.service virtstoraged.service
+
+[Service]
+Type=notify
+ExecStart=/usr/sbin/libvirtd
+Restart=on-failure
+
+[Install]
+Also=libvirtd.socket libvirtd-ro.socket libvirtd-admin.socket
+WantedBy=multi-user.target

@@ -7,6 +7,8 @@ export HOSTNAME="`cat /etc/HOSTNAME`"
 export LESSOPEN="|lesspipe.sh %s"
 export LESS="-MR"
 export SSH_AUTH_SOCK="/run/ssh-agent.socket"
+export PULSE_RUNTIME_PATH=/run/pipewire/pulse
+export TERMINAL=kitty
 
 # If the user doesn't have a .inputrc, use the one in /etc.
 if [ ! -r "$HOME/.inputrc" ]; then

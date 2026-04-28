@@ -1,0 +1,16 @@
+[Unit]
+Description=PipeWire PulseAudio Compatibility Daemon
+Wants=pipewire.service
+After=pipewire.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/pipewire-pulse
+Restart=on-failure
+RestartSec=5
+User=pipewire
+Environment=PIPEWIRE_RUNTIME_DIR=/run/pipewire
+Environment=XDG_RUNTIME_DIR=/run/pipewire
+
+[Install]
+WantedBy=multi-user.target

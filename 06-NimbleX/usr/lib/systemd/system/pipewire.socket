@@ -1,0 +1,10 @@
+[Unit]
+Description=PipeWire Multimedia System Socket
+
+[Socket]
+Priority=6
+Backlog=5
+ListenStream=/run/pipewire/pipewire-0
+
+[Install]
+WantedBy=sockets.target

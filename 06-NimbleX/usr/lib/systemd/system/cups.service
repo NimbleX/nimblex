@@ -7,8 +7,8 @@ ExecStart=/usr/sbin/cupsd -f
 # This is evil stuff. CUPS should use proper enumeration instead of
 # retriggering these devices. CUPS folks, please fix this, otherwise Kay will
 # come after you!
-ExecStartPost=/sbin/udevadm trigger --subsystem-match=usb --attr-match=bInterfaceClass=07 --attr-match=bInterfaceSubClass=01
-ExecStartPost=/sbin/udevadm trigger --subsystem-match=usb --property-match=DEVNAME=/dev/usb/lp*
+ExecStartPost=/usr/bin/udevadm trigger --subsystem-match=usb --attr-match=bInterfaceClass=07 --attr-match=bInterfaceSubClass=01
+ExecStartPost=/usr/bin/udevadm trigger --subsystem-match=usb --property-match=DEVNAME=/dev/usb/lp*
 
 [Install]
 WantedBy=multi-user.target

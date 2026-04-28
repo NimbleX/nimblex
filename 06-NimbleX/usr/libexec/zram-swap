@@ -1,0 +1,140 @@
+#!/bin/sh
+# /usr/libexec/zram-swap — setup/teardown helper for zram-swap.service
+#
+# Shipped by NimbleX. Drives /etc/default/zram-swap.
+#
+# Usage: zram-swap {start|stop|status}
+
+set -eu
+
+CONFIG=/etc/default/zram-swap
+STATE=/run/zram-swap.id
+
+# ---- defaults (overridable in $CONFIG) ----
+ZRAM_SIZE=auto       # auto | 50% | 4G | 4096M
+ZRAM_COMP=auto       # auto | zstd | lz4 | lzo-rle | lzo | 842 | deflate
+ZRAM_PRIORITY=100    # swap priority; must beat any disk swap
+ZRAM_STREAMS=        # empty = one per CPU (kernel default)
+
+# shellcheck disable=SC1090
+[ -r "$CONFIG" ] && . "$CONFIG"
+
+log()  { printf 'zram-swap: %s\n' "$*" >&2; }
+die()  { log "error: $*"; exit 1; }
+
+ram_mb() { awk '/^MemTotal:/ {print int($2/1024); exit}' /proc/meminfo; }
+
+resolve_size() {
+    # Print a size value acceptable to /sys/block/zramN/disksize (bytes or suffixed).
+    spec=$1
+    case "$spec" in
+        auto)
+            mem=$(ram_mb)
+            half=$((mem / 2))
+            [ "$half" -gt 8192 ] && half=8192
+            [ "$half" -lt 256 ]  && half=256
+            printf '%sM' "$half"
+            ;;
+        *%)
+            pct=${spec%\%}
+            mem=$(ram_mb)
+            printf '%sM' "$((mem * pct / 100))"
+            ;;
+        *[!0-9KMGkmg]*|'')
+            die "invalid ZRAM_SIZE='$spec'"
+            ;;
+        *)
+            printf '%s' "$spec"
+            ;;
+    esac
+}
+
+resolve_comp() {
+    # Pick a compressor supported by this kernel. Reads availability from
+    # /sys/block/zramN/comp_algorithm, which looks like "[lzo-rle] lzo zstd".
+    dev=$1
+    want=$2
+    avail=$(tr -d '[]' < "/sys/block/${dev}/comp_algorithm")
+    if [ "$want" = auto ]; then
+        for cand in zstd lz4 lz4hc lzo-rle lzo 842 deflate; do
+            case " $avail " in
+                *" $cand "*) printf '%s' "$cand"; return 0 ;;
+            esac
+        done
+        die "no known compressor available (kernel reports: $avail)"
+    else
+        case " $avail " in
+            *" $want "*) printf '%s' "$want" ;;
+            *) die "compressor '$want' not supported by kernel (have: $avail)" ;;
+        esac
+    fi
+}
+
+start() {
+    [ -e /sys/class/zram-control/hot_add ] \
+        || die "kernel lacks zram support (CONFIG_ZRAM)"
+    [ -f "$STATE" ] && die "already started (state file: $STATE)"
+
+    id=$(cat /sys/class/zram-control/hot_add)
+    dev="zram${id}"
+    # Roll back the hot_add if anything below fails.
+    trap 'printf %s "$id" > /sys/class/zram-control/hot_remove 2>/dev/null || true' EXIT
+
+    comp=$(resolve_comp "$dev" "$ZRAM_COMP")
+    printf '%s' "$comp" > "/sys/block/${dev}/comp_algorithm"
+
+    if [ -n "$ZRAM_STREAMS" ]; then
+        printf '%s' "$ZRAM_STREAMS" > "/sys/block/${dev}/max_comp_streams" \
+            || log "warning: could not set max_comp_streams=$ZRAM_STREAMS"
+    fi
+
+    size=$(resolve_size "$ZRAM_SIZE")
+    printf '%s' "$size" > "/sys/block/${dev}/disksize"
+
+    # Absolute paths: /sbin is not in systemd's default service PATH on
+    # Slackware-derived systems like NimbleX.
+    /sbin/mkswap -L "$dev" "/dev/${dev}" >/dev/null
+    /sbin/swapon -p "$ZRAM_PRIORITY" "/dev/${dev}"
+
+    printf '%s\n' "$id" > "$STATE"
+    trap - EXIT
+    log "enabled /dev/${dev} (size=${size}, comp=${comp}, prio=${ZRAM_PRIORITY})"
+}
+
+stop() {
+    [ -f "$STATE" ] || { log "not running"; exit 0; }
+    id=$(cat "$STATE")
+    dev="zram${id}"
+    /sbin/swapoff "/dev/${dev}" 2>/dev/null || log "warning: swapoff /dev/${dev} failed"
+    printf '%s' "$id" > /sys/class/zram-control/hot_remove 2>/dev/null \
+        || log "warning: hot_remove $id failed (device may still be in use)"
+    rm -f "$STATE"
+    log "disabled /dev/${dev}"
+}
+
+status() {
+    if [ -f "$STATE" ]; then
+        id=$(cat "$STATE")
+        dev="zram${id}"
+        printf 'active: /dev/%s\n' "$dev"
+        [ -r "/sys/block/${dev}/mm_stat" ] && {
+            awk '{
+                printf "  original:   %d MiB\n", $1/1048576
+                printf "  compressed: %d MiB\n", $2/1048576
+                printf "  pool RAM:   %d MiB\n", $3/1048576
+                if ($2 > 0) printf "  ratio:      %.2fx\n", $1/$2
+            }' "/sys/block/${dev}/mm_stat"
+        }
+        grep -E "^/dev/${dev}\b" /proc/swaps || true
+    else
+        echo 'inactive'
+        exit 3
+    fi
+}
+
+case "${1:-}" in
+    start)  start  ;;
+    stop)   stop   ;;
+    status) status ;;
+    *) echo "usage: $0 {start|stop|status}" >&2; exit 64 ;;
+esac

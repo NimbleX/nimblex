@@ -1,0 +1,25 @@
+#!/bin/sh
+# /usr/local/bin/firefox — wrapper that launches Firefox inside a
+# memory-limited systemd slice (see /etc/systemd/system/firefox.slice).
+# This protects the rest of the system from a runaway browser.
+#
+# Bypass the wrapper with:  /usr/bin/firefox "$@"
+
+REAL_FIREFOX=/usr/bin/firefox
+
+# If systemd-run is missing or we're somehow already inside firefox.slice,
+# just exec the real binary to avoid surprises.
+if ! command -v systemd-run >/dev/null 2>&1; then
+    exec "$REAL_FIREFOX" "$@"
+fi
+case "$(cat /proc/self/cgroup 2>/dev/null)" in
+    *firefox.slice*) exec "$REAL_FIREFOX" "$@" ;;
+esac
+
+exec systemd-run \
+    --quiet \
+    --collect \
+    --scope \
+    --slice=firefox.slice \
+    --unit="firefox-$$" \
+    -- "$REAL_FIREFOX" "$@"

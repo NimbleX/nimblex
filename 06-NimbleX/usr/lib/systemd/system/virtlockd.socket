@@ -1,0 +1,10 @@
+[Unit]
+Description=Libvirt lock daemon socket
+Documentation=man:virtlockd(8)
+
+[Socket]
+ListenStream=/var/run/libvirt/virtlockd-sock
+Service=virtlockd.service
+
+[Install]
+WantedBy=sockets.target

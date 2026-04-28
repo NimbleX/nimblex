@@ -1,0 +1,10 @@
+[Unit]
+Description=Libvirt QEMU daemon read-only socket
+Documentation=man:virtqemud(8)
+
+[Socket]
+ListenStream=/var/run/libvirt/virtqemud-sock-ro
+Service=virtqemud.service
+
+[Install]
+WantedBy=sockets.target
