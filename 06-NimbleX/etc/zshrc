@@ -1,0 +1,17 @@
+# /etc/zshrc - System-wide zsh interactive shell config (NimbleX)
+# Loaded for all users on every interactive zsh session.
+
+# ---- Home / End keybindings ----
+bindkey '^[[H'   beginning-of-line   # Home (xterm/most terminals)
+bindkey '^[[F'   end-of-line         # End
+bindkey '^[[1~'  beginning-of-line   # Home (linux console / some terms)
+bindkey '^[[4~'  end-of-line         # End
+bindkey '^[[7~'  beginning-of-line   # Home (rxvt)
+bindkey '^[[8~'  end-of-line         # End
+bindkey '^[OH'   beginning-of-line   # Home (application mode)
+bindkey '^[OF'   end-of-line         # End
+
+# ---- Delete / Insert keybindings ----
+bindkey '^[[3~'  delete-char         # Delete (xterm/kitty/most terminals)
+bindkey '^[[P'   delete-char         # Delete (some terminals)
+bindkey '^[[2~'  overwrite-mode      # Insert
