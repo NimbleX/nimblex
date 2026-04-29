@@ -20,7 +20,7 @@ blacklist_ap="hplip*,mariadb-*,vim*,linuxdoc*,man*,groff*,a2ps*,texinfo*,ksh93*,
 # These are necessary for printing
 #blacklist_ap=$blacklist_ap"ghostscript-*,gutenprint-*,qpdf-*"
 whitelist_l="libseccomp-*,ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,libunistring-*,elfutils-*,xxHash-*,lz4-*,lmdb-*,libuv-*"
-whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*"
+whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,python-doxy*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*"
 # These are necessary for printing
 whitelist_l=$whitelist_l",colord-*,graphene-*,libcupsfilters-*,libgusb-*,libpaper-*,libppd-*,poppler-*,fmt-*,pipewire-*,wireplumber-*"
 
@@ -215,6 +215,7 @@ cp ../06-NimbleX/etc/dhcpd.conf etc/
 cp ../06-NimbleX/etc/vsftpd.conf etc/
 cp ../06-NimbleX/etc/bootchartd.conf etc/
 cp ../06-NimbleX/etc/profile etc/
+cp ../06-NimbleX/etc/zshrc etc/
 cp ../06-NimbleX/etc/locale.conf etc/
 cp ../06-NimbleX/etc/vconsole.conf etc/
 cp ../06-NimbleX/etc/rc.local etc/

@@ -18,7 +18,7 @@ fi
 extrasrc="http://packages.nimblex.net/slacky${ARCH}"
 
 whitelist_a="grub-*,floppy-*"
-blacklist_d="perl*,llvm-*,gcc-java-*,gcc-gnat-*,gcc-go-*,gcc-gfortran-*,rust-*"
+blacklist_d="perl*,llvm-*,gcc-java-*,gcc-gnat-*,gcc-go-*,gcc-gfortran-*"
 whitelist_l="glibci-*,mpfr-*,db4-*,boost-*,python-packaging-*,python-pygments-*,python-docutils-*"
 whitelist_ap="linuxdoc-tools*,texinfo*"
 
