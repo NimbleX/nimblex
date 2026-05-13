@@ -29,10 +29,12 @@ done
 
 }
 
-run-ldconfig() {
-echo "Running ldconfig and others chrooted inside $AUFS"
+run-caches() {
+AUFS="aufs-temp"
+echo "Rebuilding caches chrooted inside $AUFS"
 
-AUFS="aufs-temp" && mkdir -p $AUFS
+mount | grep aufs-temp && umount aufs-temp
+mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 mount -t aufs -o remount,append:07-Devel64=ro none $AUFS
 mount -t aufs -o remount,append:05-KDE64=ro none $AUFS
@@ -42,6 +44,13 @@ mount -t aufs -o remount,append:02-Xorg64=ro none $AUFS
 mount -t aufs -o remount,append:01-Core64=ro none $AUFS
 
 chroot $AUFS ldconfig
+chroot $AUFS fc-cache
+chroot $AUFS update-mime-database /usr/share/mime
+chroot $AUFS update-desktop-database -q /usr/share/applications
+chroot $AUFS gio-querymodules /usr/lib64/gio/modules
+#chroot $AUFS update-gtk-immodules
+chroot $AUFS update-gdk-pixbuf-loaders
+chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
 
 umount $AUFS
 rm -rf $NP/.wh..wh.*
@@ -66,7 +75,7 @@ case $1 in
  ;;
 esac
 
-run-ldconfig
+run-caches
 
 SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
 mksquashfs $NP $NP.lzm $SQUASH_OPT

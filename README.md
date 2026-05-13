@@ -149,8 +149,6 @@ Rebuild a single module:
 - Override the package mirror by creating `ftp-credentials` (gitignored)
   with `USERNAME`, `PASSWORD`, and `HOSTNAME`.
 - Pass `WGET_OPTS=""` for verbose downloads.
-- Full build internals, gotchas, and conventions live in
-  [`AGENTS.md`](./AGENTS.md).
 
 ## Status
 

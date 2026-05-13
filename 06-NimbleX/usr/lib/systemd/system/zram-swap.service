@@ -2,7 +2,7 @@
 Description=Compressed RAM swap (zram)
 Documentation=man:zram(4) https://docs.kernel.org/admin-guide/blockdev/zram.html
 DefaultDependencies=no
-After=systemd-modules-load.service local-fs.target
+After=systemd-modules-load.service
 Before=swap.target shutdown.target
 Conflicts=shutdown.target
 # Don't even try where zram is impossible or unwanted.

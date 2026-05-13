@@ -99,15 +99,24 @@ sed -i 's/#cache = 8192/cache = 4096/g' etc/mplayer/mplayer.conf
 sed -i 's/#cache-min = 20.0/cache-min = 20.0/g' etc/mplayer/mplayer.conf
 }
 
-run-ldconfig() {
-cd $SD && AUFS="aufs-temp" && mkdir -p $AUFS
-echo "Running ldconfig and others chrooted inside $AUFS"
+run-caches() {
+cd $SD && AUFS="aufs-temp"
+echo "Rebuilding caches chrooted inside $AUFS"
+
+mount | grep aufs-temp && umount aufs-temp
+mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 #mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
 chroot $AUFS ldconfig
+chroot $AUFS fc-cache
+chroot $AUFS update-mime-database /usr/share/mime
+chroot $AUFS update-desktop-database -q /usr/share/applications
+chroot $AUFS gio-querymodules /usr/lib${ARCH}/gio/modules
+#chroot $AUFS update-gtk-immodules
+chroot $AUFS update-gdk-pixbuf-loaders
 chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
 
 umount $AUFS
@@ -138,7 +147,7 @@ else
           cripple_gimp
           cripple_samba
           cripple_mplayer
-	  run-ldconfig
+	  run-caches
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
@@ -153,7 +162,7 @@ else
           cripple_gimp
           cripple_samba
           cripple_mplayer
-	  run-ldconfig
+	  run-caches
 	  echo "...LZMFY"
 	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;

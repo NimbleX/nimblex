@@ -32,7 +32,7 @@ elif [[ $ARCH = "64" ]]; then
  wget $WGET_OPTS -N $nxsrc/libvirt-10.10.0-x86_64-1.txz        # 8.0M
  wget $WGET_OPTS -N $nxsrc/libvirt-glib-5.0.0-x86_64-1.txz		# 300K
  wget $WGET_OPTS -N $nxsrc/libvirt-python-10.10.0-x86_64-1.txz # 295K
- wget $WGET_OPTS -N $nxsrc/qemu-10.1.3-x86_64-1.txz            # 26M
+ wget $WGET_OPTS -N $nxsrc/qemu-10.2.2-x86_64-1.txz            # 27M
 # wget $WGET_OPTS -N $nxsrc/libosinfo-0.3.1-x86_64-1.txz		# 339K
  wget $WGET_OPTS -N $nxsrc/spice-0.16.0-x86_64-1.txz           # 360K
  wget $WGET_OPTS -N $nxsrc/spice-gtk-0.42-x86_64-1.txz         # 496K
@@ -76,11 +76,13 @@ sed -i 's|/lib/udev/|/usr/lib/udev/|g' usr/lib/udev/rules.d/*.rules 2>/dev/null 
 copy-static() {
 echo "Copying stuff from 06-NimbleX"
 cp ../06-NimbleX/etc/issue* etc/
+mkdir -p etc/systemd/system/multi-user.target.wants
+mkdir -p usr/lib/systemd/system
 cp -a ../06-NimbleX/usr/lib/systemd/system/virt*.service usr/lib/systemd/system/
 cp -a ../06-NimbleX/usr/lib/systemd/system/virt*.socket usr/lib/systemd/system/
-cp -a ../06-NimbleX/usr/lib/systemd/system/libvirtd*.service usr/lib/systemd/system/
-cp -a ../06-NimbleX/usr/lib/systemd/system/libvirtd*.socket usr/lib/systemd/system/
-mkdir -p etc/systemd/system/multi-user.target.wants
+# libvirt is now modular. We don't need the next one
+#cp -a ../06-NimbleX/usr/lib/systemd/system/libvirtd*.service usr/lib/systemd/system/
+#cp -a ../06-NimbleX/usr/lib/systemd/system/libvirtd*.socket usr/lib/systemd/system/
 ln -s /usr/lib/systemd/system/libvirtd.service etc/systemd/system/multi-user.target.wants/libvirtd.service
 ln -s /usr/lib/systemd/system/virtlogd.service etc/systemd/system/multi-user.target.wants/virtlogd.service
 ln -s /usr/lib/systemd/system/virtqemud.service etc/systemd/system/multi-user.target.wants/virtqemud.service
@@ -88,9 +90,31 @@ ln -s /usr/lib/systemd/system/virtnetworkd.service etc/systemd/system/multi-user
 ln -s /usr/lib/systemd/system/virtstoraged.service etc/systemd/system/multi-user.target.wants/virtstoraged.service
 }
 
-run-ldconfig() {
-echo "Running ldconfig and others chrooted"
-chroot . ldconfig
+run-caches() {
+cd $SD && AUFS="aufs-temp"
+echo "Rebuilding caches chrooted inside $AUFS"
+
+mount | grep aufs-temp && umount aufs-temp
+mkdir -p $AUFS
+mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
+mount -t aufs -o remount,append:07-Devel${ARCH}=ro none $AUFS
+mount -t aufs -o remount,append:05-KDE${ARCH}=ro none $AUFS
+mount -t aufs -o remount,append:04-Apps${ARCH}=ro none $AUFS
+#mount -t aufs -o remount,append:03-Libs${ARCH}=ro none $AUFS
+mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
+mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
+
+chroot $AUFS ldconfig
+chroot $AUFS fc-cache
+chroot $AUFS update-mime-database /usr/share/mime
+chroot $AUFS update-desktop-database -q /usr/share/applications
+chroot $AUFS gio-querymodules /usr/lib${ARCH}/gio/modules
+#chroot $AUFS update-gtk-immodules
+chroot $AUFS update-gdk-pixbuf-loaders
+chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
+
+umount $AUFS
+rm -rf $NP/.wh..wh.*
 }
 
 SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
@@ -115,7 +139,7 @@ else
 	  instpkg
 	  clean-virt
 	  copy-static
-#	  run-ldconfig
+	  run-caches
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
@@ -132,7 +156,7 @@ else
 	  instpkg
 	  clean-virt
 	  copy-static
-#	  run-ldconfig
+	  run-caches
 	  echo "...LZMFY"
 	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;

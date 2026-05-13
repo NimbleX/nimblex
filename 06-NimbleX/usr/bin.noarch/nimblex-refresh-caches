@@ -1,0 +1,64 @@
+#!/bin/bash
+# nimblex-refresh-caches
+#
+# Validate merged-filesystem caches on a layered AUFS live system.
+#
+# Each .lzm bundle ships pre-merged caches built inside its build-time
+# AUFS chroot (see run-caches in the NN-*.sh build scripts). At boot,
+# AUFS exposes the topmost bundle's cache files, which already reflect
+# the full live stack. So on a normal boot every check below is a few
+# stat() calls and we exit immediately.
+#
+# A rebuild only fires for the unusual case where some bundle's shipped
+# cache is NEWER than the currently visible cache -- e.g. a module was
+# activated at runtime that wasn't part of the build, or an installpkg
+# refreshed a per-package cache after boot. In that case the single
+# affected cache is rebuilt against the merged tree in the background.
+#
+# Subsumes the old ldconfig-check by handling /etc/ld.so.cache with the
+# same pattern.
+
+set -u
+
+# refresh_if_stale <visible cache> <rebuild cmd...>
+#
+# If the cache is missing, or any bundle's copy of it is newer than the
+# visible one, run the rebuild in the background. Otherwise no-op.
+refresh_if_stale() {
+    local cache=$1; shift
+    if [[ ! -f $cache ]]; then
+        "$@" >/dev/null 2>&1 &
+        return
+    fi
+    local b
+    for b in /mnt/live/memory/bundles/*"$cache"; do
+        [[ -f $b && $b -nt $cache ]] || continue
+        "$@" >/dev/null 2>&1 &
+        return
+    done
+}
+
+refresh_if_stale /etc/ld.so.cache \
+    /sbin/ldconfig -X
+refresh_if_stale /usr/share/glib-2.0/schemas/gschemas.compiled \
+    glib-compile-schemas /usr/share/glib-2.0/schemas
+refresh_if_stale /usr/share/mime/mime.cache \
+    update-mime-database /usr/share/mime
+refresh_if_stale /usr/share/applications/mimeinfo.cache \
+    update-desktop-database -q /usr/share/applications
+refresh_if_stale /usr/lib64/gio/modules/giomodule.cache \
+    gio-querymodules /usr/lib64/gio/modules
+refresh_if_stale /usr/lib64/gdk-pixbuf-2.0/2.10.0/loaders.cache \
+    /usr/bin/gdk-pixbuf-query-loaders-64 --update-cache
+
+# Per-theme icon caches. gtk-update-icon-cache without -f does its own
+# up-to-date check as a final belt-and-braces; refresh_if_stale gates the
+# common case where nothing needs rebuilding.
+for theme in /usr/share/icons/*/; do
+    [[ -f $theme/index.theme ]] || continue
+    refresh_if_stale "$theme/icon-theme.cache" \
+        gtk-update-icon-cache -q -t "$theme"
+done
+
+wait
+exit 0

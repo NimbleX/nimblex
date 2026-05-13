@@ -15,3 +15,20 @@ bindkey '^[OF'   end-of-line         # End
 bindkey '^[[3~'  delete-char         # Delete (xterm/kitty/most terminals)
 bindkey '^[[P'   delete-char         # Delete (some terminals)
 bindkey '^[[2~'  overwrite-mode      # Insert
+
+# ---- Colors ----
+# Load LS_COLORS from /etc/DIR_COLORS (or built-in defaults as fallback)
+if [[ -f /etc/DIR_COLORS ]]; then
+    eval "$(dircolors -b /etc/DIR_COLORS)"
+else
+    eval "$(dircolors -b)"
+fi
+
+alias ls='ls --color=auto'
+alias ll='ls -lh --color=auto'
+alias la='ls -lah --color=auto'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'

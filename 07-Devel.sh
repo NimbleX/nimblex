@@ -32,7 +32,8 @@ wget $WGET_OPTS -A "$whitelist_l" "$slacksrc"/l/*.txz
 wget $WGET_OPTS -A "$whitelist_ap" "$slacksrc"/ap/*.txz
 
 wget $WGET_OPTS http://packages.nimblex.net/nimblex/device-tree-compiler-1.7.2-x86_64-1.txz # 164K
-wget $WGET_OPTS -N http://packages.nimblex.net/nimblex/pefile-2024.8.26-x86_64-1.txz           # 148K
+wget $WGET_OPTS http://packages.nimblex.net/nimblex/intel-npu-1.32.1-x86_64.txz             # 39M
+wget $WGET_OPTS -N http://packages.nimblex.net/nimblex/pefile-2024.8.26-x86_64-1.txz        # 148K
 }
 
 instpkg() {
@@ -59,10 +60,12 @@ cd $SD/$NP
 ln -s /boot/grub/fonts/hack.pf2 usr/share/grub/unicode.pf2
 }
 
-run-ldconfig() {
-echo "Running ldconfig and others chrooted inside $AUFS"
+run-caches() {
+cd $SD && AUFS="aufs-temp"
+echo "Rebuilding caches chrooted inside $AUFS"
 
-cd $SD && AUFS="aufs-temp" && mkdir -p $AUFS
+mount | grep aufs-temp && umount aufs-temp
+mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 mount -t aufs -o remount,append:05-KDE${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:04-Apps${ARCH}=ro none $AUFS
@@ -71,7 +74,13 @@ mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
 chroot $AUFS ldconfig
+chroot $AUFS fc-cache
 chroot $AUFS update-mime-database /usr/share/mime
+chroot $AUFS update-desktop-database -q /usr/share/applications
+chroot $AUFS gio-querymodules /usr/lib${ARCH}/gio/modules
+#chroot $AUFS update-gtk-immodules
+chroot $AUFS update-gdk-pixbuf-loaders
+chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
 
 umount $AUFS
 rm -rf $NP/.wh..wh.*
@@ -99,7 +108,7 @@ else
 	  instpkg
       fix_grub_font
 	  copy-removed
-	  run-ldconfig
+	  run-caches
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
@@ -112,7 +121,7 @@ else
 	  instpkg
       fix_grub_font
 	  copy-removed
-	  run-ldconfig
+	  run-caches
 	  echo "...LZMFY"
 	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;

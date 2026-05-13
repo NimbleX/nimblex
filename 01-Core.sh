@@ -20,11 +20,11 @@ blacklist_ap="hplip*,mariadb-*,vim*,linuxdoc*,man*,groff*,a2ps*,texinfo*,ksh93*,
 # These are necessary for printing
 #blacklist_ap=$blacklist_ap"ghostscript-*,gutenprint-*,qpdf-*"
 whitelist_l="libseccomp-*,ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,libunistring-*,elfutils-*,xxHash-*,lz4-*,lmdb-*,libuv-*"
-whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,python-doxy*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*"
+whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd-*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,python-doxy*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*,libnvme-*"
 # These are necessary for printing
 whitelist_l=$whitelist_l",colord-*,graphene-*,libcupsfilters-*,libgusb-*,libpaper-*,libppd-*,poppler-*,fmt-*,pipewire-*,wireplumber-*"
 
-whitelist_n="libtirpc-*,libndp-*,nghttp2-*,nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn-*,libmnl-*,openssl*,rsync*,gpgme*,dnsmasq*,wireless_tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*,npth-*,ngtcp2-*"
+whitelist_n="libtirpc-*,libndp-*,nghttp2-*,nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn-*,libmnl-*,openssl*,rsync*,gpgme*,dnsmasq*,wireless_tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*,npth-*,ngtcp2-*,wireless-regdb-*,libnftnl-*,libnetfilter_conntrack-*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*,NetworkManager-*,ModemManager-*,libmbim-*,libqmi-*,mobile-broadband-provider-info-*,ntp-*,libnetfilter_queue-*,libnfnetlink-*,wireguard-tools-*,nghttp3-*,c-ares-*,krb5-*,nss-mdns-*,libqrtr-glib-*"
 
 extra="chillispot,scanssh,nrg2iso,mdf2iso"
@@ -84,8 +84,17 @@ elif [[ $ARCH = "64" ]]; then
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/libev-4.33-x86_64-1.txz        # 132K
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/uthash-2.3.0-x86_64-1.txz      # 108K
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/evdi-1.14.15-x86_64-1.txz      # 20K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/chntpw-140201-x86_64-1.txz     # 84K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/pv-1.10.3-x86_64-1.txz         # 104K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/shim-signed-1.47-x86_64-1.txz  # 324K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/mokutil-0.7.2-x86_64-1.txz     # 36K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/pipewire-1.6.4-x86_64-2_libcamera.txz # We need to have our own because libcamera is missing from slackware
 # wget $WGET_OPTS http://packages.nimblex.net/nimblex/xl2tpd-1.3.2-x86_64-1.txz		# 430K
 # wget $WGET_OPTS http://packages.nimblex.net/nimblex/strongswan-5.6.2-x86_64-1.txz	# 863K
+# Some fingerprint sensor support experiment
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/libgusb-0.4.9-x86_64-1.txz     # 68K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/libfprint-1.94.2-x86_64-2.txz # 836K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/fprintd-1.94.2-x86_64-1.txz    # 128K
 # # The following are some basic music apps related libs
 # wget $WGET_OPTS http://packages.nimblex.net/nimblex/dssi-1.1.1-x86_64-1.txz		# 48K
 # wget $WGET_OPTS http://packages.nimblex.net/nimblex/liblo-0.28-x86_64-1.txz		# 69K
@@ -253,11 +262,13 @@ cp ../06-NimbleX/usr/bin64/* usr/bin/
 fi
 }
 
-run-ldconfig() {
+# Rebuild merged-filesystem cache
+run-caches() {
 echo "Running ldconfig and others chrooted"
 chroot . ldconfig
 chroot . /usr/sbin/update-ca-certificates
-#chroot . /usr/sbin/groupadd -g215 vboxusers 2> /dev/null # We'll move this to sysusers.d
+chroot . glib-compile-schemas /usr/share/glib-2.0/schemas
+chroot . gio-querymodules /usr/lib${ARCH}/gio/modules
 }
 
 SQUASH_OPT="-comp xz -noappend -b 256K -Xbcj x86 -no-xattrs"
@@ -282,7 +293,7 @@ else
 	  instpkg
 	  clean-core
 	  copy-static
-	  run-ldconfig
+	  run-caches
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
@@ -295,7 +306,7 @@ else
 	  instpkg
 	  clean-core
 	  copy-static
-	  run-ldconfig
+	  run-caches
 	  echo "...LZMFY"
 	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;

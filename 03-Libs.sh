@@ -58,16 +58,24 @@ mv usr/lib${ARCH}/*.a ../$NP-removed/devel/usr/lib${ARCH}/
 }
 
 
-run-ldconfig() {
+run-caches() {
 cd $SD && AUFS="aufs-temp"
-echo "Running ldconfig and others chrooted inside $AUFS"
+echo "Rebuilding caches chrooted inside $AUFS"
 
+mount | grep aufs-temp && umount aufs-temp
 mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:03-Libs${ARCH} none $AUFS
 mount -t aufs -o remount,append:02-Xorg${ARCH}=ro none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
 chroot $AUFS ldconfig
+chroot $AUFS fc-cache
+chroot $AUFS update-mime-database /usr/share/mime
+chroot $AUFS update-desktop-database -q /usr/share/applications
+chroot $AUFS gio-querymodules /usr/lib${ARCH}/gio/modules
+#chroot $AUFS update-gtk-immodules
+chroot $AUFS update-gdk-pixbuf-loaders
+chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
 
 umount $AUFS
 rm -rf $NP/.wh..wh.*
@@ -94,7 +102,7 @@ else
 	  echo "...INSTALLING"
 	  instpkg
 	  clean-Lib
-	  run-ldconfig
+	  run-caches
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
@@ -109,7 +117,7 @@ else
 	  echo "...INSTALLING"
 	  instpkg
 	  clean-Lib
-	  run-ldconfig
+	  run-caches
 	  echo "...LZMFY"
 	  rm -f $NP.lzm
 	  mksquashfs $NP $NP.lzm $SQUASH_OPT

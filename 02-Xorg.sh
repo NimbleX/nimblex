@@ -36,23 +36,26 @@ wget $WGET_OPTS -A "$whitelist_xap" "$slacksrc"/xap/*.txz
 wget $WGET_OPTS -A "$whitelist_kde" "$slacksrc"/kde/*.txz
 
 if [[ $ARCH = "" ]]; then
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3-4.2-i486-2.txz		# 641K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	# 38K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	# 15K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3-4.2-i486-2.txz		            # 641K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3status-2.8-i686-1.txz	        # 38K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/dmenu-4.5-i686-1.txz	            # 15K
 elif [[ $ARCH = "64" ]]; then
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3-4.25.1-x86_64-1.txz     # 1.1M
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3status-2.15-x86_64-1.txz	# 52K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/xcb-util-xrm-1.3-x86_64-1.txz	# 32K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/dmenu-4.8-x86_64-1.txz	# 20K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/imlib2-1.7.1-x86_64-1.txz	# 536K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/feh-3.6.1-x86_64-1.txz	# 166K
- wget $WGET_OPTS https://packages.nimblex.net/nimblex/dunst-1.12.2-x86_64-1.txz # 127K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/xsel-1.2.1-x86_64-1.txz	# 24K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3-4.25.1-x86_64-1.txz             # 1.1M
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/i3status-2.15-x86_64-1.txz	        # 52K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/xcb-util-xrm-1.3-x86_64-1.txz	    # 32K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/dmenu-4.8-x86_64-1.txz	            # 20K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/polybar-3.7.2-x86_64-1.txz         # 822K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/snixembed-0.3.3-x86_64-1.txz       # 24K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/imlib2-1.7.1-x86_64-1.txz	        # 536K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/feh-3.6.1-x86_64-1.txz	            # 166K
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/dunst-1.12.2-x86_64-1.txz         # 127K
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/xsel-1.2.1-x86_64-1.txz	        # 24K
  wget $WGET_OPTS https://packages.nimblex.net/nimblex/ttf-nerd-fonts-symbols-3.4.0-noarch-1.txz # 2.2M
- wget $WGET_OPTS https://packages.nimblex.net/nimblex/simde-0.8.2-noarch-1.txz  # 428K
- wget $WGET_OPTS https://packages.nimblex.net/nimblex/kitty-0.38.1-x86_64-1.txz # 13M
- wget $WGET_OPTS https://packages.nimblex.net/nimblex/picom-12.5-x86_64-1.txz   # 265K
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/simde-0.8.2-noarch-1.txz          # 428K
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/kitty-0.38.1-x86_64-1.txz         # 13M
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/picom-12.5-x86_64-1.txz           # 265K
  wget $WGET_OPTS https://packages.nimblex.net/nimblex/libxdg-basedir-1.2.3-x86_64-1.txz	# 12K 
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/libcamera-0.7.1-x86_64-1.txz      # 1.5M
 fi
 
 }
@@ -106,6 +109,7 @@ cp -a ../06-NimbleX/usr/share/wallpapers usr/share/
 cp -a ../06-NimbleX/usr/share/X11/xorg.conf.d usr/share/X11/
 cp -a ../06-NimbleX/root/.config/dunst root/.config/
 cp -a ../06-NimbleX/etc/xdg etc/
+cp -a ../06-NimbleX/etc/polybar etc/
 
 echo "Enabling startx.service in graphical.target"
 mkdir -p etc/systemd/system/graphical.target.wants
@@ -113,27 +117,31 @@ ln -s /usr/lib/systemd/system/startx.service etc/systemd/system/graphical.target
 
 echo "Copying i3 configs"
 cp -a ../06-NimbleX/etc/i3 etc/
-cp -a ../06-NimbleX/etc/i3status.conf etc/
 rm etc/X11/xinit/xinitrc
 ln -s xinitrc.i3 etc/X11/xinit/xinitrc
+
+# This should be temporary.
+cp ../06-NimbleX/usr/bin64/nimblex-installer usr/bin/
 }
 
-run-ldconfig() {
+run-caches() {
 cd $SD && AUFS="aufs-temp"
-echo "Running ldconfig and others chrooted inside $AUFS"
+echo "Rebuilding caches chrooted inside $AUFS"
 
 mount | grep aufs-temp && umount aufs-temp
 mkdir -p $AUFS
 mount -t aufs -o xino=/mnt/live/memory/aufs.xino,br:$NP none $AUFS
 mount -t aufs -o remount,append:01-Core${ARCH}=ro none $AUFS
 
-chroot $AUFS ln -s /lib/libudev.so.1.3.1 /lib/libudev.so.0	# Remove this after systemd update to 20.1
 chroot $AUFS ldconfig
 chroot $AUFS fc-cache
 chroot $AUFS update-mime-database /usr/share/mime
-chroot $AUFS update-gtk-immodules
+chroot $AUFS update-desktop-database -q /usr/share/applications
+chroot $AUFS gio-querymodules /usr/lib${ARCH}/gio/modules
+#chroot $AUFS update-gtk-immodules
 chroot $AUFS update-gdk-pixbuf-loaders
 chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
+#chroot $AUFS ln -s /lib/libudev.so.1.3.1 /lib/libudev.so.0	# Remove this after systemd update to 20.1
 chroot $AUFS rm -rf /etc/gtk-2.0/gtkrc
 chroot $AUFS ln -sf /usr/share/themes/oxygen-gtk/gtk-2.0/gtkrc /etc/gtk-2.0/gtkrc
 
@@ -163,7 +171,7 @@ else
 	  instpkg
 	  clean-X
 	  nimblex_adjust
-	  run-ldconfig
+	  run-caches
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
@@ -176,7 +184,7 @@ else
 	  instpkg
 	  clean-X
 	  nimblex_adjust
-	  run-ldconfig
+	  run-caches
 	  echo "...LZMFY"
 	  mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
