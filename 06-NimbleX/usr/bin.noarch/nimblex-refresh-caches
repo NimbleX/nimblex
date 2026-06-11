@@ -20,6 +20,36 @@
 
 set -u
 
+started=0
+
+log() {
+    printf 'nimblex-refresh-caches: %s\n' "$*" >&2
+}
+
+now_ns() {
+    date +%s%N
+}
+
+run_refresh() {
+    local cache=$1 reason=$2; shift 2
+    started=$((started + 1))
+    (
+        local start end elapsed rc
+        start=$(now_ns)
+        log "rebuild start: $cache ($reason): $*"
+        "$@" >/dev/null 2>&1
+        rc=$?
+        end=$(now_ns)
+        elapsed=$(((end - start) / 1000000))
+        if [[ $rc -eq 0 ]]; then
+            log "rebuild done: $cache in ${elapsed}ms"
+        else
+            log "rebuild failed: $cache rc=$rc after ${elapsed}ms"
+        fi
+        exit "$rc"
+    ) &
+}
+
 # refresh_if_stale <visible cache> <rebuild cmd...>
 #
 # If the cache is missing, or any bundle's copy of it is newer than the
@@ -27,13 +57,13 @@ set -u
 refresh_if_stale() {
     local cache=$1; shift
     if [[ ! -f $cache ]]; then
-        "$@" >/dev/null 2>&1 &
+        run_refresh "$cache" "missing" "$@"
         return
     fi
     local b
     for b in /mnt/live/memory/bundles/*"$cache"; do
         [[ -f $b && $b -nt $cache ]] || continue
-        "$@" >/dev/null 2>&1 &
+        run_refresh "$cache" "stale: $b is newer" "$@"
         return
     done
 }

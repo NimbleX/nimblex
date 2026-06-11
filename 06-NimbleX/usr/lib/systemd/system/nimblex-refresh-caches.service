@@ -1,11 +1,12 @@
 [Unit]
 Description=NimbleX: validate merged-FS caches (ldconfig, GSettings, MIME, ...)
-Documentation=man:glib-compile-schemas(1) man:update-mime-database(1)
 # Bundles ship pre-merged caches built in their AUFS chroot, so this is
 # normally a few stat() calls and exits in <50ms. NimbleX autologins
 # straight into GUI, so we block the graphical stack to be safe in the
 # rare case a rebuild is actually needed.
-Before=display-manager.service startx.service graphical.target
+DefaultDependencies=no
+After=local-fs.target systemd-tmpfiles-setup.service
+Before=basic.target display-manager.service startx.service graphical.target
 
 [Service]
 Type=oneshot
@@ -14,4 +15,4 @@ ExecStart=/usr/bin/nimblex-refresh-caches
 TimeoutStartSec=120
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=basic.target

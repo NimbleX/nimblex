@@ -78,7 +78,7 @@ start() {
     id=$(cat /sys/class/zram-control/hot_add)
     dev="zram${id}"
     # Roll back the hot_add if anything below fails.
-    trap 'printf %s "$id" > /sys/class/zram-control/hot_remove 2>/dev/null || true' EXIT
+    trap '/sbin/swapoff "/dev/${dev}" 2>/dev/null; printf %s "$id" > /sys/class/zram-control/hot_remove 2>/dev/null || true' EXIT
 
     comp=$(resolve_comp "$dev" "$ZRAM_COMP")
     printf '%s' "$comp" > "/sys/block/${dev}/comp_algorithm"

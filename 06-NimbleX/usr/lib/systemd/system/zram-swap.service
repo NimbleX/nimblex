@@ -16,16 +16,11 @@ EnvironmentFile=-/etc/default/zram-swap
 ExecStart=/usr/libexec/zram-swap start
 ExecStop=/usr/libexec/zram-swap stop
 
-# Minor hardening — no network, no new privs, read-only rootfs except
-# the few paths we actually need to write to. We intentionally keep
-# CAP_SYS_ADMIN because swapon(2) requires it.
+# Minor hardening — no new privs, no namespace-creating options: a
+# private mount namespace makes the kernel record the swap device under
+# a path that vanishes when the oneshot exits, breaking `swapoff -a`.
+# We intentionally keep CAP_SYS_ADMIN because swapon(2) requires it.
 NoNewPrivileges=yes
-ProtectSystem=strict
-ProtectHome=yes
-ReadWritePaths=/sys/class/zram-control /sys/block /run
-PrivateNetwork=yes
-ProtectKernelLogs=yes
-ProtectHostname=yes
 ProtectClock=yes
 RestrictNamespaces=yes
 RestrictRealtime=yes

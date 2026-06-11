@@ -41,6 +41,7 @@ elif [[ $ARCH = "64" ]]; then
  wget $WGET_OPTS -N $nxsrc/virt-manager-5.0.0-x86_64-1.txz     # 1.1M
  wget $WGET_OPTS -N $nxsrc/usbredir-0.14.0-x86_64-1.txz	    # 52K
  wget $WGET_OPTS -N $nxsrc/gtk-vnc-1.5.0-x86_64-1.txz		    # 198K
+ wget $WGET_OPTS -N $nxsrc/docker-29.4.2-x86_64-1.txz		    # 20M
 # wget $WGET_OPTS -N $nxsrc/vte3-0.44.2-x86_64-1.txz		    # 566K
 fi
 }
@@ -109,7 +110,6 @@ chroot $AUFS fc-cache
 chroot $AUFS update-mime-database /usr/share/mime
 chroot $AUFS update-desktop-database -q /usr/share/applications
 chroot $AUFS gio-querymodules /usr/lib${ARCH}/gio/modules
-#chroot $AUFS update-gtk-immodules
 chroot $AUFS update-gdk-pixbuf-loaders
 chroot $AUFS glib-compile-schemas /usr/share/glib-2.0/schemas/
 

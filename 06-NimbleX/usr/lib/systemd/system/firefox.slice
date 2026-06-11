@@ -10,7 +10,7 @@ MemoryHigh=8G
 # Hard limit: kernel kills the offending Firefox content process if
 # total Firefox memory would exceed this. Usually a single tab goes,
 # not the whole browser (each tab is its own content process).
-MemoryMax=10G
+MemoryMax=12G
 
 # Account for swap usage too, so a bloated Firefox can't eat all the
 # swap and starve the rest of the system.

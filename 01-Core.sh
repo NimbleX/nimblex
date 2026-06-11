@@ -20,11 +20,11 @@ blacklist_ap="hplip*,mariadb-*,vim*,linuxdoc*,man*,groff*,a2ps*,texinfo*,ksh93*,
 # These are necessary for printing
 #blacklist_ap=$blacklist_ap"ghostscript-*,gutenprint-*,qpdf-*"
 whitelist_l="libseccomp-*,ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,libunistring-*,elfutils-*,xxHash-*,lz4-*,lmdb-*,libuv-*"
-whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd-*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,python-doxy*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*,libnvme-*"
+whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd-*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,python-doxy*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*,libnvme-*,libfyaml-*"
 # These are necessary for printing
 whitelist_l=$whitelist_l",colord-*,graphene-*,libcupsfilters-*,libgusb-*,libpaper-*,libppd-*,poppler-*,fmt-*,pipewire-*,wireplumber-*"
 
-whitelist_n="libtirpc-*,libndp-*,nghttp2-*,nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn-*,libmnl-*,openssl*,rsync*,gpgme*,dnsmasq*,wireless_tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*,npth-*,ngtcp2-*,wireless-regdb-*,libnftnl-*,libnetfilter_conntrack-*"
+whitelist_n="libtirpc-*,libndp-*,nghttp2-*,nmap*,links*,bind*,curl*,tcpdump*,openssh*,dhcpcd-*,dhcp-*,libgcrypt*,ppp*,bluez*,wget*,iproute2*,wpa_supplicant*,iptables*,iptraf*,openvpn-*,libmnl-*,openssl*,rsync*,gpgme*,dnsmasq*,wireless_tools*,ipw*,vsftpd*,net-tools*,stunnel*,pth*,obex*,openobex*,rp-pppoe*,tcp_wrappers*,netpipes*,iputils*,libgpg*,telnet*,nc-*,ethtool*,rdist*,mtr*,tftp-hpa*,netkit-ftp*,whois*,zd1211*,bridge-utils*,portmap*,network-scripts*,inetd*,popa3d*,bsd-finger*,traceroute*,iw*,crda*,pssh*,biff+comsat*,icmpinfo*,rfkill*,idnkit*,libassuan*,ipset-*,ebtables-*,npth-*,ngtcp2-*,wireless-regdb-*,libnftnl-*,nftables-*,libnetfilter_conntrack-*,openresolv-*"
 whitelist_n=$whitelist_n",httpd*,gnutls*,sendmail*,cyrus-sasl*,openldap-client*,nfs-utils*,procmail*,netwatch*,vlan*,netkit-routed*,netwrite*,gnupg-*,iftop-,mobile-broadband-provider-info-*,ca-certificates-*,libksba-*,gnupg2-*,nettle-*,p11-kit-*,NetworkManager-*,ModemManager-*,libmbim-*,libqmi-*,mobile-broadband-provider-info-*,ntp-*,libnetfilter_queue-*,libnfnetlink-*,wireguard-tools-*,nghttp3-*,c-ares-*,krb5-*,nss-mdns-*,libqrtr-glib-*"
 
 extra="chillispot,scanssh,nrg2iso,mdf2iso"
@@ -66,7 +66,7 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/audit-3.0.9-x86_64-1.txz		# 629K
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/dbus-1.16.2-x86_64-1.txz		# 373K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/systemd-258-x86_64-1.txz		# 8.9M
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/systemd-258-x86_64-1.txz		# 7.7M
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/earlyoom-1.9.0-x86_64-1.txz    # 32K
 # wget $WGET_OPTS http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/ncdu-1.15.1-x86_64-1.txz		# 42K
@@ -143,6 +143,10 @@ ln -s /usr/bin/systemctl bin/reboot
 ln -s /usr/bin/systemctl bin/halt
 ln -s /usr/bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
+rm etc/systemd/system/graphical.target.wants/display-manager.service
+# NimbleX ships /etc/ld.so.cache from the build and validates it with
+# nimblex-refresh-caches; only let ldconfig.service run if the cache is missing.
+sed -i '/^ConditionNeedsUpdate=|\/etc$/d' usr/lib/systemd/system/ldconfig.service
 mv etc/pam.d/systemd-user.new etc/pam.d/systemd-user
 
 # systemd (>=258) ships /usr/sbin/resolvconf as a symlink to resolvectl
@@ -215,6 +219,12 @@ mkdir -p ../$NP-removed/devel/usr/share/perl5/ && mv usr/share/perl5/pod $_
 # Handle usr/share/nmap/(nmap-mac-prefixes)(nmap-os-db) ? #260KB
 # Handle usr/share/terminfo # 200KB
 # Handle usr/share/zoneinfo $ 200KB
+
+# Default iptables to the nftables backend.
+for t in iptables ip6tables iptables-save iptables-restore \
+         ip6tables-save ip6tables-restore; do
+    ln -sf xtables-nft-multi usr/sbin/$t
+done
 }
 
 copy-static() {
