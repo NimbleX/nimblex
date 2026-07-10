@@ -32,7 +32,7 @@ wget $WGET_OPTS -A "$whitelist_l" "$slacksrc"/l/*.txz
 
 instpkg() {
 for pkg in $SD/$NP-work/* ; do
-   installpkg --root $SD/$NP $pkg
+   nice -n10 installpkg --root $SD/$NP $pkg
 done
 }
 
@@ -44,7 +44,6 @@ rm -r usr/share/wallpapers/{Next,Canopee,Volna,Kokkini,Flow,Cluster,Opal,IceCold
 #rm -r usr/share/apps/k3b/pics/73lab		# ~ 200K
 #rm -r usr/share/apps/k3b/pics/crystal		# ~ 300K
 rm -r usr/share/k3b/extra			# Photo2vcd crap ~ 600K
-rm -r usr/share/kopete/styles/Konqi	# ~ 820K
 rm -r usr/share/gtk-doc/html		
 rm -r usr/share/poppler/cMap/Adobe-Japan1	# ~620K
 rm -r usr/share/poppler/cMap/Adobe-Korea1	# ~280K
@@ -120,7 +119,7 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -130,7 +129,7 @@ else
 	  clean-KDE
 	  run-caches
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

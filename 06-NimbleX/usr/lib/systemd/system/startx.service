@@ -1,10 +1,12 @@
 [Unit]
 Description=Start X
-After=systemd-user-sessions.service dbus.service systemd-logind.service
+After=multi-user.target systemd-user-sessions.service dbus.service systemd-logind.service
+Before=graphical.target
 Wants=dbus.service systemd-logind.service
 
 [Service]
 ExecStart=/bin/su root -l -c /usr/bin/startx -- VT08
+CPUWeight=10000
 
 [Install]
 WantedBy=graphical.target

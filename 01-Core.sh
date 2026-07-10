@@ -20,7 +20,7 @@ blacklist_ap="hplip*,mariadb-*,vim*,linuxdoc*,man*,groff*,a2ps*,texinfo*,ksh93*,
 # These are necessary for printing
 #blacklist_ap=$blacklist_ap"ghostscript-*,gutenprint-*,qpdf-*"
 whitelist_l="libseccomp-*,ncurses*,libgphoto2*,parted*,taglib*,apr*,fuse*,libusb-*,zlib*,lzo*,libmad*,libtermcap*,libcap*,gdbm*,popt*,libao*,libid3tag*,mm*,libmowgli*,libmcs*,libaio*,alsa*,libnl*,libpcap*,libzip*,libunistring-*,elfutils-*,xxHash-*,lz4-*,lmdb-*,libuv-*"
-whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd-*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,python-doxy*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*,libnvme-*,libfyaml-*"
+whitelist_l=$whitelist_l",gmp*,libidn-*,libidn2-*,glib*,aalib*,libcaca*,gd-*,audiofile*,dbus*,esound*,sof-firmware-*,libieee1284*,libogg*,libtheora*,libvorbis*,libcddb*,libsamplerate*,libraw1394*,v4l-utils*,liboil*,mpfr*,wavpack*,libcdio*,expat*,urwid*,neon*,pcre*,libmpc*,libsndfile*,libnotify*,fftw*,libarchive*,libksba*,pygobject*,libmcrypt*,libssh-*,libatasmart-*,libffi-*,pycurl-*,libproxy-*,icu4c-*,libtasn1-*,libevent-*,jemalloc-*,libimobiledevice-*,libusbmuxd-*,usbmuxd-*,keyutils-*,libxml2-*,orc-*,svgalib-*,a52dec-*,polkit-*,libnih-*,libplist-*,gc-*,pulseaudio-*,alsa-plugins-*,sbc-*,json-c-*,libasyncns-*,libsigc++*,speexdsp-*,libssh2-*,mozilla-nss-*,libvpx-*,js185-*,ffmpeg-*,lame-*,libbluray-*,SDL2*,libyaml-*,pyparsing-*,python-six-*,opus*,libopusenc-*,speex-*,jansson-*,brotli-*,readline-*,newt-*,libpcap-*,libedit-*,python-Jinja2-*,python-MarkupSafe-*,python-doxy*,zstd-*,argon2-*,libptytty-*,duktape-*,libdeflate-*,libpsl-*,libunibreak-*,avahi-*,libdaemon-*,simdutf-*,libnvme-*,libfyaml-*,libmaxminddb-*"
 # These are necessary for printing
 whitelist_l=$whitelist_l",colord-*,graphene-*,libcupsfilters-*,libgusb-*,libpaper-*,libppd-*,poppler-*,fmt-*,pipewire-*,wireplumber-*"
 
@@ -113,7 +113,7 @@ fi
 
 instpkg() {
 for pkg in $SD/$NP-work/* ; do
-   installpkg --root $SD/$NP $pkg
+   nice -n10 installpkg --root $SD/$NP $pkg
 done
 }
 
@@ -153,7 +153,7 @@ mv etc/pam.d/systemd-user.new etc/pam.d/systemd-user
 # Revisit if/when we migrate to systemd-resolved.
 rm usr/sbin/resolvconf && ln -sf /sbin/resolvconf usr/sbin/resolvconf
 
-rm etc/xdg/autostart/pulseaudio.desktop
+#rm etc/xdg/autostart/pulseaudio.desktop
 #ln -s /run/dbus/system_bus_socket var/run/dbus/
 #sed -i '/lockdev 0775 root lock/'d usr/lib/tmpfiles.d/legacy.conf
 sed -i 's/^autospawn = yes/autospawn = no/' etc/pulse/client.conf
@@ -307,7 +307,7 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -318,7 +318,7 @@ else
 	  copy-static
 	  run-caches
 	  echo "...LZMFY"
-	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

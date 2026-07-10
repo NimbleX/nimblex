@@ -3,15 +3,20 @@ Description=Memory-limited slice for Firefox
 Before=slices.target
 
 [Slice]
+# Limits are expressed as a PERCENTAGE of total RAM so this scales
+# correctly across the whole NimbleX fleet (from small 4 GiB boxes to
+# large 64 GiB workstations). Hard-coded absolute values (e.g. 8G)
+# throttled big machines far too early and were too loose on tiny ones.
+#
 # Soft limit: kernel aggressively reclaims when Firefox exceeds this.
 # Firefox keeps running, but pages get pushed to (zram) swap first.
-MemoryHigh=8G
+MemoryHigh=50%
 
 # Hard limit: kernel kills the offending Firefox content process if
 # total Firefox memory would exceed this. Usually a single tab goes,
 # not the whole browser (each tab is its own content process).
-MemoryMax=12G
+MemoryMax=80%
 
 # Account for swap usage too, so a bloated Firefox can't eat all the
 # swap and starve the rest of the system.
-MemorySwapMax=4G
+MemorySwapMax=50%

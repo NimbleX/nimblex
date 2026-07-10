@@ -56,13 +56,14 @@ elif [[ $ARCH = "64" ]]; then
  wget $WGET_OPTS https://packages.nimblex.net/nimblex/picom-12.5-x86_64-1.txz           # 265K
  wget $WGET_OPTS https://packages.nimblex.net/nimblex/libxdg-basedir-1.2.3-x86_64-1.txz	# 12K 
  wget $WGET_OPTS https://packages.nimblex.net/nimblex/libcamera-0.7.1-x86_64-1.txz      # 1.5M
+ wget $WGET_OPTS https://packages.nimblex.net/nimblex/clipit-1.4.2-x86_64-1.txz         # 72K
 fi
 
 }
 
 instpkg() {
 for pkg in $SD/$NP-work/* ; do
-   installpkg --root $SD/$NP $pkg
+   nice -n10 installpkg --root $SD/$NP $pkg
 done
 }
 
@@ -103,6 +104,7 @@ cd $SD/$NP
 echo "Copying NimbleX specific shared files"
 cp -a ../06-NimbleX/usr/share/icons/oxygen usr/share/icons/
 cp ../06-NimbleX/usr/share/mime/packages/nimblex.xml usr/share/mime/packages/
+cp ../06-NimbleX/usr/share/xdg-desktop-portal/portals.conf usr/share/xdg-desktop-portal/
 mkdir -p usr/share/mime/application/ root/.config/
 cp ../06-NimbleX/usr/share/mime/application/x-lzm.xml usr/share/mime/application/
 cp -a ../06-NimbleX/usr/share/wallpapers usr/share/
@@ -117,6 +119,14 @@ ln -s /usr/lib/systemd/system/startx.service etc/systemd/system/graphical.target
 
 echo "Copying i3 configs"
 cp -a ../06-NimbleX/etc/i3 etc/
+sed -i '/^export GSK_RENDERER=cairo$/a\
+export XDG_RUNTIME_DIR=/run/user/0\
+[ -d "$XDG_RUNTIME_DIR" ] || mkdir -p "$XDG_RUNTIME_DIR"\
+chmod 700 "$XDG_RUNTIME_DIR" 2>/dev/null || true\
+export PIPEWIRE_RUNTIME_DIR=/run/pipewire\
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && command -v dbus-launch >/dev/null 2>&1; then\
+    eval `dbus-launch --sh-syntax --exit-with-session`\
+fi' etc/X11/xinit/xinitrc.i3
 rm etc/X11/xinit/xinitrc
 ln -s xinitrc.i3 etc/X11/xinit/xinitrc
 
@@ -175,7 +185,7 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -186,7 +196,7 @@ else
 	  nimblex_adjust
 	  run-caches
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

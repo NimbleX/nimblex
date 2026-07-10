@@ -41,7 +41,7 @@ wget $WGET_OPTS $slacksrc/l/system-config-printer-*.txz
 
 instpkg() {
 for pkg in $SD/$NP-work/*.t?z ; do
-   installpkg --root $SD/$NP $pkg
+   nice -n10 installpkg --root $SD/$NP $pkg
 done
 }
 
@@ -151,7 +151,7 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...DOWNLOADING"
@@ -164,7 +164,7 @@ else
           cripple_mplayer
 	  run-caches
 	  echo "...LZMFY"
-	  mksquashfs $NP $NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $NP $NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

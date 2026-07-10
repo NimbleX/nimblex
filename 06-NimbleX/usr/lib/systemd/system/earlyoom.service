@@ -1,0 +1,51 @@
+[Unit]
+Description=Early OOM Daemon
+Documentation=man:earlyoom(1) https://github.com/rfjakob/earlyoom
+
+[Service]
+EnvironmentFile=-/etc/default/earlyoom
+ExecStart=/usr/sbin/earlyoom $EARLYOOM_ARGS
+# Allow killing processes and calling mlockall()
+AmbientCapabilities=CAP_KILL CAP_IPC_LOCK
+CapabilityBoundingSet=CAP_KILL CAP_IPC_LOCK
+# Give priority to our process
+Nice=-20
+# Avoid getting killed by OOM
+OOMScoreAdjust=-100
+# earlyoom never exits on it's own, so have systemd
+# restart it should it get killed for some reason.
+Restart=always
+# set memory limits and max tasks number
+TasksMax=10
+MemoryMax=50M
+
+# Hardening. Deny everything we don't use.
+
+# Run as an unprivileged user with random user id.
+DynamicUser=true
+# We don't need write access anywhere.
+ProtectSystem=strict
+# We don't need /home at all, make it inaccessible.
+ProtectHome=true
+PrivateDevices=true
+ProtectClock=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+PrivateNetwork=true
+IPAddressDeny=any
+
+# Unix socket is used by dbus-send.
+RestrictAddressFamilies=AF_UNIX
+
+SystemCallArchitectures=native
+SystemCallFilter=@system-service process_mrelease
+SystemCallFilter=~@privileged
+
+[Install]
+WantedBy=multi-user.target
