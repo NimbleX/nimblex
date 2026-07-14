@@ -48,7 +48,7 @@ fi
 
 instpkg() {
 for pkg in $SD/$NP-work/* ; do
-   installpkg --root $SD/$NP $pkg
+   nice -n10 installpkg --root $SD/$NP $pkg
 done
 }
 
@@ -143,7 +143,7 @@ else
 	 ;;
 	 "lzmfy" )
 	  echo "...LZMFY"
-	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;
 	 "world" )
 	  echo "...CLEANING"
@@ -158,7 +158,7 @@ else
 	  copy-static
 	  run-caches
 	  echo "...LZMFY"
-	  mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
+	  nice -n10 mksquashfs $SD/$NP $SD/$NP.lzm $SQUASH_OPT
 	 ;;
 	esac
 	echo -e "\n $0 \033[7m DONE \033[0m \n"

@@ -66,7 +66,7 @@ if [[ $ARCH = "" ]]; then
 elif [[ $ARCH = "64" ]]; then
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/audit-3.0.9-x86_64-1.txz		# 629K
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/dbus-1.16.2-x86_64-1.txz		# 373K
- wget $WGET_OPTS http://packages.nimblex.net/nimblex/systemd-258-x86_64-1.txz		# 7.7M
+ wget $WGET_OPTS http://packages.nimblex.net/nimblex/systemd-261-x86_64-1.txz		# 8.2M
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/earlyoom-1.9.0-x86_64-1.txz    # 32K
 # wget $WGET_OPTS http://packages.nimblex.net/nimblex/grub2-2.00-slim-x86_64-1.txz	# 1.1M
  wget $WGET_OPTS http://packages.nimblex.net/nimblex/ncdu-1.15.1-x86_64-1.txz		# 42K
@@ -131,6 +131,7 @@ rm -r etc/rc.d
 sed -i 's/darkstar/nimblex/g' etc/hosts
 sed -i 's/#   ForwardAgent no/    ForwardAgent yes/' etc/ssh/ssh_config
 sed -i 's/#   StrictHostKeyChecking ask/    StrictHostKeyChecking no/' etc/ssh/ssh_config
+sed -i '3iInclude /etc/ssh/ssh_config.d/*.conf' etc/ssh/ssh_config
 
 #sed -i 's/darkstar/nimblex/g' etc/rc.d/rc.M
 #sed -i 's/LESS="-M"/LESS="-MR"/' etc/profile
@@ -144,6 +145,8 @@ ln -s /usr/bin/systemctl bin/halt
 ln -s /usr/bin/systemctl bin/poweroff
 rm etc/mtab && ln -s /proc/self/mounts etc/mtab
 rm etc/systemd/system/graphical.target.wants/display-manager.service
+# Generate SSH host keys at boot.
+ln -s /usr/lib/systemd/system/sshdgenkeys.service usr/lib/systemd/system/multi-user.target.wants/sshdgenkeys.service
 # NimbleX ships /etc/ld.so.cache from the build and validates it with
 # nimblex-refresh-caches; only let ldconfig.service run if the cache is missing.
 sed -i '/^ConditionNeedsUpdate=|\/etc$/d' usr/lib/systemd/system/ldconfig.service
@@ -151,7 +154,7 @@ mv etc/pam.d/systemd-user.new etc/pam.d/systemd-user
 
 # systemd (>=258) ships /usr/sbin/resolvconf as a symlink to resolvectl
 # Revisit if/when we migrate to systemd-resolved.
-rm usr/sbin/resolvconf && ln -sf /sbin/resolvconf usr/sbin/resolvconf
+# rm usr/sbin/resolvconf && ln -sf /sbin/resolvconf usr/sbin/resolvconf
 
 #rm etc/xdg/autostart/pulseaudio.desktop
 #ln -s /run/dbus/system_bus_socket var/run/dbus/
@@ -255,6 +258,8 @@ cp ../06-NimbleX/usr/local/bin/* usr/local/bin/
 cp ../06-NimbleX/etc/os-release etc/
 cp ../06-NimbleX/lib/udev/rules.d/*.rules usr/lib/udev/rules.d/
 cp ../06-NimbleX/etc/systemd/*.conf etc/systemd/
+# Host-side virtio vsock backend (enables "ssh vsock/<cid>" into local VMs).
+mkdir -p etc/modules-load.d && cp ../06-NimbleX/etc/modules-load.d/*.conf etc/modules-load.d/
 #cp ../06-NimbleX/etc/dbus-1/system.d/* etc/dbus-1/system.d/
 cp -a ../06-NimbleX/usr/lib/systemd/system/*.{service,socket,slice} usr/lib/systemd/system/
 cp -a ../06-NimbleX/usr/lib/systemd/system/*.target.wants usr/lib/systemd/system/

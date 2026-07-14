@@ -30,7 +30,50 @@ fi
 
 }
 
+provision_test_vsock() {
+# Provision the test ISO's rootcopy + host so the freshly built VM is
+# reachable over SSH-over-AF_VSOCK, without any guest network config.
+# (64-bit only; systemd-ssh-generator + systemd-ssh-proxy, needs systemd >=256.)
+[ "$ARCH" = "64" ] || return 0
+
+RC=ISO-test${ARCH}/nimblex${ARCH}/rootcopy
+PUBKEY=${VSOCK_PUBKEY:-$HOME/.ssh/id_ed25519.pub}
+
+# Host side: vsock backend + ssh drop-in include (both are no-ops if present).
+modprobe vhost_vsock 2>/dev/null || true
+grep -q '^Include /etc/ssh/ssh_config.d/' /etc/ssh/ssh_config 2>/dev/null || \
+	sed -i '1iInclude /etc/ssh/ssh_config.d/*.conf' /etc/ssh/ssh_config
+
+# Guest side (baked into the read-only ISO's rootcopy overlay):
+mkdir -p $RC/root/.ssh $RC/etc/systemd/system/multi-user.target.wants
+if [ -f "$PUBKEY" ]; then
+	install -m 700 -d $RC/root/.ssh
+	install -m 600 "$PUBKEY" $RC/root/.ssh/authorized_keys
+else
+	echo "WARNING: $PUBKEY not found; vsock SSH into the test VM will fail."
+fi
+# Generate host keys at boot (in the RAM union, mode 0600). We must NOT ship
+# keys on the ISO: cp -a off iso9660 lands them 0444 and sshd rejects them.
+rm -f $RC/etc/ssh/ssh_host_*
+ln -sf /usr/lib/systemd/system/sshdgenkeys.service \
+	$RC/etc/systemd/system/multi-user.target.wants/sshdgenkeys.service
+
+# Debug channel: autologin root on the serial console (the VM's <console>,
+# i.e. /dev/pts/N via `virsh ttyconsole NX64`). Handy for diagnosing boots
+# where even vsock SSH fails.
+mkdir -p $RC/etc/systemd/system/serial-getty@ttyS0.service.d \
+	 $RC/etc/systemd/system/getty.target.wants
+cat > $RC/etc/systemd/system/serial-getty@ttyS0.service.d/autologin.conf <<'EOF'
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin root --noclear - 115200,38400,9600 vt220
+EOF
+ln -sf /usr/lib/systemd/system/serial-getty@.service \
+	$RC/etc/systemd/system/getty.target.wants/serial-getty@ttyS0.service
+}
+
 create_iso() {
+provision_test_vsock
 # First we have to make sure a VM is not booted of this
 set +e
 lsof ../NimbleX${ARCH}-test.iso | grep -q qemu
@@ -62,29 +105,31 @@ while ! virsh list | grep -w NX${ARCH}; do
 	echo -n .
 done
 
-spicy --uri=spice+unix:///tmp/nx64-spice.sock
+# Wait for the guest to become reachable over SSH-over-vsock before we
+# open the graphical viewer, so scripted runs get a clear ready signal.
+if [ -n "$VM_SSH" ]; then
+	echo -n "Waiting for $VM_SSH ..."
+	for i in $(seq 1 40); do
+		if ssh -o ConnectTimeout=5 -o BatchMode=yes \
+			-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+			$VM_SSH 'true' 2>/dev/null; then
+			echo " up."; ssh $VM_SSH 'uname -a; uptime'; break
+		fi
+		echo -n .; sleep 5
+	done
+fi
 
-exit
-for i in {9..0}; do echo -en "\r$i"; sleep 3;done; echo -en "\r"
-TRIES=10
-a=1
-while [ "$a" -le "$TRIES" ]; do
-	ssh $VM_IP "uname -a; uptime"
-	if [ $? = "0" ]; then
-		a=10
-	fi
-	let "a+=1"
-done
+spicy --uri=spice+unix:///tmp/nx64-spice.sock
 
 set -e
 }
 
 build_package() {
 	PKG=`basename $1`
-	rsync -e 'ssh' -ahH --delete `dirname $1`/${PKG} $VM_IP:
-	ssh $VM_IP "cd $PKG && ./*.SlackBuild"
-	ssh $VM_IP "installpkg /tmp/${PKG}*.txz"
-	scp $VM_IP:/tmp/${PKG}*.txz /tmp/
+	rsync -e 'ssh' -ahH --delete `dirname $1`/${PKG} $VM_SSH:
+	ssh $VM_SSH "cd $PKG && ./*.SlackBuild"
+	ssh $VM_SSH "installpkg /tmp/${PKG}*.txz"
+	scp $VM_SSH:/tmp/${PKG}*.txz /tmp/
 }
 
 
@@ -114,8 +159,11 @@ fi
 if [ $2 = "64" ]; then
 	ARCH=64
 	VM_IP="192.168.122.10"
+	# Reach the freshly built VM over SSH-over-AF_VSOCK (CID 3 in the test XML).
+	VM_SSH="root@vsock/3"
 elif [ $2 = "32" ]; then
 	VM_IP="192.168.122.11"
+	VM_SSH="$VM_IP"
 fi
 
 case $1 in
